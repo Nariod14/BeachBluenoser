@@ -1,63 +1,43 @@
 package com.example.beachbluenoser;
 
-import static android.content.ContentValues.TAG;
+import android.os.Bundle;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.util.Log;
+import android.view.View;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-import android.util.Log;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class BeachListActivity extends AppCompatActivity {
     final  FirebaseFirestore db = FirebaseFirestore.getInstance();
-    //int emptyListTextViewOriginalHeight = -1; // to store original height of the TextView
+    int emptyListTextViewOriginalHeight = -1; // to store original height of the TextView
     ArrayList<BeachItem> beachList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_beach_list);
 
-/** DataBase Test code: add user Ada Lovelace **/
-//        // Create a new user with a first and last name
-//        Map<String, Object> user = new HashMap<>();
-//        user.put("first", "Ada");
-//        user.put("last", "Lovelace");
-//        user.put("born", 1815);
-//
-//        // Add a new document with a generated ID
-//        db.collection("usertable")
-//                .add(user)
-//                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-//                    @Override
-//                    public void onSuccess(DocumentReference documentReference) {
-//                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Log.w(TAG, "Error adding document", e);
-//                    }
-//                });
 
     }
-
 
     @Override
     protected void onResume() {
@@ -68,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void getDataFromDbAndShowOnUI() {
         // to toggle between the "deleted posts" and active posts button
-        // resetToggle();
+       // resetToggle();
 
         final ArrayList<BeachItem> beachItemArrayList = new ArrayList<>();
 
@@ -81,23 +61,14 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String DataName =  document.getData().get("name").toString();
-                             //   String DataDescription = document.getData().get("description").toString();
-                                Object DataImage  = document.getData().get("image");
-                                String DataImageValue;
-                                if(DataImage == null){
-                                    DataImageValue = "imageNotFound";
-                                }else {
-                                    DataImageValue = document.getData().get("image").toString();
-                                }
+                               // String DataDescription = document.getData().get("description").toString();
+                                String DataImage = document.getData().get("image").toString();
                                 Long DataRating = (Long) document.getData().get("rating");
-                                if(DataRating==null){
-                                    DataRating = Long.valueOf(0);
-                                }
-                                BeachItem beachItem = new BeachItem(DataName,DataImageValue,DataRating.intValue());
+                                BeachItem beachItem = new BeachItem(DataName,DataImage,DataRating.intValue());
 
                                 beachItemArrayList.add(beachItem);
-                               // Log.w("Beach list size check777777", "Beacharrrraayyyy list size "+beachItemArrayList.size());
-                               // Log.d("BeachRetrivalLoop", "retrieved beach with name: "+DataName +" img: "+DataImage);
+                                Log.w("Beach list size check777777", "Beacharrrraayyyy list size "+beachItemArrayList.size());
+                                Log.d("BeachRetrivalLoop", "retrieved beach with name: "+DataName +" img: "+DataImage);
                             }
                         } else {
                             Log.w("BeachRetrievalLoopERROR", "Error getting documents.", task.getException());
@@ -105,8 +76,8 @@ public class MainActivity extends AppCompatActivity {
 
                         beachList = beachItemArrayList;
                         Collections.reverse(beachList);
-                       // Log.w("Beach list size check22222", "B1111");
-                      //  Log.w("Beach list size check", "Beach list size "+beachList.size());
+                        Log.w("Beach list size check22222", "B1111");
+                        Log.w("Beach list size check", "Beach list size "+beachList.size());
                         loadMasterBeachList();
                     }
 
@@ -202,4 +173,3 @@ public class MainActivity extends AppCompatActivity {
 
      */
 }
-

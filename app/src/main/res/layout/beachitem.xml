@@ -47,13 +47,19 @@
              android:id="@+id/BeachDescription"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
-             android:text="------" />
+             android:text="Rocky / Sandy" />
 
          <TextView
              android:id="@+id/BeachRating"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
-             android:text="/5" />
+             android:text="Floating wheelchair ramp: " />
+
+         <TextView
+             android:id="@+id/BeachCapacity"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:text="Capacity: " />
      </LinearLayout>
 
 </LinearLayout>

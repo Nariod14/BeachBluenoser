@@ -58,8 +58,8 @@ import java.util.ArrayList;
                 desc = desc.substring(0,20) + "...";
             }
             */
-            listItem.beachRating.setText(rating+"/5");
-            listItem.beachDescription.setText(desc);
+            //listItem.beachRating.setText(rating+"/5");
+            //listItem.beachDescription.setText(desc);
 
             listItem.setBeachImage(beachImageFileName);
 
@@ -97,8 +97,8 @@ import java.util.ArrayList;
                 beachList =beaches;
                 mainView = listItemView;
                 beachName = listItemView.findViewById(R.id.BeachName);
-                beachDescription = listItemView.findViewById(R.id.BeachDescription);
-                beachRating = listItemView.findViewById(R.id.BeachRating);
+                //beachDescription = listItemView.findViewById(R.id.BeachDescription);
+                //beachRating = listItemView.findViewById(R.id.BeachRating);
                 beachImage = listItemView.findViewById(R.id.BeachImage);
                 //beachImage
 

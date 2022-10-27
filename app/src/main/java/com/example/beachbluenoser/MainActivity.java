@@ -1,6 +1,11 @@
 package com.example.beachbluenoser;
 
 import static android.content.ContentValues.TAG;
+import android.os.Bundle;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -24,10 +30,24 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Toast;
+
 public class MainActivity extends AppCompatActivity {
     final  FirebaseFirestore db = FirebaseFirestore.getInstance();
     //int emptyListTextViewOriginalHeight = -1; // to store original height of the TextView
     ArrayList<BeachItem> beachList;
+
+    String[] item = {"All", "Rocky", "Sandy", "Wheelchair Ramps", "Floating Wheelchairs"};
+    String[] capacity = {"High", "Medium", "Low"};
+
+    ArrayAdapter<String> adapterItems;
+
+    AutoCompleteTextView autoCompleteTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
                                 String DataName =  document.getData().get("name").toString();
                              //   String DataDescription = document.getData().get("description").toString();
                                 Object DataImage  = document.getData().get("image");
@@ -100,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
                                // Log.d("BeachRetrivalLoop", "retrieved beach with name: "+DataName +" img: "+DataImage);
                             }
                         } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
                             Log.w("BeachRetrievalLoopERROR", "Error getting documents.", task.getException());
                         }
 
@@ -113,7 +135,23 @@ public class MainActivity extends AppCompatActivity {
 
                 });
 
+        // start of stuff that isnt working
+/*
+        setContentView(R.layout.activity_main);
+        //autoCompleteTextView = findViewById(R.id.auto_complete_textview);
+        //adapterItems = new ArrayAdapter<String>(this, R.layout.list_item, item);
+        autoCompleteTextView.setAdapter(adapterItems);
 
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                String item = adapterView.getItemAtPosition(position).toString();
+                Toast.makeText(MainActivity.this, "Item " + item, Toast.LENGTH_SHORT).show();
+            }
+
+        });
+*/
+        // end of stuff that isnt working
 
     }
 

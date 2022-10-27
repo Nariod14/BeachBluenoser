@@ -22,42 +22,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:srcCompat="@android:drawable/ic_dialog_email" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_dialog_email" />
 
-    <androidx.appcompat.widget.Toolbar
-
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="#03A9F4"
-        tools:ignore="MissingConstraints,LabelFor">
-
-
-        <TextView
-            android:id="@+id/custom_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/FilterPage"
-            android:textColor="#F8F8F8"
-            android:textSize="20sp"
-            android:layout_gravity="center"
-            android:textStyle="italic"
-            tools:ignore="LabelFor,TextContrastCheck"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="14dp" />
-
-    </androidx.appcompat.widget.Toolbar>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="230dp"
+        android:layout_width="match_parent"
+        android:layout_height="84dp"
         android:padding="10dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:startIconDrawable="@drawable/ic_beach"
-        tools:ignore="LabelFor, MissingConstraints"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        tools:ignore="LabelFor, MissingConstraints">
 
         <AutoCompleteTextView
             android:id="@+id/auto_complete_textview"
@@ -69,6 +46,27 @@
             tools:ignore="TextContrastCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <LinearLayout
 
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+        <!--android:background="@drawable/rounded_edit_text"-->
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/BeachMasterList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:autofillHints="Empty"
+            android:padding="10dp"
+            android:scrollbars="vertical">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

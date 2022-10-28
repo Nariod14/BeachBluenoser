@@ -35,7 +35,10 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.Toast;
+
+import javax.xml.parsers.FactoryConfigurationError;
 
 public class MainActivity extends AppCompatActivity {
     final  FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -51,7 +54,27 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        final Button homeBtn = findViewById(R.id.HomeButton);
+        final Button loginBtn = findViewById(R.id.LoginButton);
+        homeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO: update code so that it takes user back to homepage all the time
+                setContentView(R.layout.activity_main);
+                getDataFromDbAndShowOnUI();
+            }
+        });
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO: find a way to change button to to view account
+
+                //TODO: change view to login page when clicked
+
+            }
+        });
     }
+
 
     @Override
     protected void onResume() {

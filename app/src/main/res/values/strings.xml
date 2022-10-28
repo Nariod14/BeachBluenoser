@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Beach Bluenoser</string>
-
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -14,4 +13,15 @@
     <string name="todo">TODO</string>
     <string name="FilterPage">Beach Filter Page</string>
     <string name="Search">Search...</string>
+    <string name="submit">Submit</string>
+    <string name="submit1">Submit</string>
+    <string name="choppy_waters">choppy waters</string>
+    <string name="visual_water_conditions">Visual Water conditions</string>
+    <string name="bluenoser_beach">Bluenoser Beach</string>
+    <string name="calm">calm</string>
+    <string name="a">a</string>
+    <string name="how_busy_is_the_beach">How busy is the beach</string>
+    <string name="a_few_people">A few people</string>
+    <string name="many_people">Many people</string>
+    <string name="little_to_no_people">little to no people</string>
 </resources>

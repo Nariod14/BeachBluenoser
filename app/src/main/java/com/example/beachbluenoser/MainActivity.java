@@ -2,6 +2,13 @@ package com.example.beachbluenoser;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Intent;
+import android.os.Bundle;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -24,54 +32,60 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.Toast;
+
+import javax.xml.parsers.FactoryConfigurationError;
+
 public class MainActivity extends AppCompatActivity {
     final  FirebaseFirestore db = FirebaseFirestore.getInstance();
-    //int emptyListTextViewOriginalHeight = -1; // to store original height of the TextView
     ArrayList<BeachItem> beachList;
+
+    String[] item = {"All", "Rocky", "Sandy", "Wheelchair Ramps", "Floating Wheelchairs"};
+    String[] capacity = {"High", "Medium", "Low"};
+
+    ArrayAdapter<String> adapterItems;
+
+    AutoCompleteTextView autoCompleteTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_beach_list);
-
-/** DataBase Test code: add user Ada Lovelace **/
-//        // Create a new user with a first and last name
-//        Map<String, Object> user = new HashMap<>();
-//        user.put("first", "Ada");
-//        user.put("last", "Lovelace");
-//        user.put("born", 1815);
-//
-//        // Add a new document with a generated ID
-//        db.collection("usertable")
-//                .add(user)
-//                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-//                    @Override
-//                    public void onSuccess(DocumentReference documentReference) {
-//                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Log.w(TAG, "Error adding document", e);
-//                    }
-//                });
-
+        setContentView(R.layout.activity_main);
+        final Button homeBtn = findViewById(R.id.HomeButton);
+        final Button loginBtn = findViewById(R.id.LoginButton);
+        homeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO: update code so that it takes user back to homepage all the time
+                setContentView(R.layout.activity_main);
+                getDataFromDbAndShowOnUI();
+            }
+        });
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent loginIntent = new Intent(MainActivity.this, Login.class);
+                startActivity(loginIntent);
+            }
+        });
     }
 
 
     @Override
     protected void onResume() {
         super.onResume();
-
         getDataFromDbAndShowOnUI();
     }
 
     private void getDataFromDbAndShowOnUI() {
         // to toggle between the "deleted posts" and active posts button
         // resetToggle();
-
         final ArrayList<BeachItem> beachItemArrayList = new ArrayList<>();
-
 
         db.collection("beach")
                 .get()
@@ -80,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
                                 String DataName =  document.getData().get("name").toString();
                              //   String DataDescription = document.getData().get("description").toString();
                                 Object DataImage  = document.getData().get("image");
@@ -100,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
                                // Log.d("BeachRetrivalLoop", "retrieved beach with name: "+DataName +" img: "+DataImage);
                             }
                         } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
                             Log.w("BeachRetrievalLoopERROR", "Error getting documents.", task.getException());
                         }
 
@@ -109,29 +125,25 @@ public class MainActivity extends AppCompatActivity {
                       //  Log.w("Beach list size check", "Beach list size "+beachList.size());
                         loadMasterBeachList();
                     }
-
-
                 });
 
+        autoCompleteTextView = findViewById(R.id.auto_complete_textview);
+        adapterItems = new ArrayAdapter<String>(this, R.layout.list_item, item);
+        autoCompleteTextView.setAdapter(adapterItems);
 
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                String item = adapterView.getItemAtPosition(position).toString();
+                Toast.makeText(MainActivity.this, "Item " + item, Toast.LENGTH_SHORT).show();
+            }
 
+        });
     }
 
     private void loadMasterBeachList() {
-
-        /*
-        ArrayList<TaskPost> activePosts = new ArrayList<>();
-
-        for (TaskPost task: taskPosts) {
-            if(!task.isPostDeleted()){
-                activePosts.add(task);
-            }
-        }
-
-         */
         Log.w("Beach list size check22222", "B4444");
         Log.w("Beach list size check22222", "Beach list size "+beachList.size());
-
         createRecyclerView(beachList);
     }
 

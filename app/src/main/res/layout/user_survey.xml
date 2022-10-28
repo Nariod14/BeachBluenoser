@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/qParking"
+        android:layout_width="359dp"
+        android:layout_height="59dp"
+        android:text="Was it easy to find a parking spot? How many spots were available?"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.084" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup2"
+        android:layout_width="362dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/qParking">
+
+        <RadioButton
+            android:id="@+id/parkMany"
+            android:layout_width="115dp"
+            android:layout_height="wrap_content"
+            android:text="Many spots" />
+
+        <RadioButton
+            android:id="@+id/parkFew"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:text="Few spots" />
+
+        <RadioButton
+            android:id="@+id/parkLittle"
+            android:layout_width="137dp"
+            android:layout_height="wrap_content"
+            android:text="Little/No Spots" />
+
+    </RadioGroup>
+
+
+    <TextView
+        android:id="@+id/qBeachCompanions"
+        android:layout_width="358dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="244dp"
+        android:text="How many people are you visiting the beach with?"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.547"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/qBeachCrowd"
+        android:layout_width="363dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="396dp"
+        android:text="How many people were at the beach?"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="363dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="4dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/qBeachCrowd">
+
+        <RadioButton
+            android:id="@+id/crowdMany"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Many people" />
+
+        <RadioButton
+            android:id="@+id/crowdFew"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Few people" />
+
+        <RadioButton
+            android:id="@+id/crowdLittle"
+            android:layout_width="144dp"
+            android:layout_height="wrap_content"
+            android:text="Little/No People" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
+        android:onClick="beachCompanionNumber"
+        android:text="Submit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+    <EditText
+        android:id="@+id/editTextNumber"
+        android:layout_width="358dp"
+        android:layout_height="43dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/qBeachCompanions" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--RadioGroup radioGroup;
+    RadioButton radioButton;
+    TextView textView;
+    public void beachCompanionNumber (View v) {
+        TextView t = findViewById(R.id.editTextNumber);
+        String input = t.getText().toString();
+
+        Log.d("info", input);
+    }-->

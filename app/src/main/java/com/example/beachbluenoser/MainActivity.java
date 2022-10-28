@@ -1,6 +1,8 @@
 package com.example.beachbluenoser;
 
 import static android.content.ContentValues.TAG;
+
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -67,10 +69,8 @@ public class MainActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: find a way to change button to to view account
-
-                //TODO: change view to login page when clicked
-
+                Intent loginIntent = new Intent(MainActivity.this, Login.class);
+                startActivity(loginIntent);
             }
         });
     }

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,6 +26,7 @@ public class Login extends AppCompatActivity {
 
     EditText emailAddress, passwordField;
     Button login, signUp;
+    ImageButton rtnHome;
     private FirebaseAuth beachBluenoserAuth;
     String emailAuth, passAuth;
 
@@ -36,6 +38,7 @@ public class Login extends AppCompatActivity {
 
         login = findViewById(R.id.loginBtn);
         signUp = findViewById(R.id.signupBtn);
+        rtnHome = findViewById(R.id.returnHomeButton);
 
         beachBluenoserAuth = FirebaseAuth.getInstance();
         if (beachBluenoserAuth.getCurrentUser() != null) {
@@ -59,6 +62,16 @@ public class Login extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        rtnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Login.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
 
 
     }

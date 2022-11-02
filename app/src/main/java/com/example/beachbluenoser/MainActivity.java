@@ -62,8 +62,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //TODO: update code so that it takes user back to homepage all the time
-                setContentView(R.layout.activity_main);
-                getDataFromDbAndShowOnUI();
+
+                /*setContentView(R.layout.activity_main);
+                getDataFromDbAndShowOnUI();*/
+
+                Intent homeIntent = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(homeIntent);
             }
         });
         loginBtn.setOnClickListener(new View.OnClickListener() {

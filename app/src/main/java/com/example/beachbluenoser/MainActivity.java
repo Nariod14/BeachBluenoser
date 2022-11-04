@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        autoCompleteTextView = findViewById(R.id.auto_complete_textview);
+        autoCompleteTextView = findViewById(R.id.filterDropdown);
         adapterItems = new ArrayAdapter<String>(this, R.layout.list_item, filterItem);
         autoCompleteTextView.setAdapter(adapterItems);
 

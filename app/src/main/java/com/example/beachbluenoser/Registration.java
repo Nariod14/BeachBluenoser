@@ -40,7 +40,7 @@ public class Registration extends AppCompatActivity {
     EditText userName, passwordField, fullName, emailAddress;
    // FirebaseDatabase BBDevDB;
     FirebaseFirestore beachBluenoserDB;
-    private FirebaseAuth beachBluenoserAuth, beachBluenoserAuth2;
+    private FirebaseAuth beachBluenoserAuth;
     Switch aSwitch;
     Button registerBtn;
     String username, email, fullname, password, userID;
@@ -64,13 +64,10 @@ public class Registration extends AppCompatActivity {
 */
 
         beachBluenoserDB = FirebaseFirestore.getInstance();
-        beachBluenoserAuth2 = FirebaseAuth.getInstance();
+        beachBluenoserAuth = FirebaseAuth.getInstance();
 
 
-        username = userName.getText().toString();
-        fullname = fullName.getText().toString();
-        email = emailAddress.getText().toString().trim();
-        password = passwordField.getText().toString().trim();
+
 
         backArrowkey.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +91,7 @@ public class Registration extends AppCompatActivity {
             }
         });
 
-        if(beachBluenoserAuth2.getCurrentUser() != null){
+        if(beachBluenoserAuth.getCurrentUser() != null){
             startActivity(new Intent(Registration.this,SplashPage.class)); //check later
             finish();
         }
@@ -102,84 +99,62 @@ public class Registration extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                beachBluenoserAuth2.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
+                username = userName.getText().toString();
+                fullname = fullName.getText().toString();
+                email = emailAddress.getText().toString().trim();
+                password = passwordField.getText().toString().trim();
 
-                        if(TextUtils.isEmpty(username)){
-                            userName.setError("Email is Required.");
-                            return;
-                        }
-
-
-                        if(TextUtils.isEmpty(email)){
-                            emailAddress.setError("Email is Required.");
-                            return;
-                        }
-
-                        if(TextUtils.isEmpty(password)){
-                            passwordField.setError("Password is Required.");
-                            return;
-                        }
-
-                        if(password.length() < 6){
-                            passwordField.setError("Password Must be >= 6 Characters");
-                            return;
-                        }
-
-                        registerUser();
+                if(TextUtils.isEmpty(username)){
+                    userName.setError("Email is Required.");
+                    return;
+                }
 
 
-            }
+                if(TextUtils.isEmpty(email)){
+                    emailAddress.setError("Email is Required.");
+                    return;
+                }
+
+                if(TextUtils.isEmpty(password)){
+                    passwordField.setError("Password is Required.");
+                    return;
+                }
+
+                if(password.length() < 6){
+                    passwordField.setError("Password Must be >= 6 Characters");
+                    return;
+                }
+
+                beachBluenoserAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener((task)->{
+                    if (task.isSuccessful()){
+                        Toast.makeText(Registration.this, "User Created.", Toast.LENGTH_SHORT).show();
+                        userID = beachBluenoserAuth.getCurrentUser().getUid();
+                        DocumentReference documentReference = beachBluenoserDB.collection("users").document(userID);
+
+                        Map<String, Object> user = new HashMap<>();
+                        user.put("Fullname", fullname);
+                        user.put("Email", email);
+                        user.put("Username", username);
+                        user.put("Password", password);
+
+                        documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Log.d(TAG,"onSuccess: user Profile is created for " + userID );
+                            }
+                        });
+                        startActivity(new Intent(Registration.this, SplashPage.class));
+                    }else{
+                        Toast.makeText(Registration.this, "Error!"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
 
 
+                    }
 
 
-
-
-
-        });
+                });
 
 
     }
-
-
-    private void registerUser(){
-
-        Toast.makeText(Registration.this, "User Created.", Toast.LENGTH_SHORT).show();
-        userID = beachBluenoserAuth.getCurrentUser().getUid();
-
-        DocumentReference documentReference = beachBluenoserDB.collection("users").document(userID);
-
-        Map<String, Object> user = new HashMap<>();
-        user.put("Fullname", fullname);
-        user.put("Email", email);
-        user.put("Username", username);
-        user.put("Password", password);
-
-        if (username.isEmpty() || fullname.isEmpty() ||  !isValidEmailAddress(email) ||  password.isEmpty() ) {
-            Toast.makeText(Registration.this, "Please fill out all the fields correctly!", Toast.LENGTH_LONG).show();
-
-            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void unused) {
-                    Log.d(TAG, "onSuccess: user Profile is created for " + userID);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.d(TAG, "onFailure: " + e.toString());
-                }
-
-            });
-            startActivity(new Intent(Registration.this, SplashPage.class));
-        }else {
-                Toast.makeText(Registration.this, "Registration Failed :(",
-                        Toast.LENGTH_LONG).show();
-            }
-
-        }
-
 
         });
 

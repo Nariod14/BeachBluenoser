@@ -38,13 +38,15 @@ import java.util.Map;
 public class Registration extends AppCompatActivity {
 
     EditText userName, passwordField, fullName, emailAddress;
-   // FirebaseDatabase BBDevDB;
     FirebaseFirestore beachBluenoserDB;
     private FirebaseAuth beachBluenoserAuth;
     Switch aSwitch;
     Button registerBtn;
     String username, email, fullname, password, userID;
     ImageButton backArrowkey;
+    Boolean bool = false;
+
+    String punctuation = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,10 +93,10 @@ public class Registration extends AppCompatActivity {
             }
         });
 
-        if(beachBluenoserAuth.getCurrentUser() != null){
-            startActivity(new Intent(Registration.this,SplashPage.class)); //check later
+      /*  if(beachBluenoserAuth.getCurrentUser() != null){
+            startActivity(new Intent(Registration.this,BeachListActivity.class)); //check later
             finish();
-        }
+        }*/
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,24 +106,28 @@ public class Registration extends AppCompatActivity {
                 email = emailAddress.getText().toString().trim();
                 password = passwordField.getText().toString().trim();
 
+
                 if(TextUtils.isEmpty(username)){
-                    userName.setError("Email is Required.");
-                    return;
+                    userName.setError("Please Enter a Username!");
+                }else if(username.contains("!")||username.contains("#")||username.contains("$")||username.contains("%")||username.contains("&")||username.contains("'")||username.contains("(")||username.contains(")")||username.contains("*")||username.contains("+")||username.contains(",")||username.contains("-")||username.contains(".")||username.contains("/")||username.contains(":")||username.contains(";")||username.contains("<")||username.contains("=")||username.contains(">")||username.contains("?")||username.contains("@")||username.contains("[")||username.contains("]")||username.contains("^")||username.contains("_")||username.contains("`")||username.contains("{")||username.contains("|")||username.contains("}")||username.contains("~")){
+                    userName.setError("Special symbols are not allowed!");
+                }else if(username.matches("[0-9]+")){
+                    userName.setError("Numbers are not allowed!");
                 }
 
-
                 if(TextUtils.isEmpty(email)){
-                    emailAddress.setError("Email is Required.");
+                    emailAddress.setError("Please Enter an Email!");
+                    return;
+                }else if(!email.matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]{2,3}+")){
+                    emailAddress.setError("Email is Invalid.");
                     return;
                 }
 
                 if(TextUtils.isEmpty(password)){
-                    passwordField.setError("Password is Required.");
+                    passwordField.setError("Please Enter a Password!");
                     return;
-                }
-
-                if(password.length() < 6){
-                    passwordField.setError("Password Must be >= 6 Characters");
+                }else if((password.length() < 8) && !password.matches("[a-zA-Z0-9._-]")){
+                    passwordField.setError("Password needs to be more than 8 characters and a mix of alphabets and numbers!");
                     return;
                 }
 
@@ -143,11 +149,9 @@ public class Registration extends AppCompatActivity {
                                 Log.d(TAG,"onSuccess: user Profile is created for " + userID );
                             }
                         });
-                        startActivity(new Intent(Registration.this, SplashPage.class));
+                        startActivity(new Intent(Registration.this, MainActivity.class));
                     }else{
-                        Toast.makeText(Registration.this, "Error!"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-
-
+                        Toast.makeText(Registration.this, "Error! "+task.getException().getMessage(), Toast.LENGTH_SHORT).show(); //example - It will show an error if email already exists
                     }
 
 
@@ -159,11 +163,11 @@ public class Registration extends AppCompatActivity {
         });
 
 
+
+
     }
 
-    protected static boolean isValidEmailAddress(String emailAddress) {
-        return !emailAddress.isEmpty() && emailAddress.matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]{2,3}+");
-    }
+
 
 
 

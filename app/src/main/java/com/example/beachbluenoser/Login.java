@@ -41,11 +41,11 @@ public class Login extends AppCompatActivity {
         rtnHome = findViewById(R.id.returnHomeButton);
 
         beachBluenoserAuth = FirebaseAuth.getInstance();
-        if (beachBluenoserAuth.getCurrentUser() != null) {
+      /*  if (beachBluenoserAuth.getCurrentUser() != null) {
             finish();
             return;
         }
-
+*/
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,7 +101,7 @@ public class Login extends AppCompatActivity {
         }
     }
     private void showMainActivity() {
-        Intent intent = new Intent(Login.this,SplashPage.class);
+        Intent intent = new Intent(Login.this,MainActivity.class);
         startActivity(intent);
         Toast.makeText(Login.this, "Authentication was successful", Toast.LENGTH_LONG).show();
     }

@@ -31,8 +31,17 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
+
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 
 
 public class Registration extends AppCompatActivity {
@@ -122,26 +131,48 @@ public class Registration extends AppCompatActivity {
                     emailAddress.setError("Email is Invalid.");
                     return;
                 }
-
                 if(TextUtils.isEmpty(password)){
                     passwordField.setError("Please Enter a Password!");
                     return;
-                }else if((password.length() < 8) && !password.matches("[a-zA-Z0-9._-]")){
+                }else if(!(password.length() >= 8) && (!password.matches("[a-zA-Z0-9._-]"))){
                     passwordField.setError("Password needs to be more than 8 characters and a mix of alphabets and numbers!");
                     return;
                 }
+
+                char[] passwordChar = new char[password.length()];
+
+                for(int i = 0;i<password.length();i++){
+                    passwordChar[i] = password.charAt(i);
+                }
+
+                String salty = getNextSalt();
+
+                String hashedPassword = hash(passwordChar,salty);
+
+                /*char[] saltyPassword  = new char[hashedPassword.length()];
+
+                for(int i = 0;i<hashedPassword.length();i++){
+                    saltyPassword[i] = hashedPassword.charAt(i);
+                }
+
+                if (isExpectedPassword(passwordChar,salty,saltyPassword)){
+                    Log.d(TAG,"onSuccess: Salty " );
+                }else {
+                    Log.d(TAG,"onFailure: no salt ");
+                }*/
+
 
                 beachBluenoserAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener((task)->{
                     if (task.isSuccessful()){
                         Toast.makeText(Registration.this, "User Created.", Toast.LENGTH_SHORT).show();
                         userID = beachBluenoserAuth.getCurrentUser().getUid();
-                        DocumentReference documentReference = beachBluenoserDB.collection("users").document(userID);
+                        DocumentReference documentReference = beachBluenoserDB.collection("BBUsers").document(userID);
 
                         Map<String, Object> user = new HashMap<>();
                         user.put("Fullname", fullname);
                         user.put("Email", email);
                         user.put("Username", username);
-                        user.put("Password", password);
+                        user.put("Password", hashedPassword);
 
                         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -165,8 +196,41 @@ public class Registration extends AppCompatActivity {
 
 
 
+
+
     }
 
+    public static boolean isExpectedPassword(char[] password, String salt, char[] expectedHash) {
+        char[] pwdHash = hash(password, salt).toCharArray();
+        Arrays.fill(password, Character.MIN_VALUE);
+        if (pwdHash.length != expectedHash.length) return false;
+        for (int i = 0; i < pwdHash.length; i++) {
+            if (pwdHash[i] != expectedHash[i]) return false;
+        }
+        return true;
+    }
+
+    public static String getNextSalt() {
+        byte[] salt = new byte[16];
+        Random RANDOM = new SecureRandom();
+        RANDOM.nextBytes(salt);
+        return Base64.getEncoder().encodeToString(salt);
+
+    }
+
+    public static String hash(char[] password, String salt) {
+        PBEKeySpec spec = new PBEKeySpec(password, Base64.getDecoder().decode(salt), 10000, 256);
+        Arrays.fill(password, Character.MIN_VALUE);
+        try {
+            SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+//            return skf.generateSecret(spec).getEncoded();
+            return Base64.getEncoder().encodeToString(skf.generateSecret(spec).getEncoded());
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+            throw new AssertionError("Error while hashing a password: " + e.getMessage(), e);
+        } finally {
+            spec.clearPassword();
+        }
+    }
 
 
 

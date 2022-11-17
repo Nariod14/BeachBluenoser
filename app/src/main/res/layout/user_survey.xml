@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/qParking"
+        android:id="@+id/userParkingQuestion"
         android:layout_width="359dp"
         android:layout_height="59dp"
         android:text="Was it easy to find a parking spot? How many spots were available?"
@@ -20,29 +20,29 @@
         app:layout_constraintVertical_bias="0.084" />
 
     <RadioGroup
-        android:id="@+id/radioGroup2"
+        android:id="@+id/userParkingOptions"
         android:layout_width="362dp"
         android:layout_height="53dp"
         android:layout_marginTop="8dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/qParking">
+        app:layout_constraintTop_toBottomOf="@+id/userParkingQuestion">
 
         <RadioButton
-            android:id="@+id/parkMany"
+            android:id="@+id/userParkingOption1"
             android:layout_width="115dp"
             android:layout_height="wrap_content"
             android:text="Many spots" />
 
         <RadioButton
-            android:id="@+id/parkFew"
+            android:id="@+id/userParkingOption2"
             android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:text="Few spots" />
 
         <RadioButton
-            android:id="@+id/parkLittle"
+            android:id="@+id/userParkingOption3"
             android:layout_width="137dp"
             android:layout_height="wrap_content"
             android:text="Little/No Spots" />
@@ -51,7 +51,7 @@
 
 
     <TextView
-        android:id="@+id/qBeachCompanions"
+        android:id="@+id/userCompanionQuestion"
         android:layout_width="358dp"
         android:layout_height="51dp"
         android:layout_marginTop="244dp"
@@ -63,7 +63,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/qBeachCrowd"
+        android:id="@+id/userCrowdQuestion"
         android:layout_width="363dp"
         android:layout_height="33dp"
         android:layout_marginTop="396dp"
@@ -74,36 +74,36 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <RadioGroup
-        android:id="@+id/radioGroup"
+        android:id="@+id/userCrowdOptions"
         android:layout_width="363dp"
         android:layout_height="58dp"
         android:layout_marginTop="4dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/qBeachCrowd">
+        app:layout_constraintTop_toBottomOf="@+id/userCrowdQuestion">
 
         <RadioButton
-            android:id="@+id/crowdMany"
+            android:id="@+id/userCrowdOption1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Many people" />
 
         <RadioButton
-            android:id="@+id/crowdFew"
+            android:id="@+id/userCrowdOption2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Few people" />
 
         <RadioButton
-            android:id="@+id/crowdLittle"
+            android:id="@+id/userCrowdOption3"
             android:layout_width="144dp"
             android:layout_height="wrap_content"
             android:text="Little/No People" />
     </RadioGroup>
 
     <Button
-        android:id="@+id/submitButton"
+        android:id="@+id/userSubmitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="68dp"
@@ -111,17 +111,17 @@
         android:text="Submit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/userCrowdOptions" />
 
     <EditText
-        android:id="@+id/editTextNumber"
+        android:id="@+id/userCompanionInput"
         android:layout_width="358dp"
         android:layout_height="43dp"
         android:ems="10"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/qBeachCompanions" />
+        app:layout_constraintTop_toBottomOf="@+id/userCompanionQuestion" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

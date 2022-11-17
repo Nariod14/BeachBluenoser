@@ -26,7 +26,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 //import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -37,27 +36,27 @@ import java.util.Map;
 
 public class Registration extends AppCompatActivity {
 
-    EditText userName, passwordField, fullName, emailAddress;
+    EditText usernameField, passwordField, fullNameField, emailAddressField;
    // FirebaseDatabase BBDevDB;
     FirebaseFirestore beachBluenoserDB;
     private FirebaseAuth beachBluenoserAuth, beachBluenoserAuth2;
     Switch aSwitch;
     Button registerBtn;
-    String username, email, fullname, password, userID;
-    ImageButton backArrowkey;
+    String username, email, fullName, password, userID;
+    ImageButton backArrowKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-        userName = findViewById(R.id.registerUsernameTxt);
+        usernameField = findViewById(R.id.registerUsernameTxt);
         passwordField = findViewById(R.id.registerPasswordTxt);
-        emailAddress = findViewById(R.id.registerEmailAddressTxt);
-        fullName = findViewById(R.id.registerFullNameTxt);
+        emailAddressField = findViewById(R.id.registerEmailAddressTxt);
+        fullNameField = findViewById(R.id.registerFullNameTxt);
         registerBtn = findViewById(R.id.signUpBtn);
         aSwitch = findViewById(R.id.switchUser);
-        backArrowkey = findViewById(R.id.backArrow);
+        backArrowKey = findViewById(R.id.backArrow);
 
         /*BBDevDB = FirebaseDatabase.getInstance();
         beachBluenoserAuth = FirebaseAuth.getInstance();
@@ -67,12 +66,12 @@ public class Registration extends AppCompatActivity {
         beachBluenoserAuth2 = FirebaseAuth.getInstance();
 
 
-        username = userName.getText().toString();
-        fullname = fullName.getText().toString();
-        email = emailAddress.getText().toString().trim();
+        username = usernameField.getText().toString();
+        fullName = fullNameField.getText().toString();
+        email = emailAddressField.getText().toString().trim();
         password = passwordField.getText().toString().trim();
 
-        backArrowkey.setOnClickListener(new View.OnClickListener() {
+        backArrowKey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Registration.this,Login.class);
@@ -107,13 +106,13 @@ public class Registration extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if(TextUtils.isEmpty(username)){
-                            userName.setError("Email is Required.");
+                            usernameField.setError("Email is Required.");
                             return;
                         }
 
 
                         if(TextUtils.isEmpty(email)){
-                            emailAddress.setError("Email is Required.");
+                            emailAddressField.setError("Email is Required.");
                             return;
                         }
 
@@ -152,12 +151,12 @@ public class Registration extends AppCompatActivity {
         DocumentReference documentReference = beachBluenoserDB.collection("users").document(userID);
 
         Map<String, Object> user = new HashMap<>();
-        user.put("Fullname", fullname);
+        user.put("Fullname", fullName);
         user.put("Email", email);
         user.put("Username", username);
         user.put("Password", password);
 
-        if (username.isEmpty() || fullname.isEmpty() ||  !isValidEmailAddress(email) ||  password.isEmpty() ) {
+        if (username.isEmpty() || fullName.isEmpty() ||  !isValidEmailAddress(email) ||  password.isEmpty() ) {
             Toast.makeText(Registration.this, "Please fill out all the fields correctly!", Toast.LENGTH_LONG).show();
 
             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {

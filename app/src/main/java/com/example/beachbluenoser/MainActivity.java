@@ -7,47 +7,34 @@ import android.os.Bundle;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
 
-import javax.xml.parsers.FactoryConfigurationError;
-
 public class MainActivity extends AppCompatActivity {
     final  FirebaseFirestore db = FirebaseFirestore.getInstance();
     ArrayList<BeachItem> beachList;
 
-    String[] item = {"All", "Rocky", "Sandy", "Wheelchair Ramps", "Floating Wheelchairs"};
-    String[] capacity = {"High", "Medium", "Low"};
+    String[] filterItem = {"All", "Rocky", "Sandy", "Wheelchair Ramps", "Floating Wheelchairs"};
+    String[] capacityFilters = {"High", "Medium", "Low"};
 
     ArrayAdapter<String> adapterItems;
 
@@ -131,8 +118,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        autoCompleteTextView = findViewById(R.id.auto_complete_textview);
-        adapterItems = new ArrayAdapter<String>(this, R.layout.list_item, item);
+        autoCompleteTextView = findViewById(R.id.filterDropdown);
+        adapterItems = new ArrayAdapter<String>(this, R.layout.list_item, filterItem);
         autoCompleteTextView.setAdapter(adapterItems);
 
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

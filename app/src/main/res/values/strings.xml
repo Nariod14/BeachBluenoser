@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <string name="app_name">Filtering Page</string>
     <string name="action_settings">Settings</string>
@@ -13,5 +13,6 @@
     <string name="beach_bluenoser">BEACH BLUENOSER</string>
     <string name="todo">TODO</string>
     <string name="FilterPage">Beach Filter Page</string>
-    <string name="Search">Search...</string>
+    <string name="Search" tools:ignore="TypographyEllipsis">Search Beaches</string>
+    <string name= "Capacity" tools:ignore="TypographyEllipsis">Beach Capacity</string>
 </resources>

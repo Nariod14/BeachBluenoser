@@ -2,11 +2,11 @@ package com.example.beachbluenoser;
 
 import static android.content.ContentValues.TAG;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,8 +21,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -31,16 +29,14 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+    String[] beach = {"All Beaches", "Rocky Beach", "Sandy Beach", "Shore Accessibility", "Floating Wheelchair"};
+    String[] capacity = {"High Capacity", "Medium Capacity", "Low Capacity"};
 
-    String[] item = {"All", "Rocky", "Sandy", "Wheelchair Ramps", "Floating Wheelchairs"};
-    String[] capacity = {"High", "Medium", "Low"};
-
-    AutoCompleteTextView autoCompleteTextView;
-
+    AutoCompleteTextView beachType; //Beach
+    AutoCompleteTextView capacityVolume; //Capacity
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ArrayAdapter<String> adapterItems;
         db.collection("beach")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -55,21 +51,40 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+        super.onCreate(savedInstanceState);
 
+        //Beach
         setContentView(R.layout.activity_main);
-        autoCompleteTextView = findViewById(R.id.auto_complete_textview);
-        adapterItems = new ArrayAdapter<String>(this, R.layout.list_item, item);
-        autoCompleteTextView.setAdapter(adapterItems);
+        beachType = findViewById(R.id.auto_complete_textview);
 
+        ArrayAdapter<String> adapterItems; //For Beach
+        adapterItems = new ArrayAdapter<String>(this, R.layout.beach_list, beach);
+        beachType.setAdapter(adapterItems);
 
-
-
-        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        //Beach
+        beachType.setOnItemClickListener((new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 String item = adapterView.getItemAtPosition(position).toString();
-                Toast.makeText(MainActivity.this, "Item " + item, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, item + " Option", Toast.LENGTH_SHORT).show();
             }
-        });
+        }));
+
+//        //Capacity
+//        setContentView(R.layout.activity_main);
+//        capacityVolume = findViewById(R.id.auto_complete_textview2);
+//
+//        ArrayAdapter<String> adapterItems2; //For Capacity
+//        adapterItems2 = new ArrayAdapter<String>(this, R.layout.capacity_list, capacity);
+//        capacityVolume.setAdapter(adapterItems2);
+//
+//        // Capacity
+//        capacityVolume.setOnItemClickListener((new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+//                String capacity = adapterView.getItemAtPosition(position).toString();
+//                Toast.makeText(MainActivity.this, capacity, Toast.LENGTH_SHORT).show();
+//            }
+//        }));
     }
 }

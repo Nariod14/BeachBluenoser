@@ -110,7 +110,7 @@ import java.util.ArrayList;
                     @Override
                     public void onClick(View v) {
                         // get position
-                       // gotToBeachMasterPage();
+                        gotToBeachMasterPage();
                     }
                 });
             }
@@ -149,16 +149,16 @@ import java.util.ArrayList;
 
             }
 
-/*
-           // When click on a container go to > page with context (intent)
+
+          //  When click on a container go to > page with context (intent)
             private void gotToBeachMasterPage(){
-                Intent intent = new Intent(mainView.getContext(), *InsertClassHere*.class);
+                Intent intent = new Intent(mainView.getContext(), beachLanding.class);
                 int pos = beachList.size() - (getAdapterPosition() + 1);//to reverse order
 
                 intent.putExtra("beachName",beachList.get(pos).getName());
                 mainView.getContext().startActivity(intent);
             }
-        */
+
 
         }
 

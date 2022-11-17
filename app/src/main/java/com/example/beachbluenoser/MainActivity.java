@@ -7,47 +7,34 @@ import android.os.Bundle;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
 
-import javax.xml.parsers.FactoryConfigurationError;
-
 public class MainActivity extends AppCompatActivity {
     final  FirebaseFirestore db = FirebaseFirestore.getInstance();
     ArrayList<BeachItem> beachList;
 
-    String[] item = {"All", "Rocky", "Sandy", "Wheelchair Ramps", "Floating Wheelchairs"};
-    String[] capacity = {"High", "Medium", "Low"};
+    String[] filterItem = {"All", "Rocky", "Sandy", "Wheelchair Ramps", "Floating Wheelchairs"};
+    String[] capacityFilters = {"High", "Medium", "Low"};
 
     ArrayAdapter<String> adapterItems;
 
@@ -100,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 String DataName =  document.getData().get("name").toString();
-                             //   String DataDescription = document.getData().get("description").toString();
+                                //   String DataDescription = document.getData().get("description").toString();
                                 Object DataImage  = document.getData().get("image");
                                 String DataImageValue;
                                 if(DataImage == null){
@@ -115,8 +102,8 @@ public class MainActivity extends AppCompatActivity {
                                 BeachItem beachItem = new BeachItem(DataName,DataImageValue,DataRating.intValue());
 
                                 beachItemArrayList.add(beachItem);
-                               // Log.w("Beach list size check777777", "Beacharrrraayyyy list size "+beachItemArrayList.size());
-                               // Log.d("BeachRetrivalLoop", "retrieved beach with name: "+DataName +" img: "+DataImage);
+                                // Log.w("Beach list size check777777", "Beacharrrraayyyy list size "+beachItemArrayList.size());
+                                // Log.d("BeachRetrivalLoop", "retrieved beach with name: "+DataName +" img: "+DataImage);
                             }
                         } else {
                             Log.w(TAG, "Error getting documents.", task.getException());
@@ -125,14 +112,14 @@ public class MainActivity extends AppCompatActivity {
 
                         beachList = beachItemArrayList;
                         Collections.reverse(beachList);
-                       // Log.w("Beach list size check22222", "B1111");
-                      //  Log.w("Beach list size check", "Beach list size "+beachList.size());
+                        // Log.w("Beach list size check22222", "B1111");
+                        //  Log.w("Beach list size check", "Beach list size "+beachList.size());
                         loadMasterBeachList();
                     }
                 });
 
-        autoCompleteTextView = findViewById(R.id.auto_complete_textview);
-        adapterItems = new ArrayAdapter<String>(this, R.layout.list_item, item);
+        autoCompleteTextView = findViewById(R.id.filterDropdown);
+        adapterItems = new ArrayAdapter<String>(this, R.layout.list_item, filterItem);
         autoCompleteTextView.setAdapter(adapterItems);
 
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

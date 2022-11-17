@@ -2,13 +2,13 @@ package com.example.beachbluenoser;
 
 public class User{
 
-    String username, fullname, email, password;
+    String username, fullName, email, password;
 
     public User() {}
 
     public User(String username, String fullName,  String email, String password) {
         this.username = username;
-        this.fullname = fullName;
+        this.fullName = fullName;
         this.email = email;
         this.password = password;
     }
@@ -21,7 +21,7 @@ public class User{
         return username;
     }
     public String getFullName() {
-        return fullname;
+        return fullName;
     }
     public String getEmail() {
         return email;
@@ -35,7 +35,7 @@ public class User{
         this.username = username;
     }
     public void setFullName(String fullName) {
-        this.fullname = fullName;
+        this.fullName = fullName;
     }
     public void setEmail(String email) {
         this.email = email;

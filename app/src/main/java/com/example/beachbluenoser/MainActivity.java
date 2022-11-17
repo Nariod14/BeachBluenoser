@@ -8,40 +8,27 @@ import android.os.Bundle;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
-
-import javax.xml.parsers.FactoryConfigurationError;
 
 public class MainActivity extends AppCompatActivity {
     final  FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -63,8 +50,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //TODO: update code so that it takes user back to homepage all the time
-                setContentView(R.layout.activity_main);
-                getDataFromDbAndShowOnUI();
+
+                /*setContentView(R.layout.activity_main);
+                getDataFromDbAndShowOnUI();*/
+
+                Intent homeIntent = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(homeIntent);
             }
         });
         loginBtn.setOnClickListener(new View.OnClickListener() {

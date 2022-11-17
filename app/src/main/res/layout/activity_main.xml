@@ -21,7 +21,7 @@
             android:id="@+id/AppHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#1468B2"
+            android:background="#0c68b5"
             android:text="@string/beach_bluenoser"
             android:textColor="@color/white"
             android:textSize="20sp"
@@ -32,9 +32,9 @@
             android:id="@+id/LoginButton"
             android:layout_width="101dp"
             android:layout_height="49dp"
-            android:background="#002990E3"
+            android:backgroundTint="#0c68b5"
             android:text="Login"
-
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/AppHeader"
             app:layout_constraintEnd_toStartOf="@+id/HomeButton" />
 
@@ -42,7 +42,8 @@
             android:id="@+id/HomeButton"
             android:layout_width="101dp"
             android:layout_height="49dp"
-            android:background="#002990E3"
+            android:backgroundTint="#0c68b5"
+            android:textColor="@color/white"
             android:text="Home"
             app:layout_constraintBottom_toBottomOf="@+id/AppHeader"
             app:layout_constraintEnd_toEndOf="parent" />

@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
-            android:id="@+id/beachHeaderText"
+            android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#2196F3"
@@ -24,34 +24,45 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="-4dp" />
 
-
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="Lorum Ipsum"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="32dp" />
 
         <ImageView
-            android:id="@+id/beachLandingImage"
+            android:id="@+id/imageView2"
             android:layout_width="380dp"
             android:layout_height="206dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="24dp"
             android:adjustViewBounds="true"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/headerText"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
             app:srcCompat="@drawable/black_brook_beach" />
 
         <ImageView
-            android:id="@+id/beachWeatherImage"
+            android:id="@+id/imageView3"
             android:layout_width="380dp"
             android:layout_height="250dp"
             android:layout_marginStart="12dp"
             android:adjustViewBounds="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mapImage"
+            app:layout_constraintTop_toBottomOf="@+id/imageView4"
             app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/weather_api" />
 
 
         <ImageView
-            android:id="@+id/beachMapImage"
+            android:id="@+id/imageView4"
             android:layout_width="380dp"
             android:layout_height="200dp"
             android:layout_marginStart="12dp"
@@ -60,12 +71,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.516"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/beachImage"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2"
             app:layout_constraintVertical_bias="0.011"
             app:srcCompat="@drawable/map_api" />
 
         <TextView
-            android:id="@+id/beachDescription"
+            android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -80,7 +91,7 @@
             tools:layout_editor_absoluteY="32dp" />
 <!--just comment ok-->
         <Button
-            android:id="@+id/beachCheckInButton"
+            android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

@@ -26,52 +26,61 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 //import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
+
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 
 
 public class Registration extends AppCompatActivity {
 
-    EditText usernameField, passwordField, fullNameField, emailAddressField;
-   // FirebaseDatabase BBDevDB;
+    EditText userName, passwordField, fullName, emailAddress;
     FirebaseFirestore beachBluenoserDB;
-    private FirebaseAuth beachBluenoserAuth, beachBluenoserAuth2;
+    private FirebaseAuth beachBluenoserAuth;
     Switch aSwitch;
     Button registerBtn;
-    String username, email, fullName, password, userID;
-    ImageButton backArrowKey;
+    String username, email, fullname, password, userID;
+    ImageButton backArrowkey;
+    Boolean bool = false;
+
+    String punctuation = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-        usernameField = findViewById(R.id.registerUsernameTxt);
+        userName = findViewById(R.id.registerUsernameTxt);
         passwordField = findViewById(R.id.registerPasswordTxt);
-        emailAddressField = findViewById(R.id.registerEmailAddressTxt);
-        fullNameField = findViewById(R.id.registerFullNameTxt);
+        emailAddress = findViewById(R.id.registerEmailAddressTxt);
+        fullName = findViewById(R.id.registerFullNameTxt);
         registerBtn = findViewById(R.id.signUpBtn);
         aSwitch = findViewById(R.id.switchUser);
-        backArrowKey = findViewById(R.id.backArrow);
+        backArrowkey = findViewById(R.id.backArrow);
 
         /*BBDevDB = FirebaseDatabase.getInstance();
         beachBluenoserAuth = FirebaseAuth.getInstance();
 */
 
         beachBluenoserDB = FirebaseFirestore.getInstance();
-        beachBluenoserAuth2 = FirebaseAuth.getInstance();
+        beachBluenoserAuth = FirebaseAuth.getInstance();
 
 
-        username = usernameField.getText().toString();
-        fullName = fullNameField.getText().toString();
-        email = emailAddressField.getText().toString().trim();
-        password = passwordField.getText().toString().trim();
 
-        backArrowKey.setOnClickListener(new View.OnClickListener() {
+
+        backArrowkey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Registration.this,Login.class);
@@ -93,101 +102,136 @@ public class Registration extends AppCompatActivity {
             }
         });
 
-        if(beachBluenoserAuth2.getCurrentUser() != null){
-            startActivity(new Intent(Registration.this,SplashPage.class)); //check later
+      /*  if(beachBluenoserAuth.getCurrentUser() != null){
+            startActivity(new Intent(Registration.this,BeachListActivity.class)); //check later
             finish();
-        }
+        }*/
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                beachBluenoserAuth2.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-
-                        if(TextUtils.isEmpty(username)){
-                            usernameField.setError("Email is Required.");
-                            return;
-                        }
+                username = userName.getText().toString();
+                fullname = fullName.getText().toString();
+                email = emailAddress.getText().toString().trim();
+                password = passwordField.getText().toString().trim();
 
 
-                        if(TextUtils.isEmpty(email)){
-                            emailAddressField.setError("Email is Required.");
-                            return;
-                        }
+                if(TextUtils.isEmpty(username)){
+                    userName.setError("Please Enter a Username!");
+                }else if(username.contains("!")||username.contains("#")||username.contains("$")||username.contains("%")||username.contains("&")||username.contains("'")||username.contains("(")||username.contains(")")||username.contains("*")||username.contains("+")||username.contains(",")||username.contains("-")||username.contains(".")||username.contains("/")||username.contains(":")||username.contains(";")||username.contains("<")||username.contains("=")||username.contains(">")||username.contains("?")||username.contains("@")||username.contains("[")||username.contains("]")||username.contains("^")||username.contains("_")||username.contains("`")||username.contains("{")||username.contains("|")||username.contains("}")||username.contains("~")){
+                    userName.setError("Special symbols are not allowed!");
+                }else if(username.matches("[0-9]+")){
+                    userName.setError("Numbers are not allowed!");
+                }
 
-                        if(TextUtils.isEmpty(password)){
-                            passwordField.setError("Password is Required.");
-                            return;
-                        }
+                if(TextUtils.isEmpty(email)){
+                    emailAddress.setError("Please Enter an Email!");
+                    return;
+                }else if(!email.matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]{2,3}+")){
+                    emailAddress.setError("Email is Invalid.");
+                    return;
+                }
+                if(TextUtils.isEmpty(password)){
+                    passwordField.setError("Please Enter a Password!");
+                    return;
+                }else if(!(password.length() >= 8) && (!password.matches("[a-zA-Z0-9._-]"))){
+                    passwordField.setError("Password needs to be more than 8 characters and a mix of alphabets and numbers!");
+                    return;
+                }
 
-                        if(password.length() < 6){
-                            passwordField.setError("Password Must be >= 6 Characters");
-                            return;
-                        }
+                char[] passwordChar = new char[password.length()];
 
-                        registerUser();
+                for(int i = 0;i<password.length();i++){
+                    passwordChar[i] = password.charAt(i);
+                }
+
+                String salty = getNextSalt();
+
+                String hashedPassword = hash(passwordChar,salty);
+
+                /*char[] saltyPassword  = new char[hashedPassword.length()];
+
+                for(int i = 0;i<hashedPassword.length();i++){
+                    saltyPassword[i] = hashedPassword.charAt(i);
+                }
+
+                if (isExpectedPassword(passwordChar,salty,saltyPassword)){
+                    Log.d(TAG,"onSuccess: Salty " );
+                }else {
+                    Log.d(TAG,"onFailure: no salt ");
+                }*/
 
 
-            }
+                beachBluenoserAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener((task)->{
+                    if (task.isSuccessful()){
+                        Toast.makeText(Registration.this, "User Created.", Toast.LENGTH_SHORT).show();
+                        userID = beachBluenoserAuth.getCurrentUser().getUid();
+                        DocumentReference documentReference = beachBluenoserDB.collection("BBUsers").document(userID);
+
+                        Map<String, Object> user = new HashMap<>();
+                        user.put("Fullname", fullname);
+                        user.put("Email", email);
+                        user.put("Username", username);
+                        user.put("Password", hashedPassword);
+
+                        documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Log.d(TAG,"onSuccess: user Profile is created for " + userID );
+                            }
+                        });
+                        startActivity(new Intent(Registration.this, MainActivity.class));
+                    }else{
+                        Toast.makeText(Registration.this, "Error! "+task.getException().getMessage(), Toast.LENGTH_SHORT).show(); //example - It will show an error if email already exists
+                    }
 
 
-
-
-
-
-
-        });
+                });
 
 
     }
 
+        });
 
-    private void registerUser(){
 
-        Toast.makeText(Registration.this, "User Created.", Toast.LENGTH_SHORT).show();
-        userID = beachBluenoserAuth.getCurrentUser().getUid();
 
-        DocumentReference documentReference = beachBluenoserDB.collection("users").document(userID);
 
-        Map<String, Object> user = new HashMap<>();
-        user.put("Fullname", fullName);
-        user.put("Email", email);
-        user.put("Username", username);
-        user.put("Password", password);
 
-        if (username.isEmpty() || fullName.isEmpty() ||  !isValidEmailAddress(email) ||  password.isEmpty() ) {
-            Toast.makeText(Registration.this, "Please fill out all the fields correctly!", Toast.LENGTH_LONG).show();
 
-            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void unused) {
-                    Log.d(TAG, "onSuccess: user Profile is created for " + userID);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.d(TAG, "onFailure: " + e.toString());
-                }
+    }
 
-            });
-            startActivity(new Intent(Registration.this, SplashPage.class));
-        }else {
-                Toast.makeText(Registration.this, "Registration Failed :(",
-                        Toast.LENGTH_LONG).show();
-            }
-
+    public static boolean isExpectedPassword(char[] password, String salt, char[] expectedHash) {
+        char[] pwdHash = hash(password, salt).toCharArray();
+        Arrays.fill(password, Character.MIN_VALUE);
+        if (pwdHash.length != expectedHash.length) return false;
+        for (int i = 0; i < pwdHash.length; i++) {
+            if (pwdHash[i] != expectedHash[i]) return false;
         }
+        return true;
+    }
 
-
-        });
-
+    public static String getNextSalt() {
+        byte[] salt = new byte[16];
+        Random RANDOM = new SecureRandom();
+        RANDOM.nextBytes(salt);
+        return Base64.getEncoder().encodeToString(salt);
 
     }
 
-    protected static boolean isValidEmailAddress(String emailAddress) {
-        return !emailAddress.isEmpty() && emailAddress.matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]{2,3}+");
+    public static String hash(char[] password, String salt) {
+        PBEKeySpec spec = new PBEKeySpec(password, Base64.getDecoder().decode(salt), 10000, 256);
+        Arrays.fill(password, Character.MIN_VALUE);
+        try {
+            SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+//            return skf.generateSecret(spec).getEncoded();
+            return Base64.getEncoder().encodeToString(skf.generateSecret(spec).getEncoded());
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+            throw new AssertionError("Error while hashing a password: " + e.getMessage(), e);
+        } finally {
+            spec.clearPassword();
+        }
     }
+
 
 
 

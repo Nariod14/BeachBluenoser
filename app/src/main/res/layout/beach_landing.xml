@@ -103,7 +103,7 @@
             android:text="wheelchairrAmpo:" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/checkInSurvey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

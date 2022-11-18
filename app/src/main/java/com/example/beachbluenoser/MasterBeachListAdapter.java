@@ -50,28 +50,34 @@ import java.util.ArrayList;
             int pos = beaches.size() - (position + 1);//to reverse order
             String beachImageFileName = beaches.get(pos).getImageSource();
             listItem.beachName.setText(beaches.get(pos).getName());
-            Integer rating = beaches.get(pos).getRating();
-            //set description and shorten length if needed
-            String desc = beaches.get(pos).getDescription();
-            /*
-            if(desc.length() > 20){
-                desc = desc.substring(0,20) + "...";
+
+            Log.d("beachesPosCap","CAP222;  " +beaches.get(pos).getcapacity()+";");
+            if(beaches.get(pos).getcapacity()==null||beaches.get(pos).getcapacity()==""){
+
+                listItem.beachItemCapacity.setText("Capacity:");
+            }else {
+                listItem.beachItemCapacity.setText("Capacity: "+beaches.get(pos).getcapacity());
             }
-            */
-            //listItem.beachRating.setText(rating+"/5");
-            //listItem.beachDescription.setText(desc);
+            if(beaches.get(pos).getwheelChairRamp()==null||beaches.get(pos).getwheelChairRamp()==""){
+
+                listItem.beachItemWheelChairRamp.setText("Wheelchair ramp:");
+            }else {
+                listItem.beachItemWheelChairRamp.setText("Wheelchair Ramp: "+beaches.get(pos).getwheelChairRamp());
+            }
+            if(beaches.get(pos).getsandyOrRocky()==null||beaches.get(pos).getsandyOrRocky()==""){
+
+                listItem.beachItemSandyOrRocky.setText("Sandy / Rocky:");
+            }else {
+                listItem.beachItemSandyOrRocky.setText("Sandy or Rocky: "+beaches.get(pos).getsandyOrRocky());
+            }
+
+
+            String desc = beaches.get(pos).getDescription();
 
             listItem.setBeachImage(beachImageFileName);
 
 
 
-           // int ImageResource = mainView.getResources().getIdentifier(uri,null,getPackageName());
-            // listItem.beachImage.setImageDrawable(R.drawable.theetcher);
-            //listItem.setBeachImage();
-            //listItem.beachRating.setText()
-            /*
-                    Set beach image
-             */
 
 
         }
@@ -84,7 +90,9 @@ import java.util.ArrayList;
             TextView beachDescription;
             TextView beachRating;
             ImageView beachImage;
-
+            TextView beachItemCapacity;
+            TextView beachItemSandyOrRocky;
+            TextView beachItemWheelChairRamp;
 
             // TextView postTitle;
             //  TextView postDescription;
@@ -101,7 +109,9 @@ import java.util.ArrayList;
                 //beachRating = listItemView.findViewById(R.id.BeachRating);
                 beachImage = listItemView.findViewById(R.id.BeachImage);
                 //beachImage
-
+                beachItemCapacity = listItemView.findViewById(R.id.beachItemCapacityTextView);
+                beachItemSandyOrRocky = listItemView.findViewById(R.id.beachItemRockyOrSandyTextView);
+                beachItemWheelChairRamp = listItemView.findViewById(R.id.beachItemWheelChairRampTextView);
                 beachLayout = listItemView.findViewById(R.id.beachItem);
 
 
@@ -117,10 +127,6 @@ import java.util.ArrayList;
 
             public void setBeachImage(String beachImageFileName){
 
-                //Log.d("IMAGENAME: ","name : "+ beaches.get(pos).getImageSource());
-               // beachImage.setImageResource(R.drawable.theetcher);
-           //     beachImage.setImageURI("path/");
-               // beachImage.setBackground(R.drawable.beachmeadows_beach);
                 if(beachImageFileName.equals("")|| beachImageFileName == null){
                     beachImageFileName ="default1.jpg";
                 }
@@ -144,8 +150,6 @@ import java.util.ArrayList;
 
 
 
-                //int imageResouce = mainView.getResources().getIdentifier(uri,null,mainView.getActivty().getPackageName());
-               // Drawable res = mainView.getResources().getDrawable(imageResouce);
 
             }
 

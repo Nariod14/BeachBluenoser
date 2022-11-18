@@ -90,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 String DataName =  document.getData().get("name").toString();
-                             //   String DataDescription = document.getData().get("description").toString();
                                 Object DataImage  = document.getData().get("image");
                                 String DataImageValue;
                                 if(DataImage == null){
@@ -98,15 +97,40 @@ public class MainActivity extends AppCompatActivity {
                                 }else {
                                     DataImageValue = document.getData().get("image").toString();
                                 }
-                                Long DataRating = (Long) document.getData().get("rating");
-                                if(DataRating==null){
-                                    DataRating = Long.valueOf(0);
-                                }
-                                BeachItem beachItem = new BeachItem(DataName,DataImageValue,DataRating.intValue());
+                                String landingBeachCapacityValue="";
+                                String landingBeachWheelChairRampValue="";
+                                String landingBeachSandyOrRockyValue="";
+                                Log.d("be44444","4444");
+                                if(document.exists()){
+                                    Log.d("in2","2222222222222");
 
+                                    if(document.get("capacity")!=null){
+                                        Log.d("in1","setting to val ");
+                                        landingBeachCapacityValue = document.get("capacity").toString();
+                                        Log.d("in1","setting to val "+landingBeachCapacityValue);
+                                    }else{
+                                        landingBeachCapacityValue = "";
+                                    }
+                                    if(document.get("wheelchairRamp")!=null){
+                                        landingBeachWheelChairRampValue = document.get("wheelchairRamp").toString();
+                                    }else{
+                                        landingBeachWheelChairRampValue = "";
+                                    }
+                                    if(document.get("sandyOrRocky")!=null){
+                                        landingBeachSandyOrRockyValue = document.get("sandyOrRocky").toString();
+                                    }else{
+                                        landingBeachSandyOrRockyValue = "";
+                                    }
+                                }
+
+
+
+
+
+                                BeachItem beachItem = new BeachItem(DataName,DataImageValue,landingBeachWheelChairRampValue,landingBeachCapacityValue,landingBeachSandyOrRockyValue);
+                                Log.d("Here22","cap:"+beachItem.getcapacity()+";");
                                 beachItemArrayList.add(beachItem);
-                               // Log.w("Beach list size check777777", "Beacharrrraayyyy list size "+beachItemArrayList.size());
-                               // Log.d("BeachRetrivalLoop", "retrieved beach with name: "+DataName +" img: "+DataImage);
+
                             }
                         } else {
                             Log.w(TAG, "Error getting documents.", task.getException());
@@ -115,8 +139,7 @@ public class MainActivity extends AppCompatActivity {
 
                         beachList = beachItemArrayList;
                         Collections.reverse(beachList);
-                       // Log.w("Beach list size check22222", "B1111");
-                      //  Log.w("Beach list size check", "Beach list size "+beachList.size());
+
                         loadMasterBeachList();
                     }
                 });
@@ -164,13 +187,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void createRecyclerView(ArrayList<BeachItem> beachList) {
 
-        //a message shows/expands in the recycleView if it's empty and collapses otherwise
-        /*
-        TextView emptyListTextView = (TextView)findViewById(R.id.emptyStatusMyPosts);
-        if(emptyListTextViewOriginalHeight == -1){
-            emptyListTextViewOriginalHeight = emptyListTextView.getHeight();
-        }
-*/
+
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.BeachMasterList);
 
         // using a linear layout manager
@@ -181,48 +198,9 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.Adapter mAdapter = new MasterBeachListAdapter(beachList);
         recyclerView.setAdapter(mAdapter);
 
-        /*
-        if(beachList != null && beachList.size() > 0){
-            //hide message that says the list is empty
-            emptyListTextView.setHeight(0);
-        }else {
-            emptyListTextView.setHeight(emptyListTextViewOriginalHeight);
-        }
-
-         */
 
     }
 
-    /*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
-    }
-
-     */
 }
 

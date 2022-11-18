@@ -25,4 +25,15 @@
     <string name="little_to_no_people">little to no people</string>
     <string name="Search">Search Beaches</string>
     <string name= "Capacity">Beach Capacity</string>
+    
+    <string-array name="visualWaterConditionsValues">
+        <item>Calm waters</item>
+        <item>Medium waters</item>
+        <item>Rough waters</item>
+    </string-array>
+    <string-array name="beachCapacityValues">
+        <item>Low Capacity</item>
+        <item>Medium Capacity</item>
+        <item>High Capacity</item>
+    </string-array>
 </resources>

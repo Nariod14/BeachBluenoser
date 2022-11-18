@@ -54,7 +54,7 @@ public class beachLanding extends AppCompatActivity {
                 Log.d("beach Main Page NAme ", " Name : " + beachName);
             }
         }
-
+//
        // spinnerSetup();
        // showDataOnUI();
         getDataFromDB();

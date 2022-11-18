@@ -46,9 +46,17 @@ public class beachLanding extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.beach_landing);
 
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null){
+            if(bundle.getString("beachName")!=null) {
+                beachName = bundle.getString("beachName");
+
+                Log.d("beach Main Page NAme ", " Name : " + beachName);
+            }
+        }
 
        // spinnerSetup();
-        showDataOnUI();
+       // showDataOnUI();
         getDataFromDB();
         Button btn = (Button)findViewById(R.id.checkInSurvey);
 

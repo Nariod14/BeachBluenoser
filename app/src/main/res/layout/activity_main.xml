@@ -50,44 +50,61 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
+    <!-- A Linear Layout for the TextInputLayout -->
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="409dp"
         android:layout_height="wrap_content"
-
-        android:layout_marginStart="325dp"
-        android:layout_marginTop="819dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="16dp"
-        android:contentDescription="@string/action_settings"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
+        <!--This code is for the Search Beach Dropdown-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/beachTextInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_margin="5dp"
+            android:padding="10dp"
+            app:startIconDrawable="@drawable/ic_beach"
+            tools:ignore="LabelFor,MissingConstraints,RtlSymmetry">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/filterDropdownLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="match_parent"
-        android:layout_height="84dp"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:startIconDrawable="@drawable/ic_beach"
-        tools:ignore="LabelFor, MissingConstraints">
+            <AutoCompleteTextView
+                android:id="@+id/auto_complete_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:text="@string/Search"
+                android:textColor="#000000"
+                tools:ignore="TextContrastCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <AutoCompleteTextView
-            android:id="@+id/filterDropdown"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="none"
-            android:minHeight="48dp"
-            android:text="@string/Search"
-            android:textColor="#000000"
-            tools:ignore="TextContrastCheck" />
-    </com.google.android.material.textfield.TextInputLayout>
+        <!--This code is for the Beach Capacity Dropdown-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/capacityTextInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="193dp"
+            android:layout_height="100dp"
+            android:layout_margin="5dp"
+            android:padding="10dp"
+            app:startIconDrawable="@drawable/ic_capacity"
+            tools:ignore="LabelFor, MissingConstraints">
+
+            <AutoCompleteTextView
+                android:id="@+id/auto_complete_textview2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:text="@string/Capacity"
+                android:textColor="#000000"
+                tools:ignore="TextContrastCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <!--This code is for the Toolbar that says 'Beach Filter Page'-->
 
     <LinearLayout
 
@@ -95,7 +112,7 @@
         android:layout_height="0dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/filterDropdownLayout">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
         <!--android:background="@drawable/rounded_edit_text"-->
 
 

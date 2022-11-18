@@ -12,7 +12,6 @@
     <string name="beach_bluenoser">BEACH BLUENOSER</string>
     <string name="todo">TODO</string>
     <string name="FilterPage">Beach Filter Page</string>
-    <string name="Search">Search...</string>
     <string name="submit">Submit</string>
     <string name="submit1">Submit</string>
     <string name="choppy_waters">choppy waters</string>
@@ -24,4 +23,6 @@
     <string name="a_few_people">A few people</string>
     <string name="many_people">Many people</string>
     <string name="little_to_no_people">little to no people</string>
+    <string name="Search">Search Beaches</string>
+    <string name= "Capacity">Beach Capacity</string>
 </resources>

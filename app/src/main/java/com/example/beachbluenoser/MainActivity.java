@@ -3,6 +3,7 @@ package com.example.beachbluenoser;
 import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -33,12 +34,12 @@ public class MainActivity extends AppCompatActivity {
     final  FirebaseFirestore db = FirebaseFirestore.getInstance();
     ArrayList<BeachItem> beachList;
 
-    String[] filterItem = {"All", "Rocky", "Sandy", "Wheelchair Ramps", "Floating Wheelchairs"};
-    String[] capacityFilters = {"High", "Medium", "Low"};
+    String[] beach = {"All Beaches", "Rocky Beach", "Sandy Beach", "Shore Accessibility", "Floating Wheelchair"};
+    String[] capacity = {"High Capacity", "Medium Capacity", "Low Capacity"};
 
-    ArrayAdapter<String> adapterItems;
 
-    AutoCompleteTextView autoCompleteTextView;
+    AutoCompleteTextView beachType; //Beach
+    AutoCompleteTextView capacityVolume; //Capacity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,18 +119,40 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        autoCompleteTextView = findViewById(R.id.filterDropdown);
-        adapterItems = new ArrayAdapter<String>(this, R.layout.list_item, filterItem);
-        autoCompleteTextView.setAdapter(adapterItems);
+        //Beach
+        setContentView(R.layout.activity_main);
+        beachType = findViewById(R.id.auto_complete_textview);
 
-        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ArrayAdapter<String> adapterItems; //For Beach
+        adapterItems = new ArrayAdapter<String>(this, R.layout.beach_list, beach);
+        beachType.setAdapter(adapterItems);
+
+        //Beach
+        beachType.setOnItemClickListener((new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 String item = adapterView.getItemAtPosition(position).toString();
-                Toast.makeText(MainActivity.this, "Item " + item, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, item + " Option", Toast.LENGTH_SHORT).show();
             }
 
-        });
+        }));
+
+        //Capacity
+//        setContentView(R.layout.activity_main);
+//        capacityVolume = findViewById(R.id.auto_complete_textview2);
+//
+//        ArrayAdapter<String> adapterItems2; //For Capacity
+//        adapterItems2 = new ArrayAdapter<String>(this, R.layout.capacity_list, capacity);
+//        capacityVolume.setAdapter(adapterItems2);
+//
+//        // Capacity
+//        capacityVolume.setOnItemClickListener((new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+//                String capacity = adapterView.getItemAtPosition(position).toString();
+//                Toast.makeText(MainActivity.this, capacity, Toast.LENGTH_SHORT).show();
+//            }
+//        }));
     }
 
     private void loadMasterBeachList() {

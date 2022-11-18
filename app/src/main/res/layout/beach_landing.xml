@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/landingBeachNameTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#2196F3"
@@ -25,7 +25,7 @@
             tools:layout_editor_absoluteY="-4dp" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/Placeholder2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -38,14 +38,14 @@
             tools:layout_editor_absoluteY="32dp" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/landingBeachImageView"
             android:layout_width="380dp"
             android:layout_height="206dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="24dp"
             android:adjustViewBounds="true"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/landingBeachNameTextView"
             app:srcCompat="@drawable/black_brook_beach" />
 
         <ImageView
@@ -71,25 +71,37 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.516"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2"
+            app:layout_constraintTop_toBottomOf="@+id/landingBeachImageView"
             app:layout_constraintVertical_bias="0.011"
             app:srcCompat="@drawable/map_api" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/landingBeachCapacityTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:text="Live data: \n Accessibility: lorum ipsum \n Capacity: lorum ipsum \n Weather conditions: Lorum ipsum"
-            android:textStyle="bold"
+            android:text="Capacity: "
             android:textSize="20dp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="32dp" />
 <!--just comment ok-->
+        <TextView
+            android:id="@+id/landingBeachSandyOrRockyTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="sansdryorrocky:" />
+
+        <TextView
+            android:id="@+id/landingBeachWheelChairRampTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="wheelchairrAmpo:" />
+
         <Button
             android:id="@+id/button"
             android:layout_width="wrap_content"

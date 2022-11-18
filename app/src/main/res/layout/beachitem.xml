@@ -45,21 +45,21 @@
 
 
         <TextView
-            android:id="@+id/BeachDescription"
+            android:id="@+id/beachItemRockyOrSandyTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Rocky / Sandy"
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/BeachRating"
+            android:id="@+id/beachItemWheelChairRampTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Floating wheelchair ramp: "
+            android:text="Wheelchair Ramp"
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/BeachCapacity"
+            android:id="@+id/beachItemCapacityTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Capacity: "

@@ -3,7 +3,6 @@ package com.example.beachbluenoser;
 import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -38,8 +37,11 @@ public class MainActivity extends AppCompatActivity {
     String[] capacity = {"High Capacity", "Medium Capacity", "Low Capacity"};
 
 
+    ArrayAdapter<String> adapterItems;
+
     AutoCompleteTextView beachType; //Beach
     AutoCompleteTextView capacityVolume; //Capacity
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,23 +121,18 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        //Beach
-        setContentView(R.layout.activity_main);
         beachType = findViewById(R.id.auto_complete_textview);
-
-        ArrayAdapter<String> adapterItems; //For Beach
         adapterItems = new ArrayAdapter<String>(this, R.layout.beach_list, beach);
         beachType.setAdapter(adapterItems);
 
-        //Beach
-        beachType.setOnItemClickListener((new AdapterView.OnItemClickListener() {
+        beachType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 String item = adapterView.getItemAtPosition(position).toString();
-                Toast.makeText(MainActivity.this, item + " Option", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, item + "Option", Toast.LENGTH_SHORT).show();
             }
 
-        }));
+        });
 
         //Capacity
 //        setContentView(R.layout.activity_main);

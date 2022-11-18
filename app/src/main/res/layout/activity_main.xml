@@ -65,9 +65,9 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/beachTextInputLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="200dp"
+            android:layout_width="198dp"
             android:layout_height="100dp"
-            android:layout_margin="5dp"
+            android:layout_margin="2.5dp"
             android:padding="10dp"
             app:startIconDrawable="@drawable/ic_beach"
             tools:ignore="LabelFor,MissingConstraints,RtlSymmetry">
@@ -86,18 +86,16 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/capacityTextInputLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="193dp"
+            android:layout_width="200dp"
             android:layout_height="100dp"
-            android:layout_margin="5dp"
+            android:layout_margin="2.5dp"
             android:padding="10dp"
-            app:startIconDrawable="@drawable/ic_capacity"
-            tools:ignore="LabelFor, MissingConstraints">
+            app:startIconDrawable="@drawable/ic_capacity">
 
             <AutoCompleteTextView
                 android:id="@+id/auto_complete_textview2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"
                 android:text="@string/Capacity"
                 android:textColor="#000000"
                 tools:ignore="TextContrastCheck" />
@@ -107,7 +105,6 @@
     <!--This code is for the Toolbar that says 'Beach Filter Page'-->
 
     <LinearLayout
-
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"

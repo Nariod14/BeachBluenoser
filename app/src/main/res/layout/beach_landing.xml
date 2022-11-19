@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <TextView
             android:id="@+id/landingBeachNameTextView"
             android:layout_width="match_parent"
@@ -24,18 +25,42 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="-4dp" />
 
-        <TextView
-            android:id="@+id/Placeholder2"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:text="Lorum Ipsum"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.483"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="32dp" />
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/Placeholder2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="Lorum Ipsum"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.483"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="32dp" />
+
+            <Button
+                android:id="@+id/SurveyBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="22dp"
+                android:backgroundTint="#0c68b5"
+                android:fontFamily="@font/lexend_deca"
+                android:text="Check in"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintVertical_bias="0.5"
+                app:srcCompat="@drawable/rounded_button" />
+
+        </RelativeLayout>
 
         <ImageView
             android:id="@+id/landingBeachImageView"
@@ -75,37 +100,26 @@
             android:layout_height="wrap_content"
             android:text="wheelchairrAmpo:" />
 
-        <Button
-            android:id="@+id/SurveyBtn"
-            android:layout_width="311dp"
-            android:layout_height="55dp"
-            android:backgroundTint="#0c68b5"
-            android:fontFamily="@font/lexend_deca"
-            android:text="Check in"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/noAccountView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/forgotPasswordBtn"
-            app:layout_constraintVertical_bias="0.5"
-            app:srcCompat="@drawable/rounded_button" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/mapsBtn"
-            android:layout_width="311dp"
-            android:layout_height="55dp"
-            android:backgroundTint="#0c68b5"
-            android:fontFamily="@font/lexend_deca"
-            android:text="Directions"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/noAccountView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/forgotPasswordBtn"
-            app:layout_constraintVertical_bias="0.5"
-            app:srcCompat="@drawable/rounded_button" />
+            <Button
+                android:id="@+id/mapsBtn"
+                android:layout_width="311dp"
+                android:layout_height="55dp"
+                android:layout_centerInParent="true"
+                android:backgroundTint="#0c68b5"
+                android:fontFamily="@font/lexend_deca"
+                android:text="Directions"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintVertical_bias="0.5"
+                app:srcCompat="@drawable/rounded_button" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 </ScrollView>

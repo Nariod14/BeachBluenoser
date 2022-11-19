@@ -25,8 +25,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.type.LatLng;
 
 import java.util.Collections;
 
@@ -43,6 +45,8 @@ public class beachLanding extends AppCompatActivity {
     public TextView landingBeachSandyOrRockyView;
     public TextView landingBeachWheelChairRampView;
     public TextView landingBeachNameView;
+    public TextView placeholder;
+    public Double beachLat,beachLong;
     public String beachLocation;
     public Button mapsBtn;
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +68,7 @@ public class beachLanding extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("geo:"+beachLocation+"(label:"+beachName+")"));
+                intent.setData(Uri.parse("geo:"+beachLocation));
                 Intent chooser = Intent.createChooser(intent,"Launch Maps");
                 startActivity(chooser);
             }
@@ -101,8 +105,11 @@ public class beachLanding extends AppCompatActivity {
                                 landingBeachSandyOrRockyValue = document.get("sandyOrRocky").toString();
                             }
                             if(document.get("location")!=null){
-                                beachLocation = document.get("location").toString();
-                                Log.d("Beach Location", "location"+beachLocation);
+                                GeoPoint geoPoint = document.getGeoPoint("location");
+                                beachLat = geoPoint.getLatitude();
+                                beachLong = geoPoint.getLongitude();
+                                Log.d("Beach Location", "location"+ beachLat +", " + beachLong);
+                                beachLocation = beachLat + "" + beachLong;
                             }
                         }
 

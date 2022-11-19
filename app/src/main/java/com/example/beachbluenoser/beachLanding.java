@@ -2,6 +2,7 @@ package com.example.beachbluenoser;
 
 import static android.content.ContentValues.TAG;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -41,6 +43,8 @@ public class beachLanding extends AppCompatActivity {
     public TextView landingBeachSandyOrRockyView;
     public TextView landingBeachWheelChairRampView;
     public TextView landingBeachNameView;
+    public String beachLocation;
+    public Button mapsBtn;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.beach_landing);
@@ -49,13 +53,22 @@ public class beachLanding extends AppCompatActivity {
             if(bundle.getString("beachName")!=null) {
                 beachName = bundle.getString("beachName");
 
-                Log.d("beach Main Page NAme ", " Name : " + beachName);
+                Log.d("beach Main Page Name ", " Name : " + beachName);
             }
         }
 
        // spinnerSetup();
         getDataFromDB();
-
+        mapsBtn = findViewById(R.id.mapsBtn);
+        mapsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("geo:"+beachLocation+"(label:"+beachName+")"));
+                Intent chooser = Intent.createChooser(intent,"Launch Maps");
+                startActivity(chooser);
+            }
+        });
 
     }
 
@@ -86,6 +99,10 @@ public class beachLanding extends AppCompatActivity {
                             }
                             if(document.get("sandyOrRocky")!=null){
                                 landingBeachSandyOrRockyValue = document.get("sandyOrRocky").toString();
+                            }
+                            if(document.get("location")!=null){
+                                beachLocation = document.get("location").toString();
+                                Log.d("Beach Location", "location"+beachLocation);
                             }
                         }
 
@@ -118,7 +135,6 @@ public class beachLanding extends AppCompatActivity {
         landingBeachWheelChairRampView.setText(landingBeachWheelChairRampValue);
         landingBeachNameView.setText(beachName);
         setBeachImage();
-
 
 
     }

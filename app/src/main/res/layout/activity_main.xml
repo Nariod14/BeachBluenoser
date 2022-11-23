@@ -98,6 +98,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/Capacity"
                 android:textColor="#000000"
+                android:inputType="none"
                 tools:ignore="TextContrastCheck" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>

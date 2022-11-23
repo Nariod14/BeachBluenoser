@@ -25,4 +25,6 @@
     <string name="little_to_no_people">little to no people</string>
     <string name="Search">Search Beaches</string>
     <string name= "Capacity">Beach Capacity</string>
+    <string name="home">Home</string>
+    <string name="login">Login</string>
 </resources>

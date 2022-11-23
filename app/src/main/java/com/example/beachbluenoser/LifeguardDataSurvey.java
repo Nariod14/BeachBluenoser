@@ -10,14 +10,24 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class LifeguardDataSurvey extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -25,6 +35,10 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
     public String visualWaterConditionsValue;
     public String beachName;
     public String currentDate;
+    public String beachCapacityValue;
+    public long currentVisualWaterConditionsValue;
+    public long currentBeachCapacityValue;
+
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -74,15 +88,57 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
             public void onClick(View v){
                 Log.d("HELLOTEST","JELLOTEST");
 
-
-
-                writeDataToDB();
+                 visualWaterConditionsValue = visualWaveConditionSpinner.getSelectedItem().toString();
+                 beachCapacityValue = beachCapacitySpinner.getSelectedItem().toString();
+                Log.d("Values",visualWaterConditionsValue+" "+beachCapacityValue);
+                getCurrentValues();
                // startActivity(new Intent(beachLanding.this,LifeguardDataSurvey.class));
             }
         });
 
     }
+    public void getCurrentValues(){
+        DocumentReference landingBeachRef = db.collection("survey").document(beachName);
 
+        landingBeachRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Object VWCObject = document.getData().get(visualWaterConditionsValue);
+                        if(VWCObject==null){
+
+                            Log.d("isnull","isNull");
+                            currentVisualWaterConditionsValue = 0;
+                        }else{
+                            currentVisualWaterConditionsValue = (long)document.getData().get(visualWaterConditionsValue);
+                        }
+                        Object BCObject = document.getData().get(beachCapacityValue);
+
+                        if(BCObject==null){
+                            Log.d("isnull","isNull");
+
+                            currentBeachCapacityValue = 0;
+                        }else{
+                            currentBeachCapacityValue = (long)document.getData().get(beachCapacityValue);
+                        }
+                        Log.d("ValsCurrent","Current: "+currentBeachCapacityValue + " "+currentVisualWaterConditionsValue);
+
+                        writeDataToDB();
+
+                    } else {
+                        Log.d("getCurrentSurveyData", "No such document");
+
+
+                    }
+                } else {
+                    Log.d("getCurrentSurveyData", "get failed with ", task.getException());
+                }
+            }
+        });
+
+    }
     public void writeDataToDB(){
         Log.d("HELLOTEST2222","JELLOTEST222");
         Date c = Calendar.getInstance().getTime();
@@ -93,7 +149,30 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
         Log.d("TIME222","CUR TIME:"+formattedDate+";");
 
 
+        Map<String, Object> survey = new HashMap<>();
+        Log.d("currentVals",currentBeachCapacityValue + " d: "+currentVisualWaterConditionsValue);
+        currentBeachCapacityValue++;
+        currentVisualWaterConditionsValue++;
+        Log.d("currentValsPost",currentBeachCapacityValue + " 2: "+currentVisualWaterConditionsValue);
 
+        survey.put(visualWaterConditionsValue, currentVisualWaterConditionsValue);
+        survey.put(beachCapacityValue, currentBeachCapacityValue);
+        survey.put("date", formattedDate);
+
+        db.collection("survey").document(beachName)
+                .set(survey,SetOptions.merge())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("LifeGuardSurveyWrite", "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("LifeGuardSurveyWrite", "Error writing document", e);
+                    }
+                });
 
 
     }

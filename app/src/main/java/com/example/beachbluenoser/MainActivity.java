@@ -124,10 +124,6 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 }
 
-
-
-
-
                                 BeachItem beachItem = new BeachItem(DataName,DataImageValue,landingBeachWheelChairRampValue,landingBeachCapacityValue,landingBeachSandyOrRockyValue);
                                 Log.d("Here22","cap:"+beachItem.getcapacity()+";");
                                 beachItemArrayList.add(beachItem);
@@ -159,21 +155,20 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Capacity
-//        setContentView(R.layout.activity_main);
-//        capacityVolume = findViewById(R.id.auto_complete_textview2);
-//
-//        ArrayAdapter<String> adapterItems2; //For Capacity
-//        adapterItems2 = new ArrayAdapter<String>(this, R.layout.capacity_list, capacity);
-//        capacityVolume.setAdapter(adapterItems2);
-//
-//        // Capacity
-//        capacityVolume.setOnItemClickListener((new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-//                String capacity = adapterView.getItemAtPosition(position).toString();
-//                Toast.makeText(MainActivity.this, capacity, Toast.LENGTH_SHORT).show();
-//            }
-//        }));
+        capacityVolume = findViewById(R.id.auto_complete_textview2);
+
+        ArrayAdapter<String> adapterItems2; //For Capacity
+        adapterItems2 = new ArrayAdapter<String>(this, R.layout.capacity_list, capacity);
+        capacityVolume.setAdapter(adapterItems2);
+
+        // Capacity
+        capacityVolume.setOnItemClickListener((new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                String capacity = adapterView.getItemAtPosition(position).toString();
+                Toast.makeText(MainActivity.this, capacity, Toast.LENGTH_SHORT).show();
+            }
+        }));
     }
 
     private void loadMasterBeachList() {

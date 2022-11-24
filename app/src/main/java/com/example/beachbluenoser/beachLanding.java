@@ -2,6 +2,7 @@ package com.example.beachbluenoser;
 
 import static android.content.ContentValues.TAG;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -31,17 +32,19 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class beachLanding extends AppCompatActivity {
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public String beachName;
-    public String landingBeachCapacityValue;
+    public String landingBeachCapacityText;
     public String landingBeachSandyOrRockyValue;
     public String landingBeachWheelChairRampValue;
     public String landingBeachImageSource;
-    public String landingBeachVisualWaterConditionsValue;
+    public String landingBeachVisualWaterConditionsText;
 
     public int calmWatersCount=0;
     public int mediumWatersCount=0;
@@ -131,6 +134,7 @@ public class beachLanding extends AppCompatActivity {
     private void getRemainingDataFromDB(){
         DocumentReference landingBeachRef = db.collection("survey").document(currentDate).collection(beachName).document(currentDate);
         landingBeachRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @SuppressLint("SuspiciousIndentation")
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
@@ -174,39 +178,38 @@ public class beachLanding extends AppCompatActivity {
         //FIX: could have just made it a string value instead of this then print at end
 
         if(calmWatersCount > mediumWatersCount && calmWatersCount > roughWatersCount){
-            landingBeachVisualWaterConditionsView.setText("Visual water conditions: Calm Waters");
+            landingBeachVisualWaterConditionsText = "Visual water conditions: Calm Waters";
+
         }
         else if(mediumWatersCount >= calmWatersCount && mediumWatersCount >= roughWatersCount){
-            landingBeachVisualWaterConditionsView.setText("Visual water conditions: Medium Waters");
-
+            landingBeachVisualWaterConditionsText = "Visual water conditions: Medium Waters";
         }
         else if(roughWatersCount >= calmWatersCount && roughWatersCount >= mediumWatersCount){
-            landingBeachVisualWaterConditionsView.setText("Visual water conditions: Rough Waters");
-
+            landingBeachVisualWaterConditionsText = "Visual water conditions: Rough Waters";
         }
+
+
+        landingBeachVisualWaterConditionsView.setText(landingBeachVisualWaterConditionsText);
+
 
         if(lowCapacityCount > mediumCapacityCount && lowCapacityCount > highCapacityCount){
-            landingBeachCapacityView.setText("Beach Capacity: Low Capacity");
+            landingBeachCapacityText = "Beach Capacity: Low Capacity";
         }
         else if(mediumCapacityCount >= lowCapacityCount && mediumCapacityCount >= highCapacityCount){
-            landingBeachCapacityView.setText("Beach Capacity: Medium Capacity");
-
+            landingBeachCapacityText = "Beach Capacity: Medium Capacity";
         }
         else if(highCapacityCount >= lowCapacityCount && highCapacityCount >= mediumCapacityCount){
-            landingBeachCapacityView.setText("Beach Capacity: High Capacity");
-
+            landingBeachCapacityText = "Beach Capacity: High Capacity";
         }
 
 
         if(lowCapacityCount ==0 && mediumCapacityCount ==0 && highCapacityCount==0){
-            landingBeachCapacityView.setText("Beach Capacity: No data today!");
-
+            landingBeachCapacityText = "Beach Capacity: No data today!";
         }
         if(calmWatersCount ==0 && mediumWatersCount ==0 && roughWatersCount==0){
-            landingBeachVisualWaterConditionsView.setText("Visual Water Conditons: No data today!");
+            landingBeachVisualWaterConditionsText = "Visual Water Conditions: No data today!";
 
         }
-
         landingBeachSandyOrRockyView.setText(landingBeachSandyOrRockyValue);
         landingBeachWheelChairRampView.setText(landingBeachWheelChairRampValue);
         landingBeachNameView.setText(beachName);

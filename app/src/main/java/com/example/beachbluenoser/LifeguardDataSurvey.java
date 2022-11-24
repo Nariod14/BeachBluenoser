@@ -36,8 +36,18 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
     public String beachName;
     public String currentDate;
     public String beachCapacityValue;
+    public String surveyVisualWaterConditionsTextForTheDay;
+    public String surveyCapacityTextForTheDay;
     public long currentVisualWaterConditionsValue;
     public long currentBeachCapacityValue;
+
+    public int calmWatersCount=0;
+    public int mediumWatersCount=0;
+    public int roughWatersCount=0;
+    public int lowCapacityCount=0;
+    public int mediumCapacityCount=0;
+    public int highCapacityCount=0;
+
 
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -132,7 +142,25 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
                         }
                         Log.d("ValsCurrent","Current: "+currentBeachCapacityValue + " "+currentVisualWaterConditionsValue);
 
+                        if(!(document.getData().get("Calm waters")==null))
+                            calmWatersCount  = Integer.parseInt(document.getData().get("Calm waters").toString());
+                        if(!(document.getData().get("Medium waters")==null))
+                            mediumWatersCount  = Integer.parseInt(document.getData().get("Medium waters").toString());
+                        if(!(document.getData().get("Rough waters")==null))
+                            roughWatersCount  = Integer.parseInt(document.getData().get("Rough waters").toString());
+                        if(!(document.getData().get("Low Capacity")==null))
+                            lowCapacityCount  = Integer.parseInt(document.getData().get("Low Capacity").toString());
+                        if(!(document.getData().get("Medium Capacity")==null))
+                            mediumCapacityCount   = Integer.parseInt(document.getData().get("Medium Capacity").toString());
+                        if(!(document.getData().get("High Capacity")==null))
+                            highCapacityCount  = Integer.parseInt(document.getData().get("High Capacity").toString());
+//
+
+
+
+
                         writeDataToDB();
+
 
                     } else {
                         Log.d("getCurrentSurveyData", "No such document");
@@ -157,13 +185,21 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
 
 
         Map<String, Object> survey = new HashMap<>();
+        Map<String, Object> survey2 = new HashMap<>();
         Log.d("currentVals",currentBeachCapacityValue + " d: "+currentVisualWaterConditionsValue);
         currentBeachCapacityValue++;
         currentVisualWaterConditionsValue++;
         Log.d("currentValsPost",currentBeachCapacityValue + " 2: "+currentVisualWaterConditionsValue);
 
+
+        setCapacityAndVisualConditionText();
+
+
         survey.put(visualWaterConditionsValue, currentVisualWaterConditionsValue);
         survey.put(beachCapacityValue, currentBeachCapacityValue);
+        survey2.put("beachCapacityTextForTheDay", surveyCapacityTextForTheDay);
+        survey2.put("beachVisualWaveConditionsTextForTheDay", surveyVisualWaterConditionsTextForTheDay);
+
         survey.put("date", formattedDate);
 
         DocumentReference surveyBeachRef = db.collection("survey").document(formattedDate).collection(beachName).document(formattedDate);
@@ -180,6 +216,25 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
                         Log.w("LifeGuardSurveyWrite2222", "Error writing document", e);
                     }
                 });
+
+        db.collection("beach").document(beachName)
+                .set(survey2,SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("LifeGuardSurveyWrite22222222", "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("LifeGuardSurveyWrite2222", "Error writing document", e);
+                    }
+                });
+
+
+
+
+
 
 //        db.collection("survey").document(beachName)
 //                .set(survey,SetOptions.merge())
@@ -198,7 +253,38 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
 
 
     }
+    public void setCapacityAndVisualConditionText(){
 
+        if(calmWatersCount > mediumWatersCount && calmWatersCount > roughWatersCount){
+            surveyVisualWaterConditionsTextForTheDay = "Visual water conditions: Calm Waters";
+
+        }
+        else if(mediumWatersCount >= calmWatersCount && mediumWatersCount >= roughWatersCount){
+            surveyVisualWaterConditionsTextForTheDay = "Visual water conditions: Medium Waters";
+        }
+        else if(roughWatersCount >= calmWatersCount && roughWatersCount >= mediumWatersCount){
+            surveyVisualWaterConditionsTextForTheDay = "Visual water conditions: Rough Waters";
+        }
+
+        if(lowCapacityCount > mediumCapacityCount && lowCapacityCount > highCapacityCount){
+            surveyCapacityTextForTheDay = "Beach Capacity: Low Capacity";
+        }
+        else if(mediumCapacityCount >= lowCapacityCount && mediumCapacityCount >= highCapacityCount){
+            surveyCapacityTextForTheDay = "Beach Capacity: Medium Capacity";
+        }
+        else if(highCapacityCount >= lowCapacityCount && highCapacityCount >= mediumCapacityCount){
+            surveyCapacityTextForTheDay = "Beach Capacity: High Capacity";
+        }
+
+
+        if(lowCapacityCount ==0 && mediumCapacityCount ==0 && highCapacityCount==0){
+            surveyCapacityTextForTheDay = "Beach Capacity: No data today!";
+        }
+        if(calmWatersCount ==0 && mediumWatersCount ==0 && roughWatersCount==0){
+            surveyVisualWaterConditionsTextForTheDay = "Visual Water Conditions: No data today!";
+
+        }
+    }
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long length) {
         String selectedValue = parent.getItemAtPosition(position).toString();

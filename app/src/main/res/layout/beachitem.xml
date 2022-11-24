@@ -45,10 +45,17 @@
 
 
         <TextView
-            android:id="@+id/beachItemRockyOrSandyTextView"
+            android:id="@+id/visualWaterConditionsTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Rocky / Sandy"
+            android:text="Visual Water Conditions:"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/beachItemCapacityTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Capacity: "
             android:textSize="16sp" />
 
         <TextView
@@ -58,12 +65,6 @@
             android:text="Wheelchair Ramp"
             android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/beachItemCapacityTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Capacity: "
-            android:textSize="16sp" />
     </LinearLayout>
 
 </LinearLayout>

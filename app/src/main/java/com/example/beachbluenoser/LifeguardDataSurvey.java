@@ -92,9 +92,16 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
                  beachCapacityValue = beachCapacitySpinner.getSelectedItem().toString();
                 Log.d("Values",visualWaterConditionsValue+" "+beachCapacityValue);
                 getCurrentValues();
-               // startActivity(new Intent(beachLanding.this,LifeguardDataSurvey.class));
+
+                Intent intent = new Intent(LifeguardDataSurvey.this,beachLanding.class);
+                intent.putExtra("beachName",beachName);
+
+                startActivity(intent);
+
             }
         });
+
+
 
     }
     public void getCurrentValues(){
@@ -130,7 +137,7 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
                     } else {
                         Log.d("getCurrentSurveyData", "No such document");
 
-
+                        writeDataToDB();
                     }
                 } else {
                     Log.d("getCurrentSurveyData", "get failed with ", task.getException());

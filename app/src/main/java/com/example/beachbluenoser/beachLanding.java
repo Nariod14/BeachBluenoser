@@ -27,7 +27,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
+import java.util.Locale;
 
 public class beachLanding extends AppCompatActivity {
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -37,11 +41,22 @@ public class beachLanding extends AppCompatActivity {
     public String landingBeachSandyOrRockyValue;
     public String landingBeachWheelChairRampValue;
     public String landingBeachImageSource;
+    public String landingBeachVisualWaterConditionsValue;
+
+    public int calmWatersCount=0;
+    public int mediumWatersCount=0;
+    public int roughWatersCount=0;
+    public int lowCapacityCount=0;
+    public int mediumCapacityCount=0;
+    public int highCapacityCount=0;
+
     public ImageView landingBeachImageView;
     public TextView landingBeachCapacityView;
     public TextView landingBeachSandyOrRockyView;
     public TextView landingBeachWheelChairRampView;
     public TextView landingBeachNameView;
+    public TextView landingBeachVisualWaterConditionsView;
+    public String currentDate;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.beach_landing);
@@ -54,10 +69,20 @@ public class beachLanding extends AppCompatActivity {
                 Log.d("beach Main Page NAme ", " Name : " + beachName);
             }
         }
+
+
+        Date c = Calendar.getInstance().getTime();
+
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+        String formattedDate = df.format(c);
+        currentDate = formattedDate;
 //
+
+
+
        // spinnerSetup();
        // showDataOnUI();
-        getDataFromDB();
+        getPreliminaryDataFromDB();
         Button btn = (Button)findViewById(R.id.checkInSurvey);
 
         btn.setOnClickListener(new View.OnClickListener(){
@@ -72,7 +97,7 @@ public class beachLanding extends AppCompatActivity {
     }
 
 
-    private void getDataFromDB(){
+    private void getPreliminaryDataFromDB(){
         DocumentReference landingBeachRef = db.collection("beach").document(beachName);
 
         landingBeachRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -90,24 +115,10 @@ public class beachLanding extends AppCompatActivity {
                         }
                         landingBeachImageSource = DataImageValue;
 
-                        if(document.exists()){
-                            if(document.get("capacity")!=null){
-                                landingBeachCapacityValue = document.get("capacity").toString();
-                            }
-                            if(document.get("wheelchairRamp")!=null){
-                                landingBeachWheelChairRampValue = document.get("wheelchairRamp").toString();
-                            }
-                            if(document.get("sandyOrRocky")!=null){
-                                landingBeachSandyOrRockyValue = document.get("sandyOrRocky").toString();
-                            }
-                        }
-
-
-                        showDataOnUI();
+                        getRemainingDataFromDB();
 
                     } else {
                         Log.d("Beach Landing Query", "No such document");
-
 
                     }
                 } else {
@@ -116,17 +127,86 @@ public class beachLanding extends AppCompatActivity {
             }
         });
 
-
-
-
     }
+    private void getRemainingDataFromDB(){
+        DocumentReference landingBeachRef = db.collection("survey").document(currentDate).collection(beachName).document(currentDate);
+        landingBeachRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                         if(!(document.getData().get("Calm waters")==null))
+                         calmWatersCount  = Integer.parseInt(document.getData().get("Calm waters").toString());
+                         if(!(document.getData().get("Medium waters")==null))
+                         mediumWatersCount  = Integer.parseInt(document.getData().get("Medium waters").toString());
+                         if(!(document.getData().get("Rough waters")==null))
+                         roughWatersCount  = Integer.parseInt(document.getData().get("Rough waters").toString());
+                         if(!(document.getData().get("Low Capacity")==null))
+                         lowCapacityCount  = Integer.parseInt(document.getData().get("Low Capacity").toString());
+                         if(!(document.getData().get("Medium Capacity")==null))
+                         mediumCapacityCount   = Integer.parseInt(document.getData().get("Medium Capacity").toString());
+                         if(!(document.getData().get("High Capacity")==null))
+                         highCapacityCount  = Integer.parseInt(document.getData().get("High Capacity").toString());
+
+                         showDataOnUI();
+                    } else {
+                        Log.d("Beach Landing Query", "No such document");
+                        showDataOnUI();
+                    }
+                } else {
+                    Log.d("Beach Landing Query", "get failed with ", task.getException());
+                }
+            }
+        });
+    }
+
     private void showDataOnUI(){
         landingBeachCapacityView = findViewById(R.id.landingBeachCapacityTextView);
         landingBeachSandyOrRockyView = findViewById(R.id.landingBeachSandyOrRockyTextView);
         landingBeachWheelChairRampView = findViewById(R.id.landingBeachWheelChairRampTextView);
         landingBeachNameView = findViewById(R.id.landingBeachNameTextView);
+        landingBeachVisualWaterConditionsView = findViewById(R.id.landingBeachVisualWaterConditionsTextView);
 
-        landingBeachCapacityView.setText(landingBeachCapacityValue);
+        Log.d("what22","calm: "+calmWatersCount + " medium: "+ mediumWatersCount+ " r: "+roughWatersCount);
+        Log.d("what22","calm: "+lowCapacityCount + " medium: "+ mediumCapacityCount+ " r: "+highCapacityCount);
+
+        //FIX: could have just made it a string value instead of this then print at end
+
+        if(calmWatersCount > mediumWatersCount && calmWatersCount > roughWatersCount){
+            landingBeachVisualWaterConditionsView.setText("Visual water conditions: Calm Waters");
+        }
+        else if(mediumWatersCount >= calmWatersCount && mediumWatersCount >= roughWatersCount){
+            landingBeachVisualWaterConditionsView.setText("Visual water conditions: Medium Waters");
+
+        }
+        else if(roughWatersCount >= calmWatersCount && roughWatersCount >= mediumWatersCount){
+            landingBeachVisualWaterConditionsView.setText("Visual water conditions: Rough Waters");
+
+        }
+
+        if(lowCapacityCount > mediumCapacityCount && lowCapacityCount > highCapacityCount){
+            landingBeachCapacityView.setText("Beach Capacity: Low Capacity");
+        }
+        else if(mediumCapacityCount >= lowCapacityCount && mediumCapacityCount >= highCapacityCount){
+            landingBeachCapacityView.setText("Beach Capacity: Medium Capacity");
+
+        }
+        else if(highCapacityCount >= lowCapacityCount && highCapacityCount >= mediumCapacityCount){
+            landingBeachCapacityView.setText("Beach Capacity: High Capacity");
+
+        }
+
+
+        if(lowCapacityCount ==0 && mediumCapacityCount ==0 && highCapacityCount==0){
+            landingBeachCapacityView.setText("Beach Capacity: No data today!");
+
+        }
+        if(calmWatersCount ==0 && mediumWatersCount ==0 && roughWatersCount==0){
+            landingBeachVisualWaterConditionsView.setText("Visual Water Conditons: No data today!");
+
+        }
+
         landingBeachSandyOrRockyView.setText(landingBeachSandyOrRockyValue);
         landingBeachWheelChairRampView.setText(landingBeachWheelChairRampValue);
         landingBeachNameView.setText(beachName);

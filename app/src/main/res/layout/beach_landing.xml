@@ -97,6 +97,12 @@
             android:text="sansdryorrocky:" />
 
         <TextView
+            android:id="@+id/landingBeachVisualWaterConditionsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="VisualWaterConditions" />
+
+        <TextView
             android:id="@+id/landingBeachWheelChairRampTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

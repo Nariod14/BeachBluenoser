@@ -148,7 +148,7 @@ public class beachLanding extends AppCompatActivity {
                          mediumCapacityCount   = Integer.parseInt(document.getData().get("Medium Capacity").toString());
                          if(!(document.getData().get("High Capacity")==null))
                          highCapacityCount  = Integer.parseInt(document.getData().get("High Capacity").toString());
-
+//
                          showDataOnUI();
                     } else {
                         Log.d("Beach Landing Query", "No such document");

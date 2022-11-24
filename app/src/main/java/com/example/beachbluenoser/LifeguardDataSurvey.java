@@ -105,9 +105,9 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
 
     }
     public void getCurrentValues(){
-        DocumentReference landingBeachRef = db.collection("survey").document(beachName);
+        DocumentReference surveyBeachRef = db.collection("survey").document(currentDate).collection(beachName).document(currentDate);
 
-        landingBeachRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        surveyBeachRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
@@ -166,20 +166,35 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
         survey.put(beachCapacityValue, currentBeachCapacityValue);
         survey.put("date", formattedDate);
 
-        db.collection("survey").document(beachName)
-                .set(survey,SetOptions.merge())
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
+        DocumentReference surveyBeachRef = db.collection("survey").document(formattedDate).collection(beachName).document(formattedDate);
+
+        surveyBeachRef.set(survey,SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d("LifeGuardSurveyWrite", "DocumentSnapshot successfully written!");
+                        Log.d("LifeGuardSurveyWrite22222222", "DocumentSnapshot successfully written!");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w("LifeGuardSurveyWrite", "Error writing document", e);
+                        Log.w("LifeGuardSurveyWrite2222", "Error writing document", e);
                     }
                 });
+
+//        db.collection("survey").document(beachName)
+//                .set(survey,SetOptions.merge())
+//                .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void aVoid) {
+//                        Log.d("LifeGuardSurveyWrite", "DocumentSnapshot successfully written!");
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Log.w("LifeGuardSurveyWrite", "Error writing document", e);
+//                    }
+//                });
 
 
     }

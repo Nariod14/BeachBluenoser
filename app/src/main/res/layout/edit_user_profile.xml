@@ -96,12 +96,12 @@
         android:layout_width="435dp"
         android:layout_height="67dp"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="52dp"
         android:background="#C4C4C4"
         android:backgroundTint="#C4C4C4"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/save"></LinearLayout>
 

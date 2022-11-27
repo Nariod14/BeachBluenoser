@@ -190,13 +190,29 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
         currentBeachCapacityValue++;
         currentVisualWaterConditionsValue++;
         Log.d("currentValsPost",currentBeachCapacityValue + " 2: "+currentVisualWaterConditionsValue);
+        Log.d("visualWaters",visualWaterConditionsValue + " capacityValue "+beachCapacityValue);
+        if(visualWaterConditionsValue.equals("Calm waters"))
+            calmWatersCount++;
+        if(visualWaterConditionsValue.equals("Medium waters"))
+            mediumCapacityCount++;
+        if(visualWaterConditionsValue.equals("Rough waters"))
+            roughWatersCount++;
+        if(beachCapacityValue.equals("Low Capacity"))
+            lowCapacityCount++;
+        if(beachCapacityValue.equals("Medium Capacity"))
+            mediumCapacityCount++;
+        if(beachCapacityValue.equals("High Capacity"))
+            highCapacityCount++;
 
+        Log.d("watersCountHere","calmW: "+calmWatersCount+" medW: "+mediumWatersCount +" rough: "+roughWatersCount);
+        Log.d("capCountHere","capL: "+lowCapacityCount+" capMed: "+mediumCapacityCount +" capHigh: "+highCapacityCount);
 
         setCapacityAndVisualConditionText();
 
 
         survey.put(visualWaterConditionsValue, currentVisualWaterConditionsValue);
         survey.put(beachCapacityValue, currentBeachCapacityValue);
+
         survey2.put("beachCapacityTextForTheDay", surveyCapacityTextForTheDay);
         survey2.put("beachVisualWaveConditionsTextForTheDay", surveyVisualWaterConditionsTextForTheDay);
 

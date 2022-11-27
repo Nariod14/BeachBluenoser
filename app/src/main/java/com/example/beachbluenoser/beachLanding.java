@@ -60,6 +60,8 @@ public class beachLanding extends AppCompatActivity {
     public TextView landingBeachNameView;
     public TextView landingBeachVisualWaterConditionsView;
     public String currentDate;
+
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.beach_landing);
@@ -68,11 +70,9 @@ public class beachLanding extends AppCompatActivity {
         if(bundle != null){
             if(bundle.getString("beachName")!=null) {
                 beachName = bundle.getString("beachName");
-
                 Log.d("beach Main Page NAme ", " Name : " + beachName);
             }
         }
-
 
         Date c = Calendar.getInstance().getTime();
 
@@ -85,7 +85,7 @@ public class beachLanding extends AppCompatActivity {
 
        // spinnerSetup();
        // showDataOnUI();
-        getPreliminaryDataFromDB();
+
         Button btn = (Button)findViewById(R.id.checkInSurvey);
 
         btn.setOnClickListener(new View.OnClickListener(){
@@ -97,8 +97,18 @@ public class beachLanding extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
 
+        onRestart();
+
+    }
+    @Override
+    protected void onRestart() {
+
+        super.onRestart();
+        //this.onCreate(null);
+
+        getPreliminaryDataFromDB();
+    }
 
     private void getPreliminaryDataFromDB(){
         DocumentReference landingBeachRef = db.collection("beach").document(beachName);
@@ -111,14 +121,27 @@ public class beachLanding extends AppCompatActivity {
                     if (document.exists()) {
                         Object DataImage  = document.getData().get("image");
                         String DataImageValue;
+                        //String landingBeachVisualWaterConditionsText;
+                       // String landingBeachCapacityText;
                         if(DataImage == null){
                             DataImageValue = "imageNotFound";
                         }else {
                             DataImageValue = document.getData().get("image").toString();
                         }
                         landingBeachImageSource = DataImageValue;
+                        if(document.get("beachCapacityTextForTheDay")!=null){
+                            landingBeachCapacityText = document.get("beachCapacityTextForTheDay").toString();
+                        }
+                        if(document.get("beachVisualWaveConditionsTextForTheDay")!=null){
+                            landingBeachVisualWaterConditionsText = document.get("beachVisualWaveConditionsTextForTheDay").toString();
+                        }
 
-                        getRemainingDataFromDB();
+
+                        Log.d("setCapText","capacityText: "+landingBeachCapacityText);
+                        Log.d("setVWCText","waterconText: "+landingBeachVisualWaterConditionsText);
+
+                        showDataOnUI();
+                     //   getRemainingDataFromDB();
 
                     } else {
                         Log.d("Beach Landing Query", "No such document");
@@ -175,41 +198,48 @@ public class beachLanding extends AppCompatActivity {
         Log.d("what22","calm: "+calmWatersCount + " medium: "+ mediumWatersCount+ " r: "+roughWatersCount);
         Log.d("what22","calm: "+lowCapacityCount + " medium: "+ mediumCapacityCount+ " r: "+highCapacityCount);
 
+
+
+        Log.d("setCapText222","capacityText: "+landingBeachCapacityText);
+        Log.d("setVWCText222","waterconText: "+landingBeachVisualWaterConditionsText);
+
         //FIX: could have just made it a string value instead of this then print at end
-
-        if(calmWatersCount > mediumWatersCount && calmWatersCount > roughWatersCount){
-            landingBeachVisualWaterConditionsText = "Visual water conditions: Calm Waters";
-
-        }
-        else if(mediumWatersCount >= calmWatersCount && mediumWatersCount >= roughWatersCount){
-            landingBeachVisualWaterConditionsText = "Visual water conditions: Medium Waters";
-        }
-        else if(roughWatersCount >= calmWatersCount && roughWatersCount >= mediumWatersCount){
-            landingBeachVisualWaterConditionsText = "Visual water conditions: Rough Waters";
-        }
-
-
+//
+//        if(calmWatersCount > mediumWatersCount && calmWatersCount > roughWatersCount){
+//            landingBeachVisualWaterConditionsText = "Visual water conditions: Calm Waters";
+//
+//        }
+//        else if(mediumWatersCount >= calmWatersCount && mediumWatersCount >= roughWatersCount){
+//            landingBeachVisualWaterConditionsText = "Visual water conditions: Medium Waters";
+//        }
+//        else if(roughWatersCount >= calmWatersCount && roughWatersCount >= mediumWatersCount){
+//            landingBeachVisualWaterConditionsText = "Visual water conditions: Rough Waters";
+//        }
+//
+//
+//        landingBeachVisualWaterConditionsView.setText(landingBeachVisualWaterConditionsText);
+//
+//
+//        if(lowCapacityCount > mediumCapacityCount && lowCapacityCount > highCapacityCount){
+//            landingBeachCapacityText = "Beach Capacity: Low Capacity";
+//        }
+//        else if(mediumCapacityCount >= lowCapacityCount && mediumCapacityCount >= highCapacityCount){
+//            landingBeachCapacityText = "Beach Capacity: Medium Capacity";
+//        }
+//        else if(highCapacityCount >= lowCapacityCount && highCapacityCount >= mediumCapacityCount){
+//            landingBeachCapacityText = "Beach Capacity: High Capacity";
+//        }
+//
+//
+//        if(lowCapacityCount ==0 && mediumCapacityCount ==0 && highCapacityCount==0){
+//            landingBeachCapacityText = "Beach Capacity: No data today!";
+//        }
+//        if(calmWatersCount ==0 && mediumWatersCount ==0 && roughWatersCount==0){
+//            landingBeachVisualWaterConditionsText = "Visual Water Conditions: No data today!";
+//
+//        }
+        landingBeachCapacityView.setText(landingBeachCapacityText);
         landingBeachVisualWaterConditionsView.setText(landingBeachVisualWaterConditionsText);
-
-
-        if(lowCapacityCount > mediumCapacityCount && lowCapacityCount > highCapacityCount){
-            landingBeachCapacityText = "Beach Capacity: Low Capacity";
-        }
-        else if(mediumCapacityCount >= lowCapacityCount && mediumCapacityCount >= highCapacityCount){
-            landingBeachCapacityText = "Beach Capacity: Medium Capacity";
-        }
-        else if(highCapacityCount >= lowCapacityCount && highCapacityCount >= mediumCapacityCount){
-            landingBeachCapacityText = "Beach Capacity: High Capacity";
-        }
-
-
-        if(lowCapacityCount ==0 && mediumCapacityCount ==0 && highCapacityCount==0){
-            landingBeachCapacityText = "Beach Capacity: No data today!";
-        }
-        if(calmWatersCount ==0 && mediumWatersCount ==0 && roughWatersCount==0){
-            landingBeachVisualWaterConditionsText = "Visual Water Conditions: No data today!";
-
-        }
         landingBeachSandyOrRockyView.setText(landingBeachSandyOrRockyValue);
         landingBeachWheelChairRampView.setText(landingBeachWheelChairRampValue);
         landingBeachNameView.setText(beachName);

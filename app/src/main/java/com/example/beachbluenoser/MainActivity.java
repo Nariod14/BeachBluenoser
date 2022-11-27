@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
                                 if(!(document.getData().get("beachVisualWaveConditionsTextForTheDay")==null)) {
                                      beachVisualWaveConditionsTextForTheDay = document.getData().get("beachVisualWaveConditionsTextForTheDay").toString();
                                 }else{
-                                    beachVisualWaveConditionsTextForTheDay =" Visual Water Conditions: No data today!";
+                                    beachVisualWaveConditionsTextForTheDay ="Water Conditions: No data today!";
                                 }
                                 Object DataImage  = document.getData().get("image");
                                 String DataImageValue;

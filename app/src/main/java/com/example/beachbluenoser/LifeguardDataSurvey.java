@@ -59,20 +59,15 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
         String formattedDate = df.format(c);
         currentDate = formattedDate;
-       // Log.d("TIME222","CUR TIME:"+formattedDate+";");
 
-        Log.d("here222","2222");
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
             if(bundle.getString("beachName")!=null) {
                 beachName = bundle.getString("beachName");
 
-                Log.d("beach Main Page NAme 22222", " Name : " + beachName);
             }
         }
 
-
-    //    Log.d("Here222","beachName22: "+)
 
         Spinner visualWaveConditionSpinner = findViewById(R.id.visualWaterConditionsSpinner);
         ArrayAdapter<CharSequence> adapterVWCSpinner = ArrayAdapter.createFromResource(this,R.array.visualWaterConditionsValues, android.R.layout.simple_spinner_item);
@@ -87,10 +82,6 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
         beachCapacitySpinner.setOnItemSelectedListener(this);
 
 
-
-
-
-        // spinnerSetup();
         Button btn = (Button)findViewById(R.id.lifeGuardSurveyButton);
 
         btn.setOnClickListener(new View.OnClickListener(){
@@ -154,9 +145,6 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
                             mediumCapacityCount   = Integer.parseInt(document.getData().get("Medium Capacity").toString());
                         if(!(document.getData().get("High Capacity")==null))
                             highCapacityCount  = Integer.parseInt(document.getData().get("High Capacity").toString());
-//
-
-
 
 
                         writeDataToDB();
@@ -175,7 +163,6 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
 
     }
     public void writeDataToDB(){
-        Log.d("HELLOTEST2222","JELLOTEST222");
         Date c = Calendar.getInstance().getTime();
 
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
@@ -246,27 +233,6 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
                         Log.w("LifeGuardSurveyWrite2222", "Error writing document", e);
                     }
                 });
-
-
-
-
-
-
-//        db.collection("survey").document(beachName)
-//                .set(survey,SetOptions.merge())
-//                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void aVoid) {
-//                        Log.d("LifeGuardSurveyWrite", "DocumentSnapshot successfully written!");
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Log.w("LifeGuardSurveyWrite", "Error writing document", e);
-//                    }
-//                });
-
 
     }
     public void setCapacityAndVisualConditionText(){

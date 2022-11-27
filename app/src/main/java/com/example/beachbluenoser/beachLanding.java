@@ -122,11 +122,15 @@ public class beachLanding extends AppCompatActivity {
                             DataImageValue = document.getData().get("image").toString();
                         }
                         landingBeachImageSource = DataImageValue;
-                        if(document.get("beachCapacityTextForTheDay")!=null){
-                            landingBeachCapacityText = document.get("beachCapacityTextForTheDay").toString();
+                        }if(!(document.getData().get("beachCapacityTextForTheDay")==null)) {
+                            landingBeachCapacityText = document.getData().get("beachCapacityTextForTheDay").toString();
+                        }else{
+                            landingBeachCapacityText="Beach Capacity: No data today!";
                         }
-                        if(document.get("beachVisualWaveConditionsTextForTheDay")!=null){
-                            landingBeachVisualWaterConditionsText = document.get("beachVisualWaveConditionsTextForTheDay").toString();
+                        if(!(document.getData().get("beachVisualWaveConditionsTextForTheDay")==null)) {
+                            landingBeachVisualWaterConditionsText = document.getData().get("beachVisualWaveConditionsTextForTheDay").toString();
+                        }else{
+                            landingBeachVisualWaterConditionsText =" Visual Water Conditions: No data today!";
                         }
 
 
@@ -138,11 +142,7 @@ public class beachLanding extends AppCompatActivity {
 
                     } else {
                         Log.d("Beach Landing Query", "No such document");
-
                     }
-                } else {
-                    Log.d("Beach Landing Query", "get failed with ", task.getException());
-                }
             }
         });
     }

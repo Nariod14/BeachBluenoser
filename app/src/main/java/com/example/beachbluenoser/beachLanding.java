@@ -79,9 +79,6 @@ public class beachLanding extends AppCompatActivity {
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
         String formattedDate = df.format(c);
         currentDate = formattedDate;
-//
-
-
 
        // spinnerSetup();
        // showDataOnUI();
@@ -97,18 +94,14 @@ public class beachLanding extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        onRestart();
-
     }
+
     @Override
-    protected void onRestart() {
-
-        super.onRestart();
-        //this.onCreate(null);
-
+    protected void onResume() {
+        super.onResume();
         getPreliminaryDataFromDB();
     }
+
 
     private void getPreliminaryDataFromDB(){
         DocumentReference landingBeachRef = db.collection("beach").document(beachName);
@@ -152,8 +145,8 @@ public class beachLanding extends AppCompatActivity {
                 }
             }
         });
-
     }
+
     private void getRemainingDataFromDB(){
         DocumentReference landingBeachRef = db.collection("survey").document(currentDate).collection(beachName).document(currentDate);
         landingBeachRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -280,8 +273,6 @@ public class beachLanding extends AppCompatActivity {
         landingBeachImageView = findViewById(R.id.landingBeachImageView);
         //((ImageView)) findViewById(R.id.BeachImage).setImageResource(fileID));
         landingBeachImageView.setImageResource(fileID);
-
-
 
         //int imageResouce = mainView.getResources().getIdentifier(uri,null,mainView.getActivty().getPackageName());
         // Drawable res = mainView.getResources().getDrawable(imageResouce);

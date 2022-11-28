@@ -29,6 +29,9 @@
             android:name=".beachLanding"
             android:exported="true" />
         <activity
+            android:name=".LifeguardDataSurvey"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

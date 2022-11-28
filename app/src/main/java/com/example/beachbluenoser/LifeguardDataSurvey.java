@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,6 +37,7 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
     public String beachName;
     public String currentDate;
     public String beachCapacityValue;
+    public TextView name;
     public long currentVisualWaterConditionsValue;
     public long currentBeachCapacityValue;
 
@@ -63,6 +65,8 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
 
 
     //    Log.d("Here222","beachName22: "+)
+        name = findViewById(R.id.surveyTitle);
+        name.setText(beachName);
 
         Spinner visualWaveConditionSpinner = findViewById(R.id.visualWaterConditionsSpinner);
         ArrayAdapter<CharSequence> adapterVWCSpinner = ArrayAdapter.createFromResource(this,R.array.visualWaterConditionsValues, android.R.layout.simple_spinner_item);

@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         final Button homeBtn = findViewById(R.id.HomeButton);
         final Button loginBtn = findViewById(R.id.LoginButton);
+        final Button profileBtn = findViewById(R.id.profileButton);
 
 
         Date c = Calendar.getInstance().getTime();
@@ -82,11 +83,6 @@ public class MainActivity extends AppCompatActivity {
         homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: update code so that it takes user back to homepage all the time
-
-                /*setContentView(R.layout.activity_main);
-                getDataFromDbAndShowOnUI();*/
-
                 Intent homeIntent = new Intent(MainActivity.this, MainActivity.class);
                 startActivity(homeIntent);
             }
@@ -96,6 +92,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent loginIntent = new Intent(MainActivity.this, Login.class);
                 startActivity(loginIntent);
+            }
+        });
+       profileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent profileIntent = new Intent(MainActivity.this, userprofile.class);
+                startActivity(profileIntent);
             }
         });
     }
@@ -125,12 +128,12 @@ public class MainActivity extends AppCompatActivity {
                                 String beachCapacityTextForTheDay ="";
                                 String beachVisualWaveConditionsTextForTheDay = "";
                                 if(!(document.getData().get("beachCapacityTextForTheDay")==null)) {
-                                     beachCapacityTextForTheDay = document.getData().get("beachCapacityTextForTheDay").toString();
+                                    beachCapacityTextForTheDay = document.getData().get("beachCapacityTextForTheDay").toString();
                                 }else{
                                     beachCapacityTextForTheDay="Beach Capacity: No data today!";
                                 }
                                 if(!(document.getData().get("beachVisualWaveConditionsTextForTheDay")==null)) {
-                                     beachVisualWaveConditionsTextForTheDay = document.getData().get("beachVisualWaveConditionsTextForTheDay").toString();
+                                    beachVisualWaveConditionsTextForTheDay = document.getData().get("beachVisualWaveConditionsTextForTheDay").toString();
                                 }else{
                                     beachVisualWaveConditionsTextForTheDay ="Water Conditions: No data today!";
                                 }
@@ -232,10 +235,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                       // showDataOnUI();
+                        // showDataOnUI();
                     } else {
                         Log.d("Beach Landing Query", "No such document");
-                       // showDataOnUI();
+                        // showDataOnUI();
                     }
                 } else {
                     Log.d("Beach Landing Query", "get failed with ", task.getException());

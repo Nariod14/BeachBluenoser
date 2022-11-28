@@ -37,12 +37,12 @@ public class editprofile extends AppCompatActivity {
                 if(!Pass.getText().toString().equals(password.getText().toString())){
                     openDialog();
                 }else {
-                    String NAME = name.getText().toString();
-                    String email = Email.getText().toString();
-                    String Password = password.getText().toString();
-                    User user = new User(NAME, email, Password);
-                    Upload(user);
-                    startActivity(new Intent(editprofile.this, userprofile.class));
+//                    String NAME = name.getText().toString();
+//                    String email = Email.getText().toString();
+//                    String Password = password.getText().toString();
+//                    User user = new User(NAME, email, Password);
+//                    Upload(user);
+//                    startActivity(new Intent(editprofile.this, userprofile.class));
                 }
             }
         });

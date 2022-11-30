@@ -10,6 +10,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,9 +18,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -28,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import android.widget.AdapterView;
@@ -78,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         String formattedDate = df.format(c);
         currentDate = formattedDate;
 
+        resetDataForToday();
 
         homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,7 +113,27 @@ public class MainActivity extends AppCompatActivity {
         getDataFromDbAndShowOnUI();
     }
 
-    private void getDataFromDbAndShowOnUI() {
+    private void resetDataForToday() {
+       
+        db.collection("survey").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    List<String> list = new ArrayList<>();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        list.add(document.getId());
+                    }
+                    Log.d("printDocs", list.toString());
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+                }
+            }
+        });
+
+
+    }
+
+        private void getDataFromDbAndShowOnUI() {
         // to toggle between the "deleted posts" and active posts button
         // resetToggle();
         final ArrayList<BeachItem> beachItemArrayList = new ArrayList<>();
@@ -216,6 +242,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void retrieveAdditionalDataFromDB(){
+     //   currentDate = "20-Nov-2022";
         DocumentReference landingBeachRef = db.collection("survey").document(currentDate).collection(beachName).document(currentDate);
         landingBeachRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @SuppressLint("SuspiciousIndentation")
@@ -234,7 +261,7 @@ public class MainActivity extends AppCompatActivity {
 
                        // showDataOnUI();
                     } else {
-                        Log.d("Beach Landing Query", "No such document");
+                        Log.d("Beach Landing Query", "No such document: Not today");
                        // showDataOnUI();
                     }
                 } else {

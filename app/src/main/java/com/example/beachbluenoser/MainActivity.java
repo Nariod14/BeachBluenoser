@@ -22,6 +22,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -33,8 +34,9 @@ public class MainActivity extends AppCompatActivity {
     final  FirebaseFirestore db = FirebaseFirestore.getInstance();
     ArrayList<BeachItem> beachList;
 
-    String[] beach = {"All Beaches", "Rocky Beach", "Sandy Beach", "Shore Accessibility", "Floating Wheelchair"};
+    String[] beach = {"All Beaches", "Rocky", "Sandy", "Shore Accessibility", "Floating Wheelchair"};
     String[] capacity = {"High Capacity", "Medium Capacity", "Low Capacity"};
+    String filterItem = "";
 
 
     ArrayAdapter<String> adapterItems;
@@ -126,7 +128,10 @@ public class MainActivity extends AppCompatActivity {
 
                                 BeachItem beachItem = new BeachItem(DataName,DataImageValue,landingBeachWheelChairRampValue,landingBeachCapacityValue,landingBeachSandyOrRockyValue);
                                 Log.d("Here22","cap:"+beachItem.getcapacity()+";");
-                                beachItemArrayList.add(beachItem);
+
+                                if (Objects.equals(filterItem, "") || Objects.equals(beachItem.getsandyOrRocky(), filterItem)) {
+                                    beachItemArrayList.add(beachItem);
+                                }
 
                             }
                         } else {
@@ -150,6 +155,13 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 String item = adapterView.getItemAtPosition(position).toString();
                 Toast.makeText(MainActivity.this, item + "Option", Toast.LENGTH_SHORT).show();
+                beachList.clear();
+                if (item.equals("All Beaches")){
+                    filterItem = "";
+                } else {
+                    filterItem = item;
+                }
+                getDataFromDbAndShowOnUI();
             }
 
         });

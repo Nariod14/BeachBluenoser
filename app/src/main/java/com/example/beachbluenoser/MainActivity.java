@@ -34,9 +34,11 @@ public class MainActivity extends AppCompatActivity {
     final  FirebaseFirestore db = FirebaseFirestore.getInstance();
     ArrayList<BeachItem> beachList;
 
+
     String[] beach = {"All Beaches", "Rocky", "Sandy", "Shore Accessibility", "Floating Wheelchair"};
-    String[] capacity = {"High Capacity", "Medium Capacity", "Low Capacity"};
-    String filterItem = "";
+    String[] capacity = {"Any Capacity", "High", "Medium", "Low"};
+    String filterBeachItem = "";
+    String filterCapacityItem = "";
 
 
     ArrayAdapter<String> adapterItems;
@@ -129,8 +131,10 @@ public class MainActivity extends AppCompatActivity {
                                 BeachItem beachItem = new BeachItem(DataName,DataImageValue,landingBeachWheelChairRampValue,landingBeachCapacityValue,landingBeachSandyOrRockyValue);
                                 Log.d("Here22","cap:"+beachItem.getcapacity()+";");
 
-                                if (Objects.equals(filterItem, "") || Objects.equals(beachItem.getsandyOrRocky(), filterItem)) {
-                                    beachItemArrayList.add(beachItem);
+                                if (Objects.equals(filterBeachItem, "") || Objects.equals(beachItem.getsandyOrRocky(), filterBeachItem)) {
+                                    if (Objects.equals(filterCapacityItem, "") || Objects.equals(beachItem.getcapacity(), filterCapacityItem)) {
+                                        beachItemArrayList.add(beachItem);
+                                    }
                                 }
 
                             }
@@ -153,13 +157,13 @@ public class MainActivity extends AppCompatActivity {
         beachType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                String item = adapterView.getItemAtPosition(position).toString();
-                Toast.makeText(MainActivity.this, item + "Option", Toast.LENGTH_SHORT).show();
+                String beachItem = adapterView.getItemAtPosition(position).toString();
+                Toast.makeText(MainActivity.this, beachItem + " Option", Toast.LENGTH_SHORT).show();
                 beachList.clear();
-                if (item.equals("All Beaches")){
-                    filterItem = "";
+                if (beachItem.equals("All Beaches")){
+                    filterBeachItem = "";
                 } else {
-                    filterItem = item;
+                    filterBeachItem = beachItem;
                 }
                 getDataFromDbAndShowOnUI();
             }
@@ -177,8 +181,16 @@ public class MainActivity extends AppCompatActivity {
         capacityVolume.setOnItemClickListener((new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                String capacity = adapterView.getItemAtPosition(position).toString();
-                Toast.makeText(MainActivity.this, capacity, Toast.LENGTH_SHORT).show();
+                String capacityItem = adapterView.getItemAtPosition(position).toString();
+                Toast.makeText(MainActivity.this, capacityItem, Toast.LENGTH_SHORT).show();
+                beachList.clear();
+                if (capacityItem.equals("Any Capacity")) {
+                    filterCapacityItem = "";
+                }
+                else {
+                    filterCapacityItem = capacityItem;
+                }
+                getDataFromDbAndShowOnUI();
             }
         }));
     }

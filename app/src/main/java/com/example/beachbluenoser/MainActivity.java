@@ -155,12 +155,6 @@ public class MainActivity extends AppCompatActivity {
                                 String recyclerViewSandyOrRockyValue="";
                                 String recyclerViewVisualWaterConditionsValue="";
                                 if(document.exists()){
-
-                                    if(document.get("capacity")!=null){
-                                        recyclerViewCapacityValue = document.get("capacity").toString();
-                                    }else{
-                                        recyclerViewCapacityValue = "";
-                                    }
                                     if(document.get("wheelchairRamp")!=null){
                                         recyclerViewWheelChairRampValue = document.get("wheelchairRamp").toString();
                                     }else{
@@ -176,10 +170,12 @@ public class MainActivity extends AppCompatActivity {
                                 retrieveAdditionalDataFromDB();
 
                                 Log.d("PrintingHere","BeachName: "+DataName + " capacity: "+beachCapacityTextForTheDay +  " visualWaterConditions: " +beachVisualWaveConditionsTextForTheDay);
-                                BeachItem beachItem = new BeachItem(DataName,DataImageValue,beachCapacityTextForTheDay,beachVisualWaveConditionsTextForTheDay);
-                                beachItemArrayList.add(beachItem);
-                                BeachItem beachItem = new BeachItem(DataName,DataImageValue,landingBeachWheelChairRampValue,landingBeachCapacityValue,landingBeachSandyOrRockyValue);
-                                Log.d("Here22","cap:"+beachItem.getcapacity()+";");
+                                BeachItem beachItem = new BeachItem(DataName,DataImageValue,beachCapacityTextForTheDay,
+                                        beachVisualWaveConditionsTextForTheDay,recyclerViewWheelChairRampValue,recyclerViewSandyOrRockyValue);
+                                //beachItemArrayList.add(beachItem);
+                                Log.d("Capacity:","cap:"+beachItem.getcapacity());
+                                Log.d("FilterItem:","filterItem:"+filterCapacityItem);
+
 
                                 if (Objects.equals(filterBeachItem, "") || Objects.equals(beachItem.getsandyOrRocky(), filterBeachItem)) {
                                     if (Objects.equals(filterCapacityItem, "") || Objects.equals(beachItem.getcapacity(), filterCapacityItem)) {
@@ -231,6 +227,7 @@ public class MainActivity extends AppCompatActivity {
         capacityVolume.setOnItemClickListener((new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                //dropdown item
                 String capacityItem = adapterView.getItemAtPosition(position).toString();
                 Toast.makeText(MainActivity.this, capacityItem, Toast.LENGTH_SHORT).show();
                 beachList.clear();
@@ -238,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
                     filterCapacityItem = "";
                 }
                 else {
-                    filterCapacityItem = capacityItem;
+                    filterCapacityItem = "Beach Capacity: "+ capacityItem + " Capacity";
                 }
                 getDataFromDbAndShowOnUI();
             }

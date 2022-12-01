@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (beachBluenoserAuth.getCurrentUser() != null){
-                    Intent profileIntent = new Intent(MainActivity.this, profile.class);
+                    Intent profileIntent = new Intent(MainActivity.this, Login.class); //TODO: Set to profile page
                     startActivity(profileIntent);
                 } else {
                     Intent loginIntent = new Intent(MainActivity.this, Login.class);

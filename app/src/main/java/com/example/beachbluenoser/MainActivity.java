@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -38,6 +39,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     final  FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseAuth beachBluenoserAuth = FirebaseAuth.getInstance();
     ArrayList<BeachItem> beachList;
 
     String[] beach = {"All Beaches", "Rocky Beach", "Sandy Beach", "Shore Accessibility", "Floating Wheelchair"};
@@ -69,8 +71,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final Button homeBtn = findViewById(R.id.HomeButton);
-        final Button loginBtn = findViewById(R.id.LoginButton);
-
+        final Button loginProfileBtn = findViewById(R.id.LoginButton);
+        beachBluenoserAuth.signOut();
+        if (beachBluenoserAuth.getCurrentUser() != null){
+            loginProfileBtn.setText("Profile");
+        }
 
         Date c = Calendar.getInstance().getTime();
 
@@ -82,20 +87,20 @@ public class MainActivity extends AppCompatActivity {
         homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: update code so that it takes user back to homepage all the time
-
-                /*setContentView(R.layout.activity_main);
-                getDataFromDbAndShowOnUI();*/
-
                 Intent homeIntent = new Intent(MainActivity.this, MainActivity.class);
                 startActivity(homeIntent);
             }
         });
-        loginBtn.setOnClickListener(new View.OnClickListener() {
+        loginProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent loginIntent = new Intent(MainActivity.this, Login.class);
-                startActivity(loginIntent);
+                if (beachBluenoserAuth.getCurrentUser() != null){
+                    Intent profileIntent = new Intent(MainActivity.this, Login.class); //TODO: Set to profile page
+                    startActivity(profileIntent);
+                } else {
+                    Intent loginIntent = new Intent(MainActivity.this, Login.class);
+                    startActivity(loginIntent);
+                }
             }
         });
     }

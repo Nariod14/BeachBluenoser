@@ -14,7 +14,7 @@ public class BeachItem {
 
     }
 
-    public BeachItem(String name,String imageSource,String capacity,String visualWaterConditions){
+    public BeachItem(String name,String imageSource,String capacity,String visualWaterConditions,String wheelChairRamp,String sandyOrRocky){
         this.name = name;
         this.wheelChairRamp = wheelChairRamp;
         this.capacity = capacity;

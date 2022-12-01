@@ -67,7 +67,7 @@ public class BeachListActivity extends AppCompatActivity {
                                 String landingBeachCapacityValue="";
                                 String landingBeachWheelChairRampValue="";
                                 String landingBeachSandyOrRockyValue="";
-
+                                String landingBeachVisualWaterConditions="";
                                 if(document.exists()){
                                     if(document.getData().get("capacity")!=null){
                                         landingBeachCapacityValue = document.getData().get("capacity").toString();
@@ -86,7 +86,7 @@ public class BeachListActivity extends AppCompatActivity {
                                     }
                                 }
 
-                                BeachItem beachItem = new BeachItem(DataName,DataImage,landingBeachWheelChairRampValue,landingBeachCapacityValue,landingBeachSandyOrRockyValue);
+                                BeachItem beachItem = new BeachItem(DataName,DataImage,landingBeachCapacityValue,landingBeachVisualWaterConditions);
 
                                 beachItemArrayList.add(beachItem);
                             }

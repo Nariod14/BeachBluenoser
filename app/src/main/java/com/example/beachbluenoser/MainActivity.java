@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import androidx.annotation.NonNull;
@@ -26,14 +28,17 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -56,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     public int highCapacityCount=0;
     public String visualWaterConditionsText;
     public String capacityText;
+    public List<String> dates = new ArrayList<>();
 
 
     public String currentDate;
@@ -83,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         String formattedDate = df.format(c);
         currentDate = formattedDate;
 
-        resetDataForToday();
+        checkDate();
 
         homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,23 +119,65 @@ public class MainActivity extends AppCompatActivity {
         getDataFromDbAndShowOnUI();
     }
 
-    private void resetDataForToday() {
-       
+    private void checkDate() {
+
         db.collection("survey").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                List<String> list = new ArrayList<>();
+
                 if (task.isSuccessful()) {
-                    List<String> list = new ArrayList<>();
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         list.add(document.getId());
+                       // dates = list;
+                        if(list.contains(currentDate)){
+                            Log.d("ResetDataforToday","yes contains");
+
+                        }else{
+                            Log.d("ResetDataforToday","no does not. ");
+                            resetDataForToday();
+                        }
+
                     }
                     Log.d("printDocs", list.toString());
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
                 }
+
+            }
+
+        });
+
+
+    }
+
+
+    private void resetDataForToday(){
+        Log.d("StartReset","yes");
+
+        Map<String, Object> resetText = new HashMap<>();
+
+        resetText.put("beachCapacityTextForTheDay", "Beach Capacity: No data today!");
+        resetText.put("beachVisualWaveConditionsTextForTheDay", "Visual Water Conditions: No data today!");
+
+        db.collection("beach").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d("resetting","name: "+document.getId());
+                        document.getReference().update(resetText);
+                    }
+                } else {
+                    Log.w(TAG, "Error resetingData", task.getException());
+                    Log.w("BeachRetrievalLoopERROR", "Error getting documents.", task.getException());
+                }
             }
         });
-/////
+
+
+
 
     }
 

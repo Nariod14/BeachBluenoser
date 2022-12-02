@@ -112,8 +112,7 @@ public class beachLanding extends AppCompatActivity {
                                 beachLocation = beachLat + "" + beachLong;
                             }
                         }
-
-
+                        
                         showDataOnUI();
 
                     } else {

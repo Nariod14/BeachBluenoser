@@ -19,36 +19,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.084" />
 
-    <RadioGroup
-        android:id="@+id/userParkingOptions"
-        android:layout_width="362dp"
-        android:layout_height="53dp"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal"
+    <Spinner
+        android:id="@+id/visualParkingConditionsSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/selectionDropdown"
+        android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userParkingQuestion">
-
-        <RadioButton
-            android:id="@+id/userParkingOption1"
-            android:layout_width="115dp"
-            android:layout_height="wrap_content"
-            android:text="Many spots" />
-
-        <RadioButton
-            android:id="@+id/userParkingOption2"
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:text="Few spots" />
-
-        <RadioButton
-            android:id="@+id/userParkingOption3"
-            android:layout_width="137dp"
-            android:layout_height="wrap_content"
-            android:text="Little/No Spots" />
-
-    </RadioGroup>
-
+        app:layout_constraintTop_toBottomOf="@+id/userParkingQuestion"
+        tools:ignore="DuplicateSpeakableTextCheck" />
 
     <TextView
         android:id="@+id/userCompanionQuestion"
@@ -73,45 +54,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <RadioGroup
-        android:id="@+id/userCrowdOptions"
-        android:layout_width="363dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="4dp"
-        android:orientation="horizontal"
+    <Spinner
+        android:id="@+id/visualCapacityConditionsSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/selectionDropdown"
+        android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userCrowdQuestion">
+        app:layout_constraintTop_toBottomOf="@+id/userCrowdQuestion"
+        tools:ignore="DuplicateSpeakableTextCheck" />
 
-        <RadioButton
-            android:id="@+id/userCrowdOption1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Many people" />
-
-        <RadioButton
-            android:id="@+id/userCrowdOption2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Few people" />
-
-        <RadioButton
-            android:id="@+id/userCrowdOption3"
-            android:layout_width="144dp"
-            android:layout_height="wrap_content"
-            android:text="Little/No People" />
-    </RadioGroup>
 
     <Button
         android:id="@+id/userSubmitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
         android:onClick="beachCompanionNumber"
         android:text="Submit"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userCrowdOptions" />
+        app:layout_constraintTop_toBottomOf="@+id/visualCapacityConditionsSpinner" />
 
     <EditText
         android:id="@+id/userCompanionInput"

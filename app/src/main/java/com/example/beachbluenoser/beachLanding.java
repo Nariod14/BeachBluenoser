@@ -1,23 +1,13 @@
 package com.example.beachbluenoser;
 
-import static android.content.ContentValues.TAG;
-
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,16 +17,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 public class beachLanding extends AppCompatActivity {
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -125,22 +110,6 @@ public class beachLanding extends AppCompatActivity {
         getPreliminaryDataFromDB();
     }
 
-    private void getUserDataFromDB() {
-        DocumentReference userRef = db.collection("users").document(userID);
-        userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        userType = document.getData().get("userType").toString();
-                        Log.d("USERTYPE ", userType);
-                    }
-                }
-            }
-        });
-    }
-
     private void getPreliminaryDataFromDB() {
         DocumentReference landingBeachRef = db.collection("beach").document(beachName);
         landingBeachRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -168,9 +137,7 @@ public class beachLanding extends AppCompatActivity {
                     } else {
                         landingBeachVisualWaterConditionsText = "Water Conditions: No data today!";
                     }
-
                     showDataOnUI();
-
                 } else {
                     Log.d("Beach Landing Query", "No such document");
                 }

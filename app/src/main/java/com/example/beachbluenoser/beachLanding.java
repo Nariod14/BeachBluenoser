@@ -83,13 +83,13 @@ public class beachLanding extends AppCompatActivity {
             }
         }
 
+        getPreliminaryDataFromDB();
+
         Date c = Calendar.getInstance().getTime();
 
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
         String formattedDate = df.format(c);
         currentDate = formattedDate;
-
-
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,8 +119,8 @@ public class beachLanding extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        super.onResume();
         getPreliminaryDataFromDB();
+        super.onResume();
     }
 
     private void getPreliminaryDataFromDB() {

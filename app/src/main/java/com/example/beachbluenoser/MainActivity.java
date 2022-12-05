@@ -127,15 +127,13 @@ public class MainActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         list.add(document.getId());
-                       // dates = list;
-                        if(list.contains(currentDate)){
-                            Log.d("ResetDataforToday","yes contains");
+                    }
+                    if(list.contains(currentDate)){
+                        Log.d("ResetDataforToday","yes contains");
 
-                        }else{
-                            Log.d("ResetDataforToday","no does not. ");
-                            resetDataForToday();
-                        }
-
+                    }else{
+                        Log.d("ResetDataforToday","no does not. ");
+                        resetDataForToday();
                     }
                     Log.d("printDocs", list.toString());
                 } else {

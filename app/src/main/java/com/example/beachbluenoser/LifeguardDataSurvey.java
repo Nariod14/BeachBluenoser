@@ -2,6 +2,7 @@ package com.example.beachbluenoser;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -95,12 +96,14 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
                  beachCapacityValue = beachCapacitySpinner.getSelectedItem().toString();
                 Log.d("Values",visualWaterConditionsValue+" "+beachCapacityValue);
                 getCurrentValues();
-
-                Intent intent = new Intent(LifeguardDataSurvey.this,beachLanding.class);
-                intent.putExtra("beachName",beachName);
-
-                startActivity(intent);
-
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(LifeguardDataSurvey.this,beachLanding.class);
+                        intent.putExtra("beachName",beachName);
+                        startActivity(intent);
+                    }
+                }, 10);
             }
         });
 

@@ -17,20 +17,27 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Map;
 
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -50,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
     public String visualWaterConditionsText;
     public String capacityText;
+    public List<String> dates = new ArrayList<>();
 
     public String currentDate;
     public String beachName;
@@ -78,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
         String formattedDate = df.format(c);
         currentDate = formattedDate;
 
+        checkDate();
+
         homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,13 +109,67 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
         getDataFromDbAndShowOnUI();
     }
 
-    private void getDataFromDbAndShowOnUI() {
+    private void checkDate() {
+
+        db.collection("survey").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                List<String> list = new ArrayList<>();
+
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        list.add(document.getId());
+                       // dates = list;
+                        if(list.contains(currentDate)){
+                            Log.d("ResetDataforToday","yes contains");
+
+                        }else{
+                            Log.d("ResetDataforToday","no does not. ");
+                            resetDataForToday();
+                        }
+
+                    }
+                    Log.d("printDocs", list.toString());
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+                }
+            }
+        });
+    }
+
+    private void resetDataForToday(){
+        Log.d("StartReset","yes");
+
+        Map<String, Object> resetText = new HashMap<>();
+
+        resetText.put("beachCapacityTextForTheDay", "Beach Capacity: No data today!");
+        resetText.put("beachVisualWaveConditionsTextForTheDay", "Visual Water Conditions: No data today!");
+
+        db.collection("beach").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d("resetting","name: "+document.getId());
+                        document.getReference().update(resetText);
+                    }
+                } else {
+                    Log.w(TAG, "Error resetingData", task.getException());
+                    Log.w("BeachRetrievalLoopERROR", "Error getting documents.", task.getException());
+                }
+            }
+        });
+    }
+
+        private void getDataFromDbAndShowOnUI() {
         // to toggle between the "deleted posts" and active posts button
         // resetToggle();
         final ArrayList<BeachItem> beachItemArrayList = new ArrayList<>();
@@ -251,7 +315,7 @@ public class MainActivity extends AppCompatActivity {
                             visualWaterConditionsText  = document.getData().get("beachVisualWaveConditionsTextForTheDay").toString();
                        // showDataOnUI();
                     } else {
-                        Log.d("Beach Landing Query", "No such document");
+                        Log.d("Beach Landing Query", "No such document: Not today");
                        // showDataOnUI();
                     }
                 } else {
@@ -262,8 +326,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadMasterBeachList() {
-        Log.w("Beach list size check22222", "B4444");
-        Log.w("Beach list size check22222", "Beach list size "+beachList.size());
         createRecyclerView(beachList);
     }
 

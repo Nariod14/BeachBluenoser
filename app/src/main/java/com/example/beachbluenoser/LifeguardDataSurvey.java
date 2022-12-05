@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -197,7 +198,22 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
         survey2.put("beachVisualWaveConditionsTextForTheDay", surveyVisualWaterConditionsTextForTheDay);
 
         survey.put("date", formattedDate);
+        Map<String, Object> emptyVal = new HashMap<>();
+        emptyVal.put("emptyField","EmptyVal");
 
+        DocumentReference surveyEmptyField = db.collection("survey").document(currentDate);
+        surveyEmptyField.set(emptyVal,SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("LifeGuardSurveyWrite22222222", "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("LifeGuardSurveyWrite2222", "Error writing document", e);
+                    }
+                });
         DocumentReference surveyBeachRef = db.collection("survey").document(formattedDate).collection(beachName).document(formattedDate);
 
         surveyBeachRef.set(survey,SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {

@@ -32,17 +32,13 @@ public class BeachListActivity extends AppCompatActivity {
     ArrayList<BeachItem> beachList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_beach_list);
-
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
         getDataFromDbAndShowOnUI();
     }
 
@@ -67,7 +63,7 @@ public class BeachListActivity extends AppCompatActivity {
                                 String landingBeachCapacityValue="";
                                 String landingBeachWheelChairRampValue="";
                                 String landingBeachSandyOrRockyValue="";
-
+                                String landingBeachVisualWaterConditions="";
                                 if(document.exists()){
                                     if(document.getData().get("capacity")!=null){
                                         landingBeachCapacityValue = document.getData().get("capacity").toString();
@@ -86,8 +82,8 @@ public class BeachListActivity extends AppCompatActivity {
                                     }
                                 }
 
-                                BeachItem beachItem = new BeachItem(DataName,DataImage,landingBeachWheelChairRampValue,landingBeachCapacityValue,landingBeachSandyOrRockyValue);
-
+                                BeachItem beachItem = new BeachItem(DataName,DataImage,landingBeachCapacityValue,
+                                        landingBeachVisualWaterConditions, landingBeachWheelChairRampValue,landingBeachSandyOrRockyValue);
                                 beachItemArrayList.add(beachItem);
                             }
                         } else {

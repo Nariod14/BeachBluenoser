@@ -2,9 +2,6 @@ package com.example.beachbluenoser;
 
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,7 +53,7 @@ import java.util.ArrayList;
 
                 listItem.beachItemCapacity.setText("Capacity:");
             }else {
-                listItem.beachItemCapacity.setText("Capacity: "+beaches.get(pos).getcapacity());
+                listItem.beachItemCapacity.setText(beaches.get(pos).getcapacity());
             }
             if(beaches.get(pos).getwheelChairRamp()==null||beaches.get(pos).getwheelChairRamp()==""){
 
@@ -66,10 +63,17 @@ import java.util.ArrayList;
             }
             if(beaches.get(pos).getsandyOrRocky()==null||beaches.get(pos).getsandyOrRocky()==""){
 
-                listItem.beachItemSandyOrRocky.setText("Sandy / Rocky:");
+              //  listItem.beachItemSandyOrRocky.setText("Sandy / Rocky:");
             }else {
-                listItem.beachItemSandyOrRocky.setText("Sandy or Rocky: "+beaches.get(pos).getsandyOrRocky());
+              //  listItem.beachItemSandyOrRocky.setText("Sandy or Rocky: "+beaches.get(pos).getsandyOrRocky());
             }
+            if(beaches.get(pos).getvisualWaterConditions()==null||beaches.get(pos).getvisualWaterConditions()==""){
+
+                listItem.beachItemVisualWaterConditions.setText("Visual Water Conditions:");
+            }else {
+                listItem.beachItemVisualWaterConditions.setText(beaches.get(pos).getvisualWaterConditions());
+            }
+
 
 
             String desc = beaches.get(pos).getDescription();
@@ -91,9 +95,9 @@ import java.util.ArrayList;
             TextView beachRating;
             ImageView beachImage;
             TextView beachItemCapacity;
-            TextView beachItemSandyOrRocky;
+           // TextView beachItemSandyOrRocky;
             TextView beachItemWheelChairRamp;
-
+            TextView beachItemVisualWaterConditions;
             // TextView postTitle;
             //  TextView postDescription;
             //  ImageView jobIcon;
@@ -110,7 +114,8 @@ import java.util.ArrayList;
                 beachImage = listItemView.findViewById(R.id.BeachImage);
                 //beachImage
                 beachItemCapacity = listItemView.findViewById(R.id.beachItemCapacityTextView);
-                beachItemSandyOrRocky = listItemView.findViewById(R.id.beachItemRockyOrSandyTextView);
+                beachItemVisualWaterConditions = listItemView.findViewById(R.id.visualWaterConditionsTextView);
+               // beachItemSandyOrRocky = listItemView.findViewById(R.id.visualWaterConditionsTextView);
                 beachItemWheelChairRamp = listItemView.findViewById(R.id.beachItemWheelChairRampTextView);
                 beachLayout = listItemView.findViewById(R.id.beachItem);
 

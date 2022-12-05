@@ -2,6 +2,7 @@ package com.example.beachbluenoser;
 
 import static android.content.ContentValues.TAG;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -16,12 +17,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Objects;
 
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -31,40 +40,71 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     final  FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseAuth beachBluenoserAuth = FirebaseAuth.getInstance();
     ArrayList<BeachItem> beachList;
 
-    String[] beach = {"All Beaches", "Rocky Beach", "Sandy Beach", "Shore Accessibility", "Floating Wheelchair"};
-    String[] capacity = {"High Capacity", "Medium Capacity", "Low Capacity"};
+
+    String[] beach = {"All Beaches", "Rocky", "Sandy", "Shore Accessibility", "Floating Wheelchair"};
+    String[] capacity = {"Any Capacity", "High", "Medium", "Low"};
+    String filterBeachItem = "";
+    String filterCapacityItem = "";
+
+    public int calmWatersCount=0;
+    public int mediumWatersCount=0;
+    public int roughWatersCount=0;
+    public int lowCapacityCount=0;
+    public int mediumCapacityCount=0;
+    public int highCapacityCount=0;
+    public String visualWaterConditionsText;
+    public String capacityText;
 
 
+    public String currentDate;
+    public String beachName;
     ArrayAdapter<String> adapterItems;
 
     AutoCompleteTextView beachType; //Beach
     AutoCompleteTextView capacityVolume; //Capacity
+
+    interface MyCallback {
+        void callbackCall();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final Button homeBtn = findViewById(R.id.HomeButton);
-        final Button loginBtn = findViewById(R.id.LoginButton);
+        final Button loginProfileBtn = findViewById(R.id.LoginButton);
+        beachBluenoserAuth.signOut();
+        if (beachBluenoserAuth.getCurrentUser() != null){
+            loginProfileBtn.setText("Profile");
+        }
+
+        Date c = Calendar.getInstance().getTime();
+
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+        String formattedDate = df.format(c);
+        currentDate = formattedDate;
+
+
         homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: update code so that it takes user back to homepage all the time
-
-                /*setContentView(R.layout.activity_main);
-                getDataFromDbAndShowOnUI();*/
-
                 Intent homeIntent = new Intent(MainActivity.this, MainActivity.class);
                 startActivity(homeIntent);
             }
         });
-        loginBtn.setOnClickListener(new View.OnClickListener() {
+        loginProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent loginIntent = new Intent(MainActivity.this, Login.class);
-                startActivity(loginIntent);
+                if (beachBluenoserAuth.getCurrentUser() != null){
+                    Intent profileIntent = new Intent(MainActivity.this, Login.class); //TODO: Set to profile page
+                    startActivity(profileIntent);
+                } else {
+                    Intent loginIntent = new Intent(MainActivity.this, Login.class);
+                    startActivity(loginIntent);
+                }
             }
         });
     }
@@ -90,6 +130,19 @@ public class MainActivity extends AppCompatActivity {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 String DataName =  document.getData().get("name").toString();
+                                beachName = DataName;
+                                String beachCapacityTextForTheDay ="";
+                                String beachVisualWaveConditionsTextForTheDay = "";
+                                if(!(document.getData().get("beachCapacityTextForTheDay")==null)) {
+                                     beachCapacityTextForTheDay = document.getData().get("beachCapacityTextForTheDay").toString();
+                                }else{
+                                    beachCapacityTextForTheDay="Beach Capacity: No data today!";
+                                }
+                                if(!(document.getData().get("beachVisualWaveConditionsTextForTheDay")==null)) {
+                                     beachVisualWaveConditionsTextForTheDay = document.getData().get("beachVisualWaveConditionsTextForTheDay").toString();
+                                }else{
+                                    beachVisualWaveConditionsTextForTheDay ="Water Conditions: No data today!";
+                                }
                                 Object DataImage  = document.getData().get("image");
                                 String DataImageValue;
                                 if(DataImage == null){
@@ -97,39 +150,38 @@ public class MainActivity extends AppCompatActivity {
                                 }else {
                                     DataImageValue = document.getData().get("image").toString();
                                 }
-                                String landingBeachCapacityValue="";
-                                String landingBeachWheelChairRampValue="";
-                                String landingBeachSandyOrRockyValue="";
-                                Log.d("be44444","4444");
+                                String recyclerViewCapacityValue="";
+                                String recyclerViewWheelChairRampValue="";
+                                String recyclerViewSandyOrRockyValue="";
+                                String recyclerViewVisualWaterConditionsValue="";
                                 if(document.exists()){
-                                    Log.d("in2","2222222222222");
-
-                                    if(document.get("capacity")!=null){
-                                        Log.d("in1","setting to val ");
-                                        landingBeachCapacityValue = document.get("capacity").toString();
-                                        Log.d("in1","setting to val "+landingBeachCapacityValue);
-                                    }else{
-                                        landingBeachCapacityValue = "";
-                                    }
                                     if(document.get("wheelchairRamp")!=null){
-                                        landingBeachWheelChairRampValue = document.get("wheelchairRamp").toString();
+                                        recyclerViewWheelChairRampValue = document.get("wheelchairRamp").toString();
                                     }else{
-                                        landingBeachWheelChairRampValue = "";
+                                        recyclerViewWheelChairRampValue = "";
                                     }
                                     if(document.get("sandyOrRocky")!=null){
-                                        landingBeachSandyOrRockyValue = document.get("sandyOrRocky").toString();
+                                        recyclerViewSandyOrRockyValue = document.get("sandyOrRocky").toString();
                                     }else{
-                                        landingBeachSandyOrRockyValue = "";
+                                        recyclerViewSandyOrRockyValue = "";
                                     }
                                 }
 
+                                retrieveAdditionalDataFromDB();
+
+                                Log.d("PrintingHere","BeachName: "+DataName + " capacity: "+beachCapacityTextForTheDay +  " visualWaterConditions: " +beachVisualWaveConditionsTextForTheDay);
+                                BeachItem beachItem = new BeachItem(DataName,DataImageValue,beachCapacityTextForTheDay,
+                                        beachVisualWaveConditionsTextForTheDay,recyclerViewWheelChairRampValue,recyclerViewSandyOrRockyValue);
+                                //beachItemArrayList.add(beachItem);
+                                Log.d("Capacity:","cap:"+beachItem.getcapacity());
+                                Log.d("FilterItem:","filterItem:"+filterCapacityItem);
 
 
-
-
-                                BeachItem beachItem = new BeachItem(DataName,DataImageValue,landingBeachWheelChairRampValue,landingBeachCapacityValue,landingBeachSandyOrRockyValue);
-                                Log.d("Here22","cap:"+beachItem.getcapacity()+";");
-                                beachItemArrayList.add(beachItem);
+                                if (Objects.equals(filterBeachItem, "") || Objects.equals(beachItem.getsandyOrRocky(), filterBeachItem)) {
+                                    if (Objects.equals(filterCapacityItem, "") || Objects.equals(beachItem.getcapacity(), filterCapacityItem)) {
+                                        beachItemArrayList.add(beachItem);
+                                    }
+                                }
 
                             }
                         } else {
@@ -151,29 +203,76 @@ public class MainActivity extends AppCompatActivity {
         beachType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                String item = adapterView.getItemAtPosition(position).toString();
-                Toast.makeText(MainActivity.this, item + "Option", Toast.LENGTH_SHORT).show();
+                String beachItem = adapterView.getItemAtPosition(position).toString();
+                Toast.makeText(MainActivity.this, beachItem + " Option", Toast.LENGTH_SHORT).show();
+                beachList.clear();
+                if (beachItem.equals("All Beaches")){
+                    filterBeachItem = "";
+                } else {
+                    filterBeachItem = beachItem;
+                }
+                getDataFromDbAndShowOnUI();
             }
 
         });
 
         //Capacity
-//        setContentView(R.layout.activity_main);
-//        capacityVolume = findViewById(R.id.auto_complete_textview2);
-//
-//        ArrayAdapter<String> adapterItems2; //For Capacity
-//        adapterItems2 = new ArrayAdapter<String>(this, R.layout.capacity_list, capacity);
-//        capacityVolume.setAdapter(adapterItems2);
-//
-//        // Capacity
-//        capacityVolume.setOnItemClickListener((new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-//                String capacity = adapterView.getItemAtPosition(position).toString();
-//                Toast.makeText(MainActivity.this, capacity, Toast.LENGTH_SHORT).show();
-//            }
-//        }));
+        capacityVolume = findViewById(R.id.auto_complete_textview2);
+
+        ArrayAdapter<String> adapterItems2; //For Capacity
+        adapterItems2 = new ArrayAdapter<String>(this, R.layout.capacity_list, capacity);
+        capacityVolume.setAdapter(adapterItems2);
+
+        // Capacity
+        capacityVolume.setOnItemClickListener((new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                //dropdown item
+                String capacityItem = adapterView.getItemAtPosition(position).toString();
+                Toast.makeText(MainActivity.this, capacityItem, Toast.LENGTH_SHORT).show();
+                beachList.clear();
+                if (capacityItem.equals("Any Capacity")) {
+                    filterCapacityItem = "";
+                }
+                else {
+                    filterCapacityItem = "Beach Capacity: "+ capacityItem + " Capacity";
+                }
+                getDataFromDbAndShowOnUI();
+            }
+        }));
     }
+
+
+    private void retrieveAdditionalDataFromDB(){
+        DocumentReference landingBeachRef = db.collection("survey").document(currentDate).collection(beachName).document(currentDate);
+        landingBeachRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @SuppressLint("SuspiciousIndentation")
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        if(!(document.getData().get("beachCapacityTextForTheDay")==null))
+                            capacityText  =document.getData().get("beachCapacityTextForTheDay").toString();
+                        if(!(document.getData().get("beachVisualWaveConditionsTextForTheDay")==null))
+                            visualWaterConditionsText  = document.getData().get("beachVisualWaveConditionsTextForTheDay").toString();
+
+
+
+
+                       // showDataOnUI();
+                    } else {
+                        Log.d("Beach Landing Query", "No such document");
+                       // showDataOnUI();
+                    }
+                } else {
+                    Log.d("Beach Landing Query", "get failed with ", task.getException());
+                }
+            }
+        });
+    }
+
+
 
     private void loadMasterBeachList() {
         Log.w("Beach list size check22222", "B4444");
@@ -198,9 +297,48 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.Adapter mAdapter = new MasterBeachListAdapter(beachList);
         recyclerView.setAdapter(mAdapter);
 
+        /*
+        if(beachList != null && beachList.size() > 0){
+            //hide message that says the list is empty
+            emptyListTextView.setHeight(0);
+        }else {
+            emptyListTextView.setHeight(emptyListTextViewOriginalHeight);
+        }
+
+         */
 
     }
 
+    /*
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        return NavigationUI.navigateUp(navController, appBarConfiguration)
+                || super.onSupportNavigateUp();
+    }
+
+     */
 }
 

@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,7 +18,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -30,22 +30,22 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class LifeguardDataSurvey extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class UserDataSurvey extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    public String visualWaterConditionsValue;
+    public String parkingValue;
     public String beachName;
     public String currentDate;
     public String beachCapacityValue;
     public TextView name;
-    public String surveyVisualWaterConditionsTextForTheDay;
+    public String surveyParkingTextForTheDay;
     public String surveyCapacityTextForTheDay;
-    public long currentVisualWaterConditionsValue;
+    public long currentParkingValue;
     public long currentBeachCapacityValue;
 
-    public int calmWatersCount=0;
-    public int mediumWatersCount=0;
-    public int roughWatersCount=0;
+    public int lowParkingCount=0;
+    public int mediumParkingCount=0;
+    public int highParkingCount=0;
     public int lowCapacityCount=0;
     public int mediumCapacityCount=0;
     public int highCapacityCount=0;
@@ -54,7 +54,7 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.lifeguard_data);
+        setContentView(R.layout.user_survey);
 
         Date c = Calendar.getInstance().getTime();
 
@@ -66,47 +66,45 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
         if(bundle != null){
             if(bundle.getString("beachName")!=null) {
                 beachName = bundle.getString("beachName");
-
             }
         }
 
         name = findViewById(R.id.surveyTitle);
         name.setText(beachName);
 
-        Spinner visualWaveConditionSpinner = findViewById(R.id.visualWaterConditionsSpinner);
-        ArrayAdapter<CharSequence> adapterVWCSpinner = ArrayAdapter.createFromResource(this,R.array.visualWaterConditionsValues, android.R.layout.simple_spinner_item);
-        adapterVWCSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        visualWaveConditionSpinner.setAdapter(adapterVWCSpinner);
-        visualWaveConditionSpinner.setOnItemSelectedListener(this);
+        Spinner parkingConditionSpinner = findViewById(R.id.parkingConditionsSpinner);
+        ArrayAdapter<CharSequence> adapterParkingSpinner = ArrayAdapter.createFromResource(this,R.array.parkingSpotValues, android.R.layout.simple_spinner_item);
+        adapterParkingSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        parkingConditionSpinner.setAdapter(adapterParkingSpinner);
+        parkingConditionSpinner.setOnItemSelectedListener(this);
 
-        Spinner beachCapacitySpinner = findViewById(R.id.lifeguardBeachCapacitySpinner);
+        Spinner UserbeachCapacitySpinner = findViewById(R.id.userCapacitySpinner);
         ArrayAdapter<CharSequence> adapterCapacity = ArrayAdapter.createFromResource(this,R.array.beachCapacityValues, android.R.layout.simple_spinner_item);
         adapterCapacity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        beachCapacitySpinner.setAdapter(adapterCapacity);
-        beachCapacitySpinner.setOnItemSelectedListener(this);
+        UserbeachCapacitySpinner.setAdapter(adapterCapacity);
+        UserbeachCapacitySpinner.setOnItemSelectedListener(this);
 
-        Button btn = findViewById(R.id.lifeGuardSurveyButton);
+        Button btn = findViewById(R.id.userSubmitButton);
 
         btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 Log.d("HELLOTEST","JELLOTEST");
 
-                 visualWaterConditionsValue = visualWaveConditionSpinner.getSelectedItem().toString();
-                 beachCapacityValue = beachCapacitySpinner.getSelectedItem().toString();
-                Log.d("Values",visualWaterConditionsValue+" "+beachCapacityValue);
+                 parkingValue = parkingConditionSpinner.getSelectedItem().toString();
+                 beachCapacityValue = UserbeachCapacitySpinner.getSelectedItem().toString();
+                Log.d("Values", parkingValue +" "+beachCapacityValue);
                 getCurrentValues();
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Intent intent = new Intent(LifeguardDataSurvey.this,beachLanding.class);
+                        Intent intent = new Intent(UserDataSurvey.this,beachLanding.class);
                         intent.putExtra("beachName",beachName);
                         startActivity(intent);
                     }
                 }, 10);
             }
         });
-
     }
     public void getCurrentValues(){
         DocumentReference surveyBeachRef = db.collection("survey").document(currentDate).collection(beachName).document(currentDate);
@@ -117,13 +115,13 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        Object VWCObject = document.getData().get(visualWaterConditionsValue);
+                        Object VWCObject = document.getData().get(parkingValue);
                         if(VWCObject==null){
 
                             Log.d("isnull","isNull");
-                            currentVisualWaterConditionsValue = 0;
+                            currentParkingValue = 0;
                         }else{
-                            currentVisualWaterConditionsValue = (long)document.getData().get(visualWaterConditionsValue);
+                            currentParkingValue = (long)document.getData().get(parkingValue);
                         }
                         Object BCObject = document.getData().get(beachCapacityValue);
 
@@ -134,14 +132,14 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
                         }else{
                             currentBeachCapacityValue = (long)document.getData().get(beachCapacityValue);
                         }
-                        Log.d("ValsCurrent","Current: "+currentBeachCapacityValue + " "+currentVisualWaterConditionsValue);
+                        Log.d("ValsCurrent","Current: "+currentBeachCapacityValue + " "+ currentParkingValue);
 
-                        if(!(document.getData().get("Calm waters")==null))
-                            calmWatersCount  = Integer.parseInt(document.getData().get("Calm waters").toString());
+                        if(!(document.getData().get("Low Parking")==null))
+                            lowParkingCount  = Integer.parseInt(document.getData().get("Low Parking").toString());
                         if(!(document.getData().get("Medium waters")==null))
-                            mediumWatersCount  = Integer.parseInt(document.getData().get("Medium waters").toString());
+                            mediumParkingCount  = Integer.parseInt(document.getData().get("Medium Parking").toString());
                         if(!(document.getData().get("Rough waters")==null))
-                            roughWatersCount  = Integer.parseInt(document.getData().get("Rough waters").toString());
+                            highParkingCount  = Integer.parseInt(document.getData().get("High Parking").toString());
                         if(!(document.getData().get("Low Capacity")==null))
                             lowCapacityCount  = Integer.parseInt(document.getData().get("Low Capacity").toString());
                         if(!(document.getData().get("Medium Capacity")==null))
@@ -171,17 +169,17 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
 
         Map<String, Object> survey = new HashMap<>();
         Map<String, Object> survey2 = new HashMap<>();
-        Log.d("currentVals",currentBeachCapacityValue + " d: "+currentVisualWaterConditionsValue);
+        Log.d("currentVals",currentBeachCapacityValue + " d: "+ currentParkingValue);
         currentBeachCapacityValue++;
-        currentVisualWaterConditionsValue++;
-        Log.d("currentValsPost",currentBeachCapacityValue + " 2: "+currentVisualWaterConditionsValue);
-        Log.d("visualWaters",visualWaterConditionsValue + " capacityValue "+beachCapacityValue);
-        if(visualWaterConditionsValue.equals("Calm waters"))
-            calmWatersCount++;
-        if(visualWaterConditionsValue.equals("Medium waters"))
-            mediumWatersCount++;
-        if(visualWaterConditionsValue.equals("Rough waters"))
-            roughWatersCount++;
+        currentParkingValue++;
+        Log.d("currentValsPost",currentBeachCapacityValue + " 2: "+ currentParkingValue);
+        Log.d("visualWaters", parkingValue + " capacityValue "+beachCapacityValue);
+        if(parkingValue.equals("Many spots"))
+            lowParkingCount++;
+        if(parkingValue.equals("Few spots"))
+            mediumCapacityCount++;
+        if(parkingValue.equals("Little/No spots"))
+            highCapacityCount++;
         if(beachCapacityValue.equals("Low Capacity"))
             lowCapacityCount++;
         if(beachCapacityValue.equals("Medium Capacity"))
@@ -189,16 +187,16 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
         if(beachCapacityValue.equals("High Capacity"))
             highCapacityCount++;
 
-        Log.d("watersCountHere","calmW: "+calmWatersCount+" medW: "+mediumWatersCount +" rough: "+roughWatersCount);
+        Log.d("watersCountHere","parkL: "+lowParkingCount+" parkMed: "+mediumParkingCount +" parkHi: "+ highParkingCount);
         Log.d("capCountHere","capL: "+lowCapacityCount+" capMed: "+mediumCapacityCount +" capHigh: "+highCapacityCount);
 
         setCapacityAndVisualConditionText();
 
-        survey.put(visualWaterConditionsValue, currentVisualWaterConditionsValue);
+        survey.put(parkingValue, currentParkingValue);
         survey.put(beachCapacityValue, currentBeachCapacityValue);
 
         survey2.put("beachCapacityTextForTheDay", surveyCapacityTextForTheDay);
-        survey2.put("beachVisualWaveConditionsTextForTheDay", surveyVisualWaterConditionsTextForTheDay);
+        survey2.put("beachParkingConForDay", surveyParkingTextForTheDay);
 
         survey.put("date", formattedDate);
         Map<String, Object> emptyVal = new HashMap<>();
@@ -208,13 +206,13 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
         surveyEmptyField.set(emptyVal,SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d("LifeGuardSurveyWrite22222222", "DocumentSnapshot successfully written!");
+                        Log.d("UserSurveyWrite", "DocumentSnapshot successfully written!");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w("LifeGuardSurveyWrite2222", "Error writing document", e);
+                        Log.w("UserSurveyWrite", "Error writing document", e);
                     }
                 });
         DocumentReference surveyBeachRef = db.collection("survey").document(formattedDate).collection(beachName).document(formattedDate);
@@ -222,13 +220,13 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
         surveyBeachRef.set(survey,SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d("LifeGuardSurveyWrite22222222", "DocumentSnapshot successfully written!");
+                        Log.d("UserSurveyWrite", "DocumentSnapshot successfully written!");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w("LifeGuardSurveyWrite2222", "Error writing document", e);
+                        Log.w("UserSurveyWrite", "Error writing document", e);
                     }
                 });
 
@@ -236,28 +234,27 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
                 .set(survey2,SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d("LifeGuardSurveyWrite22222222", "DocumentSnapshot successfully written!");
+                        Log.d("UserSurveyWrite", "DocumentSnapshot successfully written!");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w("LifeGuardSurveyWrite2222", "Error writing document", e);
+                        Log.w("UserSurveyWrite", "Error writing document", e);
                     }
                 });
 
     }
     public void setCapacityAndVisualConditionText(){
 
-        if(calmWatersCount > mediumWatersCount && calmWatersCount > roughWatersCount){
-            surveyVisualWaterConditionsTextForTheDay = "Visual water conditions: Calm Waters";
-
+        if(lowParkingCount > mediumParkingCount && lowParkingCount > highParkingCount){
+            surveyParkingTextForTheDay = "Parking Availability: Many Spots";
         }
-        else if(mediumWatersCount >= calmWatersCount && mediumWatersCount >= roughWatersCount){
-            surveyVisualWaterConditionsTextForTheDay = "Visual water conditions: Medium Waters";
+        else if(mediumParkingCount >= lowParkingCount && mediumParkingCount >= highParkingCount){
+            surveyParkingTextForTheDay = "Parking Availability: Few Spots";
         }
-        else if(roughWatersCount >= calmWatersCount && roughWatersCount >= mediumWatersCount){
-            surveyVisualWaterConditionsTextForTheDay = "Visual water conditions: Rough Waters";
+        else if(highParkingCount >= mediumParkingCount && highParkingCount >= mediumParkingCount){
+            surveyParkingTextForTheDay = "Parking Availability: Little/No Spots";
         }
 
         if(lowCapacityCount > mediumCapacityCount && lowCapacityCount > highCapacityCount){
@@ -273,20 +270,17 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
         if(lowCapacityCount ==0 && mediumCapacityCount ==0 && highCapacityCount==0){
             surveyCapacityTextForTheDay = "Beach Capacity: No data today!";
         }
-        if(calmWatersCount ==0 && mediumWatersCount ==0 && roughWatersCount==0){
-            surveyVisualWaterConditionsTextForTheDay = "Visual Water Conditions: No data today!";
-
+        if(lowParkingCount ==0 && mediumParkingCount ==0 && highParkingCount==0){
+            surveyParkingTextForTheDay = "Parking Availability: No data today!";
         }
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long length) {
         String selectedValue = parent.getItemAtPosition(position).toString();
-        visualWaterConditionsValue = selectedValue;
+        parkingValue = selectedValue;
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
+    public void onNothingSelected(AdapterView<?> adapterView) {}
 }

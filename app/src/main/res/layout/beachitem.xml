@@ -58,13 +58,6 @@
             android:text="Water Conditions:"
             android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/beachItemWheelChairRampTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Wheelchair Ramp"
-            android:textSize="16sp" />
-
     </LinearLayout>
 
 </LinearLayout>

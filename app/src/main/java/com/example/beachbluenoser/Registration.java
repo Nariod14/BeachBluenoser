@@ -177,8 +177,6 @@ public class Registration extends AppCompatActivity {
                         Log.d(TAG,"onSuccess: hashedpasswordBae " + hashedPassword );
 
 
-
-
                         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {

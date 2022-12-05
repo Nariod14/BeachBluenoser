@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -73,6 +74,15 @@ public class beachLanding extends AppCompatActivity {
         currentDate = formattedDate;
 
         Button btn = (Button)findViewById(R.id.checkInSurvey);
+        ImageButton backBtn = findViewById(R.id.backButton);
+
+        backBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent backIntent = new Intent(beachLanding.this,MainActivity.class);
+                startActivity(backIntent);
+            }
+        });
 
         btn.setOnClickListener(new View.OnClickListener(){
             @Override

@@ -7,6 +7,17 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/surveyTitle"
+        android:layout_width="415dp"
+        android:layout_height="50dp"
+        android:background="#2990E3"
+        android:text="@string/bluenoser_beach"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/userParkingQuestion"
         android:layout_width="359dp"
         android:layout_height="59dp"
@@ -14,10 +25,9 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.084" />
+        app:layout_constraintVertical_bias="0.136" />
 
     <Spinner
         android:id="@+id/visualParkingConditionsSpinner"

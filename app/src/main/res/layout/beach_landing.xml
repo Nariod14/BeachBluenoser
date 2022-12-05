@@ -9,33 +9,42 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <TextView
-            android:id="@+id/landingBeachNameTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#2196F3"
-            android:shadowColor="#2196F3"
-            android:text="Beach landing page"
-            android:textColor="@color/white"
-            android:textSize="70px"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="-4dp" />
 
-        <TextView
-            android:id="@+id/Placeholder2"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:text="Lorum Ipsum"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.483"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="32dp" />
+            android:background="#0c68b5"
+            android:backgroundTint="#0c68b5">
+
+            <TextView
+                android:id="@+id/landingBeachNameTextView"
+                android:layout_width="378dp"
+                android:layout_height="41dp"
+                android:background="#0c68b5"
+                android:backgroundTint="#0c68b5"
+                android:shadowColor="#0c68b5"
+                android:text="Beach landing page"
+                android:textColor="@color/white"
+                android:textSize="70px"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/backButton"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <ImageButton
+                android:id="@+id/backButton"
+                android:layout_width="34dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="#0c68b5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/back_svgrepo_com"
+                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
             android:id="@+id/landingBeachImageView"

@@ -32,6 +32,9 @@
             android:name=".LifeguardDataSurvey"
             android:exported="true" />
         <activity
+            android:name=".ManagementDataSurvey"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

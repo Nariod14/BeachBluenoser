@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -40,13 +41,14 @@ import java.util.Map;
 public class beachLanding extends AppCompatActivity {
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+    public FirebaseAuth auth = FirebaseAuth.getInstance();;
     public String beachName;
     public String landingBeachCapacityText;
     public String landingBeachSandyOrRockyValue;
     public String landingBeachWheelChairRampValue;
     public String landingBeachImageSource;
     public String landingBeachVisualWaterConditionsText;
-    
+
     public ImageView landingBeachImageView;
     public TextView landingBeachCapacityView;
     public TextView landingBeachSandyOrRockyView;
@@ -54,15 +56,32 @@ public class beachLanding extends AppCompatActivity {
     public TextView landingBeachNameView;
     public TextView landingBeachVisualWaterConditionsView;
     public String currentDate;
+    public String userID;
+    public String userType = "";
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.beach_landing);
 
+        userID = auth.getCurrentUser().getUid();
+        DocumentReference userRef = db.collection("BBUsers").document(userID);
+        userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        userType = document.getData().get("userType").toString();
+                        Log.d("USERTYPE ", userType);
+                    }
+                }
+            }
+        });
+
         Bundle bundle = getIntent().getExtras();
-        if(bundle != null){
-            if(bundle.getString("beachName")!=null) {
+        if (bundle != null) {
+            if (bundle.getString("beachName") != null) {
                 beachName = bundle.getString("beachName");
             }
         }
@@ -73,22 +92,27 @@ public class beachLanding extends AppCompatActivity {
         String formattedDate = df.format(c);
         currentDate = formattedDate;
 
-        Button btn = (Button)findViewById(R.id.checkInSurvey);
+        Button btn = (Button) findViewById(R.id.checkInSurvey);
         ImageButton backBtn = findViewById(R.id.backButton);
 
-        backBtn.setOnClickListener(new View.OnClickListener(){
+        backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-                Intent backIntent = new Intent(beachLanding.this,MainActivity.class);
+            public void onClick(View v) {
+                Intent backIntent = new Intent(beachLanding.this, MainActivity.class);
                 startActivity(backIntent);
             }
         });
 
-        btn.setOnClickListener(new View.OnClickListener(){
+        btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-                Intent intent = new Intent(beachLanding.this,LifeguardDataSurvey.class);
-                intent.putExtra("beachName",beachName);
+            public void onClick(View v) {
+                Intent intent;
+                if (userType.equals("Manager")) {
+                    intent = new Intent(beachLanding.this, ManagementDataSurvey.class);
+                } else {
+                    intent = new Intent(beachLanding.this, LifeguardDataSurvey.class);
+                }
+                intent.putExtra("beachName", beachName);
 
                 startActivity(intent);
             }
@@ -101,45 +125,60 @@ public class beachLanding extends AppCompatActivity {
         getPreliminaryDataFromDB();
     }
 
+    private void getUserDataFromDB() {
+        DocumentReference userRef = db.collection("users").document(userID);
+        userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        userType = document.getData().get("userType").toString();
+                        Log.d("USERTYPE ", userType);
+                    }
+                }
+            }
+        });
+    }
 
-    private void getPreliminaryDataFromDB(){
+    private void getPreliminaryDataFromDB() {
         DocumentReference landingBeachRef = db.collection("beach").document(beachName);
-
         landingBeachRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        Object DataImage  = document.getData().get("image");
+                        Object DataImage = document.getData().get("image");
                         String DataImageValue;
-                        if(DataImage == null){
+                        if (DataImage == null) {
                             DataImageValue = "imageNotFound";
-                        }else {
+                        } else {
                             DataImageValue = document.getData().get("image").toString();
                         }
                         landingBeachImageSource = DataImageValue;
-                        }if(!(document.getData().get("beachCapacityTextForTheDay")==null)) {
-                            landingBeachCapacityText = document.getData().get("beachCapacityTextForTheDay").toString();
-                        }else{
-                            landingBeachCapacityText="Beach Capacity: No data today!";
-                        }
-                        if(!(document.getData().get("beachVisualWaveConditionsTextForTheDay")==null)) {
-                            landingBeachVisualWaterConditionsText = document.getData().get("beachVisualWaveConditionsTextForTheDay").toString();
-                        }else{
-                            landingBeachVisualWaterConditionsText ="Water Conditions: No data today!";
-                        }
-
-                        showDataOnUI();
-
-                    } else {
-                        Log.d("Beach Landing Query", "No such document");
                     }
+                    if (!(document.getData().get("beachCapacityTextForTheDay") == null)) {
+                        landingBeachCapacityText = document.getData().get("beachCapacityTextForTheDay").toString();
+                    } else {
+                        landingBeachCapacityText = "Beach Capacity: No data today!";
+                    }
+                    if (!(document.getData().get("beachVisualWaveConditionsTextForTheDay") == null)) {
+                        landingBeachVisualWaterConditionsText = document.getData().get("beachVisualWaveConditionsTextForTheDay").toString();
+                    } else {
+                        landingBeachVisualWaterConditionsText = "Water Conditions: No data today!";
+                    }
+
+                    showDataOnUI();
+
+                } else {
+                    Log.d("Beach Landing Query", "No such document");
+                }
             }
         });
     }
 
-    private void showDataOnUI(){
+    private void showDataOnUI() {
         landingBeachCapacityView = findViewById(R.id.landingBeachCapacityTextView);
         landingBeachSandyOrRockyView = findViewById(R.id.landingBeachSandyOrRockyTextView);
         landingBeachWheelChairRampView = findViewById(R.id.landingBeachWheelChairRampTextView);
@@ -155,29 +194,28 @@ public class beachLanding extends AppCompatActivity {
 
     }
 
-    public void setBeachImage(){
+    public void setBeachImage() {
 
-        if(landingBeachImageSource.equals("")|| landingBeachImageSource == null){
-            landingBeachImageSource ="default1.jpg";
+        if (landingBeachImageSource.equals("") || landingBeachImageSource == null) {
+            landingBeachImageSource = "default1.jpg";
         }
-        landingBeachImageSource = landingBeachImageSource.replace('-','_');
+        landingBeachImageSource = landingBeachImageSource.replace('-', '_');
         int fileExtension = landingBeachImageSource.indexOf('.');
 
-        landingBeachImageSource = landingBeachImageSource.substring(0,fileExtension);
-        String uri = "@drawable/"+landingBeachImageSource;
-        Log.d("SetImage"," this is the file path: "+uri);
-        int fileID =0;
+        landingBeachImageSource = landingBeachImageSource.substring(0, fileExtension);
+        String uri = "@drawable/" + landingBeachImageSource;
+        Log.d("SetImage", " this is the file path: " + uri);
+        int fileID = 0;
 
-        try{
+        try {
             fileID = R.drawable.class.getField(landingBeachImageSource).getInt(null);
-        }catch(IllegalAccessException e){
-            Log.d("getImageIDError","Error getting image");
-        }catch(NoSuchFieldException e2){
-            Log.d("getImageIDError","no Icon found");
+        } catch (IllegalAccessException e) {
+            Log.d("getImageIDError", "Error getting image");
+        } catch (NoSuchFieldException e2) {
+            Log.d("getImageIDError", "no Icon found");
         }
         landingBeachImageView = findViewById(R.id.landingBeachImageView);
         landingBeachImageView.setImageResource(fileID);
 
     }
-
 }

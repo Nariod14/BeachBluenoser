@@ -55,11 +55,11 @@ import java.util.ArrayList;
             }else {
                 listItem.beachItemCapacity.setText(beaches.get(pos).getcapacity());
             }
-            if(beaches.get(pos).getwheelChairRamp()==null||beaches.get(pos).getwheelChairRamp()==""){
+            if(beaches.get(pos).getwheelChairAccess()==null||beaches.get(pos).getwheelChairAccess()==""){
 
                 listItem.beachItemWheelChairRamp.setText("Wheelchair ramp:");
             }else {
-                listItem.beachItemWheelChairRamp.setText("Wheelchair Ramp: "+beaches.get(pos).getwheelChairRamp());
+                listItem.beachItemWheelChairRamp.setText("Wheelchair Ramp: "+beaches.get(pos).getwheelChairAccess());
             }
             if(beaches.get(pos).getsandyOrRocky()==null||beaches.get(pos).getsandyOrRocky()==""){
 

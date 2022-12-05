@@ -61,9 +61,10 @@ public class BeachListActivity extends AppCompatActivity {
                                 String DataImage = document.getData().get("image").toString();
                                 Long DataRating = (Long) document.getData().get("rating");
                                 String landingBeachCapacityValue="";
-                                String landingBeachWheelChairRampValue="";
+                                String landingBeachWheelchairAccessValue="";
                                 String landingBeachSandyOrRockyValue="";
                                 String landingBeachVisualWaterConditions="";
+                                String  landingBeachFloatingWheelchairValue ="";
                                 if(document.exists()){
                                     if(document.getData().get("capacity")!=null){
                                         landingBeachCapacityValue = document.getData().get("capacity").toString();
@@ -71,19 +72,24 @@ public class BeachListActivity extends AppCompatActivity {
                                         landingBeachCapacityValue = "";
                                     }
                                     if(document.getData().get("wheelchairRamp")!=null){
-                                        landingBeachWheelChairRampValue = document.getData().get("wheelchairRamp").toString();
+                                        landingBeachWheelchairAccessValue = document.getData().get("wheelchairRamp").toString();
                                     }else{
-                                        landingBeachWheelChairRampValue = "";
+                                        landingBeachWheelchairAccessValue = "";
                                     }
                                     if(document.getData().get("sandyOrRocky")!=null){
                                         landingBeachSandyOrRockyValue = document.getData().get("sandyOrRocky").toString();
                                     }else{
                                         landingBeachSandyOrRockyValue = "";
                                     }
+                                    if(document.get("floatingWheelchair")!=null){
+                                        landingBeachFloatingWheelchairValue = document.get("floatingWheelchair").toString();
+                                    }else{
+                                        landingBeachFloatingWheelchairValue = "";
+                                    }
                                 }
 
                                 BeachItem beachItem = new BeachItem(DataName,DataImage,landingBeachCapacityValue,
-                                        landingBeachVisualWaterConditions, landingBeachWheelChairRampValue,landingBeachSandyOrRockyValue);
+                                        landingBeachVisualWaterConditions, landingBeachWheelchairAccessValue,landingBeachSandyOrRockyValue, landingBeachFloatingWheelchairValue);
                                 beachItemArrayList.add(beachItem);
                             }
                         } else {

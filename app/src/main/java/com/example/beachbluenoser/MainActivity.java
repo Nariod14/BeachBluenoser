@@ -44,20 +44,13 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<BeachItem> beachList;
 
 
-    String[] beach = {"All Beaches", "Rocky", "Sandy", "Shore Accessibility", "Floating Wheelchair"};
+    String[] beach = {"All Beaches", "Rocky", "Sandy", "Wheelchair Accessibility", "Floating Wheelchair"};
     String[] capacity = {"Any Capacity", "High", "Medium", "Low"};
     String filterBeachItem = "";
     String filterCapacityItem = "";
 
-    public int calmWatersCount=0;
-    public int mediumWatersCount=0;
-    public int roughWatersCount=0;
-    public int lowCapacityCount=0;
-    public int mediumCapacityCount=0;
-    public int highCapacityCount=0;
     public String visualWaterConditionsText;
     public String capacityText;
-
 
     public String currentDate;
     public String beachName;
@@ -76,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         final Button homeBtn = findViewById(R.id.HomeButton);
         final Button loginProfileBtn = findViewById(R.id.LoginButton);
-        beachBluenoserAuth.signOut();
+        //beachBluenoserAuth.signOut();
         if (beachBluenoserAuth.getCurrentUser() != null){
             loginProfileBtn.setText("Profile");
         }
@@ -108,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 
     @Override
     protected void onResume() {
@@ -150,20 +142,24 @@ public class MainActivity extends AppCompatActivity {
                                 }else {
                                     DataImageValue = document.getData().get("image").toString();
                                 }
-                                String recyclerViewCapacityValue="";
-                                String recyclerViewWheelChairRampValue="";
+                                String recyclerViewWheelchairAccessValue="";
                                 String recyclerViewSandyOrRockyValue="";
-                                String recyclerViewVisualWaterConditionsValue="";
+                                String recyclerViewFloatingWheelchairValue="";
                                 if(document.exists()){
-                                    if(document.get("wheelchairRamp")!=null){
-                                        recyclerViewWheelChairRampValue = document.get("wheelchairRamp").toString();
-                                    }else{
-                                        recyclerViewWheelChairRampValue = "";
-                                    }
                                     if(document.get("sandyOrRocky")!=null){
                                         recyclerViewSandyOrRockyValue = document.get("sandyOrRocky").toString();
                                     }else{
                                         recyclerViewSandyOrRockyValue = "";
+                                    }
+                                    if(document.get("wheelchairRamp")!=null){
+                                        recyclerViewWheelchairAccessValue = document.get("wheelchairAccessible").toString();
+                                    }else{
+                                        recyclerViewWheelchairAccessValue = "";
+                                    }
+                                    if(document.get("floatingWheelchair")!=null){
+                                        recyclerViewFloatingWheelchairValue = document.get("floatingWheelchair").toString();
+                                    }else{
+                                        recyclerViewFloatingWheelchairValue = "";
                                     }
                                 }
 
@@ -171,13 +167,13 @@ public class MainActivity extends AppCompatActivity {
 
                                 Log.d("PrintingHere","BeachName: "+DataName + " capacity: "+beachCapacityTextForTheDay +  " visualWaterConditions: " +beachVisualWaveConditionsTextForTheDay);
                                 BeachItem beachItem = new BeachItem(DataName,DataImageValue,beachCapacityTextForTheDay,
-                                        beachVisualWaveConditionsTextForTheDay,recyclerViewWheelChairRampValue,recyclerViewSandyOrRockyValue);
+                                        beachVisualWaveConditionsTextForTheDay,recyclerViewWheelchairAccessValue,recyclerViewSandyOrRockyValue,recyclerViewFloatingWheelchairValue);
                                 //beachItemArrayList.add(beachItem);
                                 Log.d("Capacity:","cap:"+beachItem.getcapacity());
                                 Log.d("FilterItem:","filterItem:"+filterCapacityItem);
 
 
-                                if (Objects.equals(filterBeachItem, "") || Objects.equals(beachItem.getsandyOrRocky(), filterBeachItem)) {
+                                if (Objects.equals(filterBeachItem, "") || Objects.equals(beachItem.getsandyOrRocky(), filterBeachItem) || Objects.equals(beachItem.getFloatingWheelchair(), filterBeachItem)) {
                                     if (Objects.equals(filterCapacityItem, "") || Objects.equals(beachItem.getcapacity(), filterCapacityItem)) {
                                         beachItemArrayList.add(beachItem);
                                     }
@@ -196,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+        //filters
         beachType = findViewById(R.id.auto_complete_textview);
         adapterItems = new ArrayAdapter<String>(this, R.layout.beach_list, beach);
         beachType.setAdapter(adapterItems);
@@ -256,10 +253,6 @@ public class MainActivity extends AppCompatActivity {
                             capacityText  =document.getData().get("beachCapacityTextForTheDay").toString();
                         if(!(document.getData().get("beachVisualWaveConditionsTextForTheDay")==null))
                             visualWaterConditionsText  = document.getData().get("beachVisualWaveConditionsTextForTheDay").toString();
-
-
-
-
                        // showDataOnUI();
                     } else {
                         Log.d("Beach Landing Query", "No such document");
@@ -272,8 +265,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
-
     private void loadMasterBeachList() {
         Log.w("Beach list size check22222", "B4444");
         Log.w("Beach list size check22222", "Beach list size "+beachList.size());
@@ -285,60 +276,14 @@ public class MainActivity extends AppCompatActivity {
      * @param beachList list of all my posts
      */
     public void createRecyclerView(ArrayList<BeachItem> beachList) {
-
-
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.BeachMasterList);
 
         // using a linear layout manager
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-
         RecyclerView.Adapter mAdapter = new MasterBeachListAdapter(beachList);
         recyclerView.setAdapter(mAdapter);
-
-        /*
-        if(beachList != null && beachList.size() > 0){
-            //hide message that says the list is empty
-            emptyListTextView.setHeight(0);
-        }else {
-            emptyListTextView.setHeight(emptyListTextViewOriginalHeight);
-        }
-
-         */
-
     }
-
-    /*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
-    }
-
-     */
 }
 

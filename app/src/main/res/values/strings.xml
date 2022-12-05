@@ -46,9 +46,8 @@
     <string name="login">Login</string>
 
     <string-array name="beachTypeValues">
-        <item>Rocky beach</item>
-        <item>Sandy beach</item>
-        <item>Shelly beach</item>
+        <item>Rocky</item>
+        <item>Sandy</item>
     </string-array>
     <string-array name="wheelChairAccessibleValue">
         <item>Yes</item>

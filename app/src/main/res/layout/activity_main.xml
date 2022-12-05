@@ -81,10 +81,11 @@
             <AutoCompleteTextView
                 android:id="@+id/auto_complete_textview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="73dp"
                 android:inputType="none"
                 android:text="@string/Search"
                 android:textColor="#000000"
+                android:textSize="14sp"
                 tools:ignore="TextContrastCheck" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -101,10 +102,10 @@
             <AutoCompleteTextView
                 android:id="@+id/auto_complete_textview2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="73dp"
+                android:inputType="none"
                 android:text="@string/Capacity"
                 android:textColor="#000000"
-                android:inputType="none"
                 tools:ignore="TextContrastCheck" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>

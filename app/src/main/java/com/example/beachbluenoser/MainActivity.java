@@ -43,8 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth beachBluenoserAuth = FirebaseAuth.getInstance();
     ArrayList<BeachItem> beachList;
 
-
-    String[] beach = {"All Beaches", "Rocky", "Sandy", "Wheelchair Accessibility", "Floating Wheelchair"};
+    String[] beach = {"All Beaches", "Rocky", "Sandy", "Wheelchair Accessible", "Floating Wheelchair"};
     String[] capacity = {"Any Capacity", "High", "Medium", "Low"};
     String filterBeachItem = "";
     String filterCapacityItem = "";
@@ -150,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                                     }else{
                                         recyclerViewSandyOrRockyValue = "";
                                     }
-                                    if(document.get("wheelchairRamp")!=null){
+                                    if(document.get("wheelchairAccessible")!=null){
                                         recyclerViewWheelchairAccessValue = document.get("wheelchairAccessible").toString();
                                     }else{
                                         recyclerViewWheelchairAccessValue = "";
@@ -168,11 +167,11 @@ public class MainActivity extends AppCompatActivity {
                                 BeachItem beachItem = new BeachItem(DataName,DataImageValue,beachCapacityTextForTheDay,
                                         beachVisualWaveConditionsTextForTheDay,recyclerViewWheelchairAccessValue,recyclerViewSandyOrRockyValue,recyclerViewFloatingWheelchairValue);
                                 //beachItemArrayList.add(beachItem);
-                                Log.d("Capacity:","cap:"+beachItem.getcapacity());
+                                Log.d("beachdetails:","wheelchair: "+beachItem.getwheelchairAccess() + " floating: "+beachItem.getFloatingWheelchair() +" sandy or rocky: "+beachItem.getsandyOrRocky());
                                 Log.d("FilterItem:","filterItem:"+filterCapacityItem);
 
 
-                                if (Objects.equals(filterBeachItem, "") || Objects.equals(beachItem.getsandyOrRocky(), filterBeachItem) || Objects.equals(beachItem.getFloatingWheelchair(), filterBeachItem)) {
+                                if (Objects.equals(filterBeachItem, "") || Objects.equals(beachItem.getsandyOrRocky(), filterBeachItem) || Objects.equals(beachItem.getwheelchairAccess(), filterBeachItem) || Objects.equals(beachItem.getFloatingWheelchair(), filterBeachItem)) {
                                     if (Objects.equals(filterCapacityItem, "") || Objects.equals(beachItem.getcapacity(), filterCapacityItem)) {
                                         beachItemArrayList.add(beachItem);
                                     }

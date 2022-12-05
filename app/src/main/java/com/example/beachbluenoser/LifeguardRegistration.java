@@ -9,11 +9,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,7 +23,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
@@ -37,7 +34,7 @@ public class LifeguardRegistration extends AppCompatActivity {
     EditText emailAdd, accessToken;
     Button backBtn, registerBtn;
 
-    String email, AccToken, lgID;
+    String email, AccToken, lgID, beachName;
 
     private int temp = 0;
     FirebaseFirestore beachBluenoserDB, beachBluenoserDBB;
@@ -60,10 +57,8 @@ public class LifeguardRegistration extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent intent = new Intent(LifeguardRegistration.this, Registration.class);
                 startActivity(intent);
-
             }
         });
 
@@ -80,7 +75,6 @@ public class LifeguardRegistration extends AppCompatActivity {
                     emailAdd.setError("Email is Invalid.");
                     return;
                 }
-
                 if(TextUtils.isEmpty(AccToken)){
                     accessToken.setError("Please Enter an Access Token!");
                     return;
@@ -90,9 +84,7 @@ public class LifeguardRegistration extends AppCompatActivity {
                     @Override
                     public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
 
-                        if (e != null) {
-
-                        }
+                        if (e != null) {}
 
                         for (DocumentChange documentChange : documentSnapshots.getDocumentChanges()) {
 
@@ -100,12 +92,11 @@ public class LifeguardRegistration extends AppCompatActivity {
 
                             Log.d(TAG, "Test " + AccToken);
                             if (isAttendance.equals(AccToken)) {
-
                                 temp = 1;
                                 lgID = UUID.randomUUID().toString();
                                 checkEmail(email);
+                                beachName = documentChange.getDocument().get("beachName").toString();
                                 break;
-
                             }
                             if (temp == 0) {
                                 Toast.makeText(LifeguardRegistration.this, "Invalid Token", Toast.LENGTH_SHORT).show();
@@ -132,13 +123,15 @@ public class LifeguardRegistration extends AppCompatActivity {
                 Log.d(TAG, "onSuccess: user Profile is created for " + lgID);
             }
         });
-        startActivity(new Intent(LifeguardRegistration.this, MainActivity.class));
-        Toast.makeText(LifeguardRegistration.this, "Lifeguard Loged IN.", Toast.LENGTH_SHORT).show();
+        Intent intent = (new Intent(LifeguardRegistration.this, beachLanding.class));
+        intent.putExtra("beachName",beachName);
+        intent.putExtra("userType","Lifeguard");
+        startActivity(intent);
+        Toast.makeText(LifeguardRegistration.this, "Lifeguard Logged In.", Toast.LENGTH_SHORT).show();
         return true;
     }
 
     private void checkEmail(String email) {
-
         String email12 = email;
 
         beachBluenoserDB.collection("Lifeguard")

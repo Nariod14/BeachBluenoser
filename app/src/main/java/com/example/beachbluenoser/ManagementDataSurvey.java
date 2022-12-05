@@ -86,6 +86,9 @@ public class ManagementDataSurvey extends AppCompatActivity implements AdapterVi
     }
 
     public void writeDataToDB(){
+        if (wheelChairAccessibleValue.equals("Yes")){ wheelChairAccessibleValue = "Wheelchair Accessible"; }
+        if (floatingWheelchairValue.equals("Yes")){ floatingWheelchairValue = "Floating Wheelchair"; }
+
         Map<String, Object> survey2 = new HashMap<>();
 
         survey2.put("sandyOrRocky", beachTypeValue);
@@ -96,13 +99,13 @@ public class ManagementDataSurvey extends AppCompatActivity implements AdapterVi
                 .set(survey2,SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d("LifeGuardSurveyWrite22222222", "DocumentSnapshot successfully written!");
+                        Log.d("LifeGuardSurveyWrite", "DocumentSnapshot successfully written!");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w("LifeGuardSurveyWrite2222", "Error writing document", e);
+                        Log.w("LifeGuardSurveyWrite", "Error writing document", e);
                     }
                 });
 

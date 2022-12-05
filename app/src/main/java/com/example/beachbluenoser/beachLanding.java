@@ -18,6 +18,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.checkerframework.checker.units.qual.h;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -49,25 +51,35 @@ public class beachLanding extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.beach_landing);
 
-        userID = auth.getCurrentUser().getUid();
-        DocumentReference userRef = db.collection("BBUsers").document(userID);
-        userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        userType = document.getData().get("userType").toString();
-                        Log.d("USERTYPE ", userType);
-                    }
-                }
-            }
-        });
-
         Bundle bundle = getIntent().getExtras();
+
+        Button btn = findViewById(R.id.checkInSurvey);
+        ImageButton backBtn = findViewById(R.id.backButton);
+
         if (bundle != null) {
             if (bundle.getString("beachName") != null) {
                 beachName = bundle.getString("beachName");
+            }
+            if (bundle.getString("userType") != null) {
+                userType = bundle.getString("userType");
+            }
+            if (auth.getCurrentUser() != null) {
+                userID = auth.getCurrentUser().getUid();
+                DocumentReference userRef = db.collection("BBUsers").document(userID);
+                userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                userType = document.getData().get("userType").toString();
+                                Log.d("USERTYPE ", userType);
+                            }
+                        }
+                    }
+                });
+            } else {
+                btn.setVisibility(View.GONE);
             }
         }
 
@@ -77,8 +89,7 @@ public class beachLanding extends AppCompatActivity {
         String formattedDate = df.format(c);
         currentDate = formattedDate;
 
-        Button btn = (Button) findViewById(R.id.checkInSurvey);
-        ImageButton backBtn = findViewById(R.id.backButton);
+
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +105,8 @@ public class beachLanding extends AppCompatActivity {
                 Intent intent;
                 if (userType.equals("Manager")) {
                     intent = new Intent(beachLanding.this, ManagementDataSurvey.class);
+                } else if (userType.equals("Lifeguard")) {
+                    intent = new Intent(beachLanding.this, LifeguardDataSurvey.class);
                 } else {
                     intent = new Intent(beachLanding.this, LifeguardDataSurvey.class);
                 }

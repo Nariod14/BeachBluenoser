@@ -30,8 +30,8 @@ public class BeachItem {
     public String getvisualWaterConditions(){return visualWaterConditions;}
     public void setvisualWaterConditions(String visualWaterConditions){this.visualWaterConditions = visualWaterConditions;}
 
-    public String getwheelChairAccess(){return wheelchairAccess;}
-    public void setwheelChairAccess(String wheelchairAccess){this.wheelchairAccess = wheelchairAccess;}
+    public String getwheelchairAccess(){return wheelchairAccess;}
+    public void setwheelchairAccess(String wheelchairAccess){this.wheelchairAccess = wheelchairAccess;}
 
     public String getFloatingWheelchair(){return floatingWheelchair;}
     public void setFloatingWheelchair(String floatingWheelchair){this.floatingWheelchair = floatingWheelchair;}

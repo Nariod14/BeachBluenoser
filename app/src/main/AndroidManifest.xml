@@ -35,6 +35,9 @@
             android:name=".ManagementDataSurvey"
             android:exported="true" />
         <activity
+            android:name=".UserDataSurvey"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

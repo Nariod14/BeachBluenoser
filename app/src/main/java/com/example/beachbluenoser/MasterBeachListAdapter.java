@@ -48,12 +48,6 @@ import java.util.ArrayList;
             }else {
                 listItem.beachItemCapacity.setText(beaches.get(pos).getcapacity());
             }
-            if(beaches.get(pos).getwheelchairAccess()==null||beaches.get(pos).getwheelchairAccess()==""){
-
-                listItem.beachItemWheelChairRamp.setText("Wheelchair ramp:");
-            }else {
-                listItem.beachItemWheelChairRamp.setText("Wheelchair Ramp: "+beaches.get(pos).getwheelchairAccess());
-            }
             if(beaches.get(pos).getsandyOrRocky()==null||beaches.get(pos).getsandyOrRocky()==""){
 
               //  listItem.beachItemSandyOrRocky.setText("Sandy / Rocky:");
@@ -90,7 +84,6 @@ import java.util.ArrayList;
                 beachImage = listItemView.findViewById(R.id.BeachImage);
                 beachItemCapacity = listItemView.findViewById(R.id.beachItemCapacityTextView);
                 beachItemVisualWaterConditions = listItemView.findViewById(R.id.visualWaterConditionsTextView);
-                beachItemWheelChairRamp = listItemView.findViewById(R.id.beachItemWheelChairRampTextView);
                 beachLayout = listItemView.findViewById(R.id.beachItem);
 
                 //make item clickable

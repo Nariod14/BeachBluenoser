@@ -57,6 +57,7 @@
             app:layout_constraintTop_toBottomOf="@+id/landingBeachNameTextView"
             app:srcCompat="@drawable/black_brook_beach" />
 
+
         <ImageView
             android:id="@+id/imageView3"
             android:layout_width="380dp"
@@ -68,7 +69,6 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView4"
             app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/weather_api" />
-
 
         <ImageView
             android:id="@+id/imageView4"
@@ -103,19 +103,76 @@
             android:id="@+id/landingBeachSandyOrRockyTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="sansdryorrocky:" />
+            android:background="@color/white"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="32dp"
+            android:text="Sandy or Rocky:" />
 
         <TextView
             android:id="@+id/landingBeachVisualWaterConditionsTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="VisualWaterConditions" />
+            android:background="@color/white"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="32dp"
+            android:text="VisualWaterConditions:" />
 
         <TextView
-            android:id="@+id/landingBeachWheelChairRampTextView"
+            android:id="@+id/landingBeachWheelchairAccessibleTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="wheelchairrAmpo:" />
+            android:background="@color/white"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="32dp"
+            android:text="@string/wheelchair_accessible" />
+
+        <TextView
+            android:id="@+id/landingBeachFloatingWheelchairTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="32dp"
+            android:text="@string/floating_wheelchair" />
+
+        <TextView
+            android:id="@+id/landingBeachParkingTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="32dp"
+            android:text="Parking:" />
 
         <Button
             android:id="@+id/checkInSurvey"

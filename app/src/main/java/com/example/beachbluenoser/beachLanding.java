@@ -18,8 +18,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import org.checkerframework.checker.units.qual.h;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -32,14 +30,18 @@ public class beachLanding extends AppCompatActivity {
     public String beachName;
     public String landingBeachCapacityText;
     public String landingBeachSandyOrRockyValue;
-    public String landingBeachWheelChairRampValue;
+    public String landingBeachWheelchairAccessibleText;
     public String landingBeachImageSource;
     public String landingBeachVisualWaterConditionsText;
+    public String landingBeachParkingText;
+    public String landingBeachFloatingWheelchairText;
 
     public ImageView landingBeachImageView;
     public TextView landingBeachCapacityView;
     public TextView landingBeachSandyOrRockyView;
-    public TextView landingBeachWheelChairRampView;
+    public TextView landingBeachWheelchairAccessibleView;
+    public TextView landingBeachFloatingWheelchairView;
+    public TextView landingBeachParkingView;
     public TextView landingBeachNameView;
     public TextView landingBeachVisualWaterConditionsView;
     public String currentDate;
@@ -108,7 +110,7 @@ public class beachLanding extends AppCompatActivity {
                 } else if (userType.equals("Lifeguard")) {
                     intent = new Intent(beachLanding.this, LifeguardDataSurvey.class);
                 } else {
-                    intent = new Intent(beachLanding.this, LifeguardDataSurvey.class);
+                    intent = new Intent(beachLanding.this, UserDataSurvey.class);
                 }
                 intent.putExtra("beachName", beachName);
 
@@ -150,6 +152,27 @@ public class beachLanding extends AppCompatActivity {
                     } else {
                         landingBeachVisualWaterConditionsText = "Water Conditions: No data today!";
                     }
+                    if (!(document.getData().get("beachParkingConForDay") == null)) {
+                        landingBeachParkingText = document.getData().get("beachParkingConForDay").toString();
+                    } else {
+                        landingBeachParkingText = "Parking: No data today!";
+                    }
+                    if (!(document.getData().get("floatingWheelchair") == null)) {
+                        landingBeachFloatingWheelchairText = document.getData().get("floatingWheelchair").toString();
+                        if (landingBeachFloatingWheelchairText.equals("Floating Wheelchair"))
+                        { landingBeachFloatingWheelchairText="Floating Wheelchair: Yes"; }
+                        else {landingBeachFloatingWheelchairText="Floating Wheelchair: No"; }
+                    } else {
+                        landingBeachFloatingWheelchairText = "Floating Wheelchair: Unknown";
+                    }
+                    if (!(document.getData().get("wheelchairAccessible") == null)) {
+                        landingBeachWheelchairAccessibleText = document.getData().get("wheelchairAccessible").toString();
+                        if (landingBeachWheelchairAccessibleText.equals("Wheelchair Accessible"))
+                        { landingBeachWheelchairAccessibleText="Wheelchair Accessible: Yes"; }
+                        else {landingBeachWheelchairAccessibleText="Wheelchair Accessible: No"; }
+                    } else {
+                        landingBeachWheelchairAccessibleText = "Floating Wheelchair: Unknown";
+                    }
                     showDataOnUI();
                 } else {
                     Log.d("Beach Landing Query", "No such document");
@@ -161,16 +184,21 @@ public class beachLanding extends AppCompatActivity {
     private void showDataOnUI() {
         landingBeachCapacityView = findViewById(R.id.landingBeachCapacityTextView);
         landingBeachSandyOrRockyView = findViewById(R.id.landingBeachSandyOrRockyTextView);
-        landingBeachWheelChairRampView = findViewById(R.id.landingBeachWheelChairRampTextView);
+        landingBeachWheelchairAccessibleView = findViewById(R.id.landingBeachWheelchairAccessibleTextView);
         landingBeachNameView = findViewById(R.id.landingBeachNameTextView);
         landingBeachVisualWaterConditionsView = findViewById(R.id.landingBeachVisualWaterConditionsTextView);
+        landingBeachFloatingWheelchairView = findViewById(R.id.landingBeachFloatingWheelchairTextView);
+        landingBeachParkingView = findViewById(R.id.landingBeachParkingTextView);
 
         landingBeachCapacityView.setText(landingBeachCapacityText);
         landingBeachVisualWaterConditionsView.setText(landingBeachVisualWaterConditionsText);
         landingBeachSandyOrRockyView.setText(landingBeachSandyOrRockyValue);
-        landingBeachWheelChairRampView.setText(landingBeachWheelChairRampValue);
+        landingBeachWheelchairAccessibleView.setText(landingBeachWheelchairAccessibleText);
+        landingBeachFloatingWheelchairView.setText(landingBeachFloatingWheelchairText);
+        landingBeachParkingView.setText(landingBeachParkingText);
         landingBeachNameView.setText(beachName);
         setBeachImage();
+
 
     }
 

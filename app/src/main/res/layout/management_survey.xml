@@ -7,12 +7,14 @@
 
     <TextView
         android:id="@+id/surveyTitle"
-        android:layout_width="415dp"
-        android:layout_height="50dp"
-        android:background="#2990E3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#0c68b5"
         android:text="@string/bluenoser_beach"
         android:textColor="@color/white"
         android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -20,13 +22,12 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="56dp"
         android:text="@string/beach_type"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.538"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/surveyTitle" />
 
     <Spinner
         android:id="@+id/beachTypeSpinner"
@@ -35,6 +36,7 @@
         android:contentDescription="@string/selectionDropdown"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView1"
         tools:ignore="DuplicateSpeakableTextCheck" />
@@ -43,57 +45,55 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginTop="56dp"
         android:text="@string/wheelchair_accessible"
         android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@+id/wheelchairAccessibleSpinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/beachTypeSpinner" />
 
     <Spinner
         android:id="@+id/wheelchairAccessibleSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:contentDescription="@string/selectionDropdown"
         android:minHeight="48dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
         tools:ignore="DuplicateSpeakableTextCheck" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="56dp"
         android:text="@string/floating_wheelchair"
         android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@+id/floatingWheelchairSpinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wheelchairAccessibleSpinner" />
 
     <Spinner
         android:id="@+id/floatingWheelchairSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="204dp"
         android:contentDescription="@string/selectionDropdown"
         android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <Button
         android:id="@+id/lifeGuardSurveyButton"
         android:layout_width="101dp"
         android:layout_height="49dp"
+        android:layout_marginTop="56dp"
         android:text="@string/submitButtonLabel"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/floatingWheelchairSpinner" />

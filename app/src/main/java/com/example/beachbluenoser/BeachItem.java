@@ -4,7 +4,8 @@ public class BeachItem {
     private String name;
     private String description;
     private String location;
-    private String wheelChairRamp;
+    private String wheelchairAccess;
+    private String floatingWheelchair;
     private String capacity;
     private String sandyOrRocky;
     private String imageSource;
@@ -14,15 +15,14 @@ public class BeachItem {
 
     }
 
-    public BeachItem(String name,String imageSource,String capacity,String visualWaterConditions,String wheelChairRamp,String sandyOrRocky){
+    public BeachItem(String name,String imageSource,String capacity,String visualWaterConditions,String wheelchairAccess,String sandyOrRocky, String floatingWheelchair){
         this.name = name;
-        this.wheelChairRamp = wheelChairRamp;
+        this.wheelchairAccess = wheelchairAccess;
+        this.floatingWheelchair = floatingWheelchair;
         this.capacity = capacity;
         this.sandyOrRocky = sandyOrRocky;
         this.imageSource = imageSource;
-        this.rating = rating;
         this.visualWaterConditions = visualWaterConditions;
-       // this.location = location;
     }
 
     public String getName(){return name;}
@@ -32,8 +32,11 @@ public class BeachItem {
     public void setvisualWaterConditions(String visualWaterConditions){this.visualWaterConditions = visualWaterConditions;}
 
 
-    public String getwheelChairRamp(){return wheelChairRamp;}
-    public void setwheelChairRamp(String wheelChairRamp){this.wheelChairRamp = wheelChairRamp;}
+    public String getwheelChairAccess(){return wheelchairAccess;}
+    public void setwheelChairAccess(String wheelchairAccess){this.wheelchairAccess = wheelchairAccess;}
+
+    public String getFloatingWheelchair(){return floatingWheelchair;}
+    public void setFloatingWheelchair(String floatingWheelchair){this.floatingWheelchair = floatingWheelchair;}
 
     public String getcapacity(){return capacity;}
     public void setcapacity(String capacity){this.capacity = capacity;}

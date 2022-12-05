@@ -8,9 +8,9 @@
 
     <TextView
         android:id="@+id/surveyTitle"
-        android:layout_width="415dp"
-        android:layout_height="50dp"
-        android:background="#2990E3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#0c68b5"
         android:text="@string/bluenoser_beach"
         android:textColor="@color/white"
         android:textSize="30sp"
@@ -42,18 +42,6 @@
         tools:ignore="DuplicateSpeakableTextCheck" />
 
     <TextView
-        android:id="@+id/userCompanionQuestion"
-        android:layout_width="358dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="244dp"
-        android:text="How many people are you visiting the beach with?"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.547"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
         android:id="@+id/userCrowdQuestion"
         android:layout_width="363dp"
         android:layout_height="33dp"
@@ -81,22 +69,12 @@
         android:id="@+id/userSubmitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="beachCompanionNumber"
+
         android:text="Submit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/visualCapacityConditionsSpinner" />
-
-    <EditText
-        android:id="@+id/userCompanionInput"
-        android:layout_width="358dp"
-        android:layout_height="43dp"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userCompanionQuestion" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

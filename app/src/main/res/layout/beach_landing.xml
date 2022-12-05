@@ -18,10 +18,11 @@
 
             <TextView
                 android:id="@+id/landingBeachNameTextView"
-                android:layout_width="378dp"
-                android:layout_height="41dp"
+                android:layout_width="359dp"
+                android:layout_height="wrap_content"
                 android:background="#0c68b5"
                 android:backgroundTint="#0c68b5"
+                android:fontFamily="@font/lexend_deca"
                 android:shadowColor="#0c68b5"
                 android:text="Beach landing page"
                 android:textColor="@color/white"
@@ -29,10 +30,9 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_bias="0.777"
                 app:layout_constraintStart_toEndOf="@+id/backButton"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
                 android:id="@+id/backButton"

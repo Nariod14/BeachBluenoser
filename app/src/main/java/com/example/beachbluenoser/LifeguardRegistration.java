@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,7 +12,6 @@ public class LifeguardRegistration extends AppCompatActivity {
 
     EditText emailAdd, accessToken;
     Button backBtn;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +22,6 @@ public class LifeguardRegistration extends AppCompatActivity {
         accessToken = findViewById(R.id.editAccessToken);
         backBtn = findViewById(R.id.backButton);
 
-
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -34,6 +31,5 @@ public class LifeguardRegistration extends AppCompatActivity {
 
             }
         });
-
-}
+    }
 }

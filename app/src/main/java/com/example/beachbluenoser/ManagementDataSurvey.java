@@ -13,20 +13,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 public class ManagementDataSurvey extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
@@ -71,7 +64,7 @@ public class ManagementDataSurvey extends AppCompatActivity implements AdapterVi
         floatingWheelchairSpinner.setAdapter(adapterFloatingWheelSpinner);
         floatingWheelchairSpinner.setOnItemSelectedListener(this);
 
-        Button btn = (Button)findViewById(R.id.lifeGuardSurveyButton);
+        Button btn = findViewById(R.id.lifeGuardSurveyButton);
 
         btn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -99,7 +92,6 @@ public class ManagementDataSurvey extends AppCompatActivity implements AdapterVi
         survey2.put("wheelchairAccessible", wheelChairAccessibleValue);
         survey2.put("floatingWheelchair", floatingWheelchairValue);
 
-
         db.collection("beach").document(beachName)
                 .set(survey2,SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -120,11 +112,8 @@ public class ManagementDataSurvey extends AppCompatActivity implements AdapterVi
     public void onItemSelected(AdapterView<?> parent, View view, int position, long length) {
         String selectedValue = parent.getItemAtPosition(position).toString();
         beachTypeValue = selectedValue;
-        //Toast.makeText(parent.getContext(),selectedValue,Toast.LENGTH_LONG).show();
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
+    public void onNothingSelected(AdapterView<?> adapterView) {}
 }

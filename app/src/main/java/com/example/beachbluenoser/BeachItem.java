@@ -10,7 +10,6 @@ public class BeachItem {
     private String sandyOrRocky;
     private String imageSource;
     private String visualWaterConditions;
-    private Integer rating;
     public BeachItem(){
 
     }
@@ -31,7 +30,6 @@ public class BeachItem {
     public String getvisualWaterConditions(){return visualWaterConditions;}
     public void setvisualWaterConditions(String visualWaterConditions){this.visualWaterConditions = visualWaterConditions;}
 
-
     public String getwheelChairAccess(){return wheelchairAccess;}
     public void setwheelChairAccess(String wheelchairAccess){this.wheelchairAccess = wheelchairAccess;}
 
@@ -44,8 +42,6 @@ public class BeachItem {
     public String getsandyOrRocky(){return sandyOrRocky;}
     public void setsandyOrRocky(String sandyOrRocky){this.sandyOrRocky = sandyOrRocky;}
 
-
-
     public String getDescription(){return description;}
     public void setDescription(String description){this.description = description;}
 
@@ -54,7 +50,4 @@ public class BeachItem {
 
     public String getLocation(){return location;}
     public void setLocation(String location){this.location = location;}
-
-
-
 }

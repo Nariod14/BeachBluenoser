@@ -73,13 +73,11 @@ public class MainActivity extends AppCompatActivity {
         if (beachBluenoserAuth.getCurrentUser() != null){
             loginProfileBtn.setText("Profile");
         }
-
         Date c = Calendar.getInstance().getTime();
 
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
         String formattedDate = df.format(c);
         currentDate = formattedDate;
-
 
         homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(homeIntent);
             }
         });
+
         loginProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -239,7 +238,6 @@ public class MainActivity extends AppCompatActivity {
         }));
     }
 
-
     private void retrieveAdditionalDataFromDB(){
         DocumentReference landingBeachRef = db.collection("survey").document(currentDate).collection(beachName).document(currentDate);
         landingBeachRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -286,4 +284,3 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
     }
 }
-

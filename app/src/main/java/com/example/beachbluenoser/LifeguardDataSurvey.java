@@ -9,8 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -70,8 +68,6 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
             }
         }
 
-
-    //    Log.d("Here222","beachName22: "+)
         name = findViewById(R.id.surveyTitle);
         name.setText(beachName);
 
@@ -87,8 +83,7 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
         beachCapacitySpinner.setAdapter(adapterCapacity);
         beachCapacitySpinner.setOnItemSelectedListener(this);
 
-
-        Button btn = (Button)findViewById(R.id.lifeGuardSurveyButton);
+        Button btn = findViewById(R.id.lifeGuardSurveyButton);
 
         btn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -107,8 +102,6 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
 
             }
         });
-
-
 
     }
     public void getCurrentValues(){
@@ -151,14 +144,10 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
                             mediumCapacityCount   = Integer.parseInt(document.getData().get("Medium Capacity").toString());
                         if(!(document.getData().get("High Capacity")==null))
                             highCapacityCount  = Integer.parseInt(document.getData().get("High Capacity").toString());
-
-
                         writeDataToDB();
-
 
                     } else {
                         Log.d("getCurrentSurveyData", "No such document");
-
                         writeDataToDB();
                     }
                 } else {
@@ -166,8 +155,8 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
                 }
             }
         });
-
     }
+
     public void writeDataToDB(){
         Date c = Calendar.getInstance().getTime();
 
@@ -175,7 +164,6 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
         String formattedDate = df.format(c);
 
         Log.d("TIME222","CUR TIME:"+formattedDate+";");
-
 
         Map<String, Object> survey = new HashMap<>();
         Map<String, Object> survey2 = new HashMap<>();
@@ -201,7 +189,6 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
         Log.d("capCountHere","capL: "+lowCapacityCount+" capMed: "+mediumCapacityCount +" capHigh: "+highCapacityCount);
 
         setCapacityAndVisualConditionText();
-
 
         survey.put(visualWaterConditionsValue, currentVisualWaterConditionsValue);
         survey.put(beachCapacityValue, currentBeachCapacityValue);
@@ -264,7 +251,6 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
             surveyCapacityTextForTheDay = "Beach Capacity: High Capacity";
         }
 
-
         if(lowCapacityCount ==0 && mediumCapacityCount ==0 && highCapacityCount==0){
             surveyCapacityTextForTheDay = "Beach Capacity: No data today!";
         }
@@ -273,11 +259,11 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
 
         }
     }
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long length) {
         String selectedValue = parent.getItemAtPosition(position).toString();
         visualWaterConditionsValue = selectedValue;
-        //Toast.makeText(parent.getContext(),selectedValue,Toast.LENGTH_LONG).show();
     }
 
     @Override

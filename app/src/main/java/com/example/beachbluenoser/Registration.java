@@ -133,6 +133,7 @@ public class Registration extends AppCompatActivity {
                         user.put("Email", email);
                         user.put("Username", username);
                         user.put("Password", hashedPassword);
+                        user.put("userType", "user");
 
                         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override

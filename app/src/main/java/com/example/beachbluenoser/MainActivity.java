@@ -67,10 +67,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final Button homeBtn = findViewById(R.id.HomeButton);
-        final Button loginProfileBtn = findViewById(R.id.LoginButton);
+        final Button loginLogoutBtn = findViewById(R.id.LoginButton);
         //beachBluenoserAuth.signOut();
         if (beachBluenoserAuth.getCurrentUser() != null){
-            loginProfileBtn.setText("Profile");
+            loginLogoutBtn.setText("Logout");
         }
         Date c = Calendar.getInstance().getTime();
 
@@ -86,12 +86,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        loginProfileBtn.setOnClickListener(new View.OnClickListener() {
+        loginLogoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (beachBluenoserAuth.getCurrentUser() != null){
-                    Intent profileIntent = new Intent(MainActivity.this, Login.class); //TODO: Set to profile page
-                    startActivity(profileIntent);
+                    beachBluenoserAuth.signOut();
                 } else {
                     Intent loginIntent = new Intent(MainActivity.this, Login.class);
                     startActivity(loginIntent);

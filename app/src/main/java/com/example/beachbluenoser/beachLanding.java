@@ -97,7 +97,7 @@ public class beachLanding extends AppCompatActivity {
             if (bundle.getString("userType") != null) {
                 userType = bundle.getString("userType");
             }
-            if (auth.getCurrentUser() != null) {
+            else if (auth.getCurrentUser() != null) {
                 userID = auth.getCurrentUser().getUid();
                 DocumentReference userRef = db.collection("BBUsers").document(userID);
                 userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

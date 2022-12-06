@@ -4,30 +4,23 @@
     package="com.example.beachbluenoser">
 
     <application
+        android:hardwareAccelerated="false"
+        android:largeHeap="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:hardwareAccelerated="false"
         android:icon="@drawable/beachlogo"
         android:label="@string/app_name"
-        android:largeHeap="true"
         android:roundIcon="@drawable/beachlogo"
         android:supportsRtl="true"
         android:theme="@style/Theme.BeachBluenoser"
         tools:targetApi="31">
-        <activity
-            android:name=".PasswordReset"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".LifeguardRegistration"
-            android:exported="true" />
-        <activity
-            android:name=".SplashPage"
-            android:exported="true" />
+        <activity android:name=".PasswordReset"
+            android:exported="true"/>
+        <activity android:name=".LifeguardRegistration"
+            android:exported="true"/>
+        <activity android:name=".SplashPage"
+            android:exported="true"/>
         <activity
             android:name=".Registration"
             android:exported="true" />
@@ -41,6 +34,12 @@
             android:name=".LifeguardDataSurvey"
             android:exported="true" />
         <activity
+            android:name=".ManagementDataSurvey"
+            android:exported="true" />
+        <activity
+            android:name=".UserDataSurvey"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -48,7 +47,13 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

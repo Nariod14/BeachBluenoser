@@ -1,6 +1,5 @@
 package com.example.beachbluenoser;
 
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.content.Intent;
@@ -29,12 +28,10 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 
-import org.checkerframework.checker.units.qual.C;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -46,7 +43,7 @@ public class beachLanding extends AppCompatActivity {
     public FirebaseAuth auth = FirebaseAuth.getInstance();;
     public String beachName, parsedBeachName;
     public String landingBeachCapacityText;
-    public String landingBeachSandyOrRockyValue;
+    public String landingBeachSandyOrRockyText;
     public String landingBeachWheelchairAccessibleText;
     public String landingBeachImageSource;
     public String landingBeachVisualWaterConditionsText;
@@ -199,6 +196,11 @@ public class beachLanding extends AppCompatActivity {
                     } else {
                         landingBeachVisualWaterConditionsText = "Water Conditions: No data today!";
                     }
+                    if (!(document.getData().get("sandyOrRocky") == null)) {
+                        landingBeachSandyOrRockyText = "Beach type: " + document.getData().get("sandyOrRocky").toString();
+                    } else {
+                        landingBeachSandyOrRockyText = "Beach type: Unknown";
+                    }
                     if (!(document.getData().get("beachParkingConForDay") == null)) {
                         landingBeachParkingText = document.getData().get("beachParkingConForDay").toString();
                     } else {
@@ -303,7 +305,7 @@ public class beachLanding extends AppCompatActivity {
 
         landingBeachCapacityView.setText(landingBeachCapacityText);
         landingBeachVisualWaterConditionsView.setText(landingBeachVisualWaterConditionsText);
-        landingBeachSandyOrRockyView.setText(landingBeachSandyOrRockyValue);
+        landingBeachSandyOrRockyView.setText(landingBeachSandyOrRockyText);
         landingBeachWheelchairAccessibleView.setText(landingBeachWheelchairAccessibleText);
         landingBeachFloatingWheelchairView.setText(landingBeachFloatingWheelchairText);
         landingBeachParkingView.setText(landingBeachParkingText);

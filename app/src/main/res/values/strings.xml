@@ -25,7 +25,12 @@
     <string name="little_to_no_people">little to no people</string>
     <string name="Search">Search Beaches</string>
     <string name= "Capacity">Beach Capacity</string>
-    
+    <string name="editBtnText">EDIT</string>
+    <string name="sign_out_buttton">SIGN OUT</string>
+    <string name="user_name">User Name</string>
+    <string name="full_name">Full Name</string>
+    <string name="email_address">Email Address</string>
+
     <string-array name="visualWaterConditionsValues">
         <item>Calm waters</item>
         <item>Medium waters</item>

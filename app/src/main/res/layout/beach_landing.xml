@@ -38,12 +38,12 @@
                 android:id="@+id/backButton"
                 android:layout_width="34dp"
                 android:layout_height="40dp"
-                android:layout_marginBottom="8dp"
                 android:backgroundTint="#0c68b5"
+                android:contentDescription="TODO"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/back_svgrepo_com"
-                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck,DuplicateSpeakableTextCheck" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
@@ -55,10 +55,9 @@
             android:adjustViewBounds="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/landingBeachNameTextView"
-            app:srcCompat="@drawable/black_brook_beach" />
+            app:srcCompat="@drawable/black_brook_beach"
+            android:contentDescription="TODO" />
 
-<<<<<<< app/src/main/res/layout/beach_landing.xml
-=======
         <TextView
             android:id="@+id/weatherDescriptionTextView"
             android:layout_width="match_parent"
@@ -68,13 +67,13 @@
             android:paddingRight="15dp"
             android:text="Description: "
             android:textColor="#4486C7"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="32dp" />
->>>>>>> app/src/main/res/layout/beach_landing.xml
+
 
         <TextView
             android:id="@+id/weatherTextView"
@@ -85,7 +84,7 @@
             android:paddingRight="15dp"
             android:text="Weather: "
             android:textColor="#4486C7"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
@@ -101,7 +100,7 @@
             android:paddingRight="15dp"
             android:text="Temperature: "
             android:textColor="#4486C7"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
@@ -117,7 +116,7 @@
             android:paddingRight="15dp"
             android:text="Humidity : "
             android:textColor="#4486C7"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
@@ -133,7 +132,7 @@
             android:paddingRight="15dp"
             android:text="Wind Speed: "
             android:textColor="#4486C7"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
@@ -149,7 +148,7 @@
             android:paddingRight="15dp"
             android:text="Cloud Cover: "
             android:textColor="#4486C7"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
@@ -164,7 +163,7 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:text="Capacity: "
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
@@ -178,7 +177,7 @@
             android:background="@color/white"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
@@ -193,7 +192,7 @@
             android:background="@color/white"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
@@ -208,7 +207,7 @@
             android:background="@color/white"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
@@ -223,7 +222,7 @@
             android:background="@color/white"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
@@ -238,7 +237,7 @@
             android:background="@color/white"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
@@ -251,8 +250,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-<<<<<<< app/src/main/res/layout/beach_landing.xml
-=======
             android:backgroundTint="#0c68b5"
             android:textColor="@color/black"
             android:text="Check-in"
@@ -264,8 +261,6 @@
             android:id="@+id/mapsBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
             android:backgroundTint="#0c68b5"
             android:fontFamily="@font/lexend_deca"
             android:text="Directions"
@@ -275,12 +270,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintVertical_bias="0.5"
             app:srcCompat="@drawable/rounded_button" />
->>>>>>> app/src/main/res/layout/beach_landing.xml
 
-            android:background="@color/black"
-            android:text="Check-in"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="660dp" />
     </LinearLayout>
 </ScrollView>

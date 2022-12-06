@@ -24,29 +24,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#0c68b5"
+            android:fontFamily="@font/lexend_deca"
             android:text="@string/beach_bluenoser"
             android:textColor="@color/white"
-            android:textSize="10sp"
+            android:textSize="19sp"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="3dp" />
-
-        <Button
-            android:id="@+id/profileButton"
-            android:layout_width="101dp"
-            android:layout_height="49dp"
-            android:backgroundTint="#0c68b5"
-            android:text="Profile"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/AppHeader"
-            app:layout_constraintEnd_toStartOf="@+id/HomeButton" />
 
         <Button
             android:id="@+id/LoginButton"
             android:layout_width="101dp"
             android:layout_height="49dp"
             android:backgroundTint="#0c68b5"
+            android:fontFamily="@font/lexend_deca"
             android:text="Login"
             android:textColor="@color/white"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/AppHeader"
             app:layout_constraintEnd_toStartOf="@+id/HomeButton" />
 
@@ -55,8 +48,10 @@
             android:layout_width="101dp"
             android:layout_height="49dp"
             android:backgroundTint="#0c68b5"
+            android:fontFamily="@font/lexend_deca"
             android:text="Home"
             android:textColor="@color/white"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/AppHeader"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -86,10 +81,11 @@
             <AutoCompleteTextView
                 android:id="@+id/auto_complete_textview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="73dp"
                 android:inputType="none"
                 android:text="@string/Search"
                 android:textColor="#000000"
+                android:textSize="14sp"
                 tools:ignore="TextContrastCheck" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -106,7 +102,8 @@
             <AutoCompleteTextView
                 android:id="@+id/auto_complete_textview2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="73dp"
+                android:inputType="none"
                 android:text="@string/Capacity"
                 android:textColor="#000000"
                 tools:ignore="TextContrastCheck" />

@@ -4,11 +4,7 @@ import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -20,14 +16,9 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
+;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-//import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -38,6 +29,7 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 
 import javax.crypto.SecretKeyFactory;
@@ -52,10 +44,7 @@ public class Registration extends AppCompatActivity {
     Switch aSwitch;
     Button registerBtn;
     String username, email, fullname, password, userID;
-    ImageButton backArrowkey;
-    Boolean bool = false;
-
-    String punctuation = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
+    ImageButton backArrowkey;;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,29 +59,20 @@ public class Registration extends AppCompatActivity {
         aSwitch = findViewById(R.id.switchUser);
         backArrowkey = findViewById(R.id.backArrow);
 
-        /*BBDevDB = FirebaseDatabase.getInstance();
-        beachBluenoserAuth = FirebaseAuth.getInstance();
-*/
-
         beachBluenoserDB = FirebaseFirestore.getInstance();
         beachBluenoserAuth = FirebaseAuth.getInstance();
-
-
-
 
         backArrowkey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Registration.this,Login.class);
                 startActivity(intent);
-
             }
         });
 
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
                 if(b == true){
                     Intent intent = new Intent(Registration.this, LifeguardRegistration.class);
                     startActivity(intent);
@@ -102,10 +82,6 @@ public class Registration extends AppCompatActivity {
             }
         });
 
-      /*  if(beachBluenoserAuth.getCurrentUser() != null){
-            startActivity(new Intent(Registration.this,BeachListActivity.class)); //check later
-            finish();
-        }*/
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,7 +90,6 @@ public class Registration extends AppCompatActivity {
                 fullname = fullName.getText().toString();
                 email = emailAddress.getText().toString().trim();
                 password = passwordField.getText().toString().trim();
-
 
                 if(TextUtils.isEmpty(username)){
                     userName.setError("Please Enter a Username!");
@@ -146,33 +121,27 @@ public class Registration extends AppCompatActivity {
                 }
 
                 String salty = getNextSalt();
-
                 String hashedPassword = hash(passwordChar,salty);
-
-                /*char[] saltyPassword  = new char[hashedPassword.length()];
-
-                for(int i = 0;i<hashedPassword.length();i++){
-                    saltyPassword[i] = hashedPassword.charAt(i);
-                }
-
-                if (isExpectedPassword(passwordChar,salty,saltyPassword)){
-                    Log.d(TAG,"onSuccess: Salty " );
-                }else {
-                    Log.d(TAG,"onFailure: no salt ");
-                }*/
-
 
                 beachBluenoserAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener((task)->{
                     if (task.isSuccessful()){
                         Toast.makeText(Registration.this, "User Created.", Toast.LENGTH_SHORT).show();
-                        userID = beachBluenoserAuth.getCurrentUser().getUid();
-                        DocumentReference documentReference = beachBluenoserDB.collection("BBUsers").document(userID);
+                        userID = Objects.requireNonNull(beachBluenoserAuth.getCurrentUser()).getUid();
+                        DocumentReference documentReference = beachBluenoserDB.collection("BBUSERSTABLE-PROD").document(userID);
 
-                        Map<String, Object> user = new HashMap<>();
+/*
+                        User user = new User(username,fullname,email,hashedPassword);
+*/
+
+                        Map<String,Object > user= new HashMap<>();
                         user.put("Fullname", fullname);
                         user.put("Email", email);
                         user.put("Username", username);
                         user.put("Password", hashedPassword);
+                        user.put("userType", "User");
+
+                        Log.d(TAG,"onSuccess: hashedpasswordResult " + hashedPassword );
+
 
                         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -182,32 +151,11 @@ public class Registration extends AppCompatActivity {
                         });
                         startActivity(new Intent(Registration.this, MainActivity.class));
                     }else{
-                        Toast.makeText(Registration.this, "Error! "+task.getException().getMessage(), Toast.LENGTH_SHORT).show(); //example - It will show an error if email already exists
+                        Toast.makeText(Registration.this, "Error! "+ Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show(); //example - It will show an error if email already exists
                     }
-
-
                 });
-
-
-    }
-
+            }
         });
-
-
-
-
-
-
-    }
-
-    public static boolean isExpectedPassword(char[] password, String salt, char[] expectedHash) {
-        char[] pwdHash = hash(password, salt).toCharArray();
-        Arrays.fill(password, Character.MIN_VALUE);
-        if (pwdHash.length != expectedHash.length) return false;
-        for (int i = 0; i < pwdHash.length; i++) {
-            if (pwdHash[i] != expectedHash[i]) return false;
-        }
-        return true;
     }
 
     public static String getNextSalt() {
@@ -219,11 +167,11 @@ public class Registration extends AppCompatActivity {
     }
 
     public static String hash(char[] password, String salt) {
+        Log.d(TAG,"onSuccess: SaltCheck " + salt );
         PBEKeySpec spec = new PBEKeySpec(password, Base64.getDecoder().decode(salt), 10000, 256);
         Arrays.fill(password, Character.MIN_VALUE);
         try {
             SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-//            return skf.generateSecret(spec).getEncoded();
             return Base64.getEncoder().encodeToString(skf.generateSecret(spec).getEncoded());
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             throw new AssertionError("Error while hashing a password: " + e.getMessage(), e);
@@ -231,11 +179,4 @@ public class Registration extends AppCompatActivity {
             spec.clearPassword();
         }
     }
-
-
-
-
-
-
-
 }

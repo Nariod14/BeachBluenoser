@@ -1,6 +1,5 @@
 package com.example.beachbluenoser;
 
-
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,18 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-
-
     public class MasterBeachListAdapter extends RecyclerView.Adapter<MasterBeachListAdapter.ListItem> {
         private ArrayList<BeachItem> beaches;
 
-
-
-
-        /*
         /**
          * constructor
-         * @param beches array of BeachItem objects to show on the list
+         * @param beaches array of BeachItem objects to show on the list
          */
         public MasterBeachListAdapter(ArrayList<BeachItem> beaches) {
             this.beaches = beaches;
@@ -55,12 +48,6 @@ import java.util.ArrayList;
             }else {
                 listItem.beachItemCapacity.setText(beaches.get(pos).getcapacity());
             }
-            if(beaches.get(pos).getwheelChairRamp()==null||beaches.get(pos).getwheelChairRamp()==""){
-
-                listItem.beachItemWheelChairRamp.setText("Wheelchair ramp:");
-            }else {
-                listItem.beachItemWheelChairRamp.setText("Wheelchair Ramp: "+beaches.get(pos).getwheelChairRamp());
-            }
             if(beaches.get(pos).getsandyOrRocky()==null||beaches.get(pos).getsandyOrRocky()==""){
 
               //  listItem.beachItemSandyOrRocky.setText("Sandy / Rocky:");
@@ -73,34 +60,19 @@ import java.util.ArrayList;
             }else {
                 listItem.beachItemVisualWaterConditions.setText(beaches.get(pos).getvisualWaterConditions());
             }
-
-
-
             String desc = beaches.get(pos).getDescription();
-
             listItem.setBeachImage(beachImageFileName);
-
-
-
-
-
         }
-
 
         public static class ListItem extends RecyclerView.ViewHolder {
             LinearLayout beachLayout;
             View mainView;
             TextView beachName;
-            TextView beachDescription;
-            TextView beachRating;
             ImageView beachImage;
             TextView beachItemCapacity;
-           // TextView beachItemSandyOrRocky;
             TextView beachItemWheelChairRamp;
             TextView beachItemVisualWaterConditions;
-            // TextView postTitle;
-            //  TextView postDescription;
-            //  ImageView jobIcon;
+
 
             ArrayList<BeachItem> beachList;
 
@@ -109,16 +81,10 @@ import java.util.ArrayList;
                 beachList =beaches;
                 mainView = listItemView;
                 beachName = listItemView.findViewById(R.id.BeachName);
-                //beachDescription = listItemView.findViewById(R.id.BeachDescription);
-                //beachRating = listItemView.findViewById(R.id.BeachRating);
                 beachImage = listItemView.findViewById(R.id.BeachImage);
-                //beachImage
                 beachItemCapacity = listItemView.findViewById(R.id.beachItemCapacityTextView);
                 beachItemVisualWaterConditions = listItemView.findViewById(R.id.visualWaterConditionsTextView);
-               // beachItemSandyOrRocky = listItemView.findViewById(R.id.visualWaterConditionsTextView);
-                beachItemWheelChairRamp = listItemView.findViewById(R.id.beachItemWheelChairRampTextView);
                 beachLayout = listItemView.findViewById(R.id.beachItem);
-
 
                 //make item clickable
                 beachLayout.setOnClickListener(new View.OnClickListener() {
@@ -152,12 +118,7 @@ import java.util.ArrayList;
                     Log.d("getImageIDError","no Icon found");
                 }
                 beachImage.setImageResource(fileID);
-
-
-
-
             }
-
 
           //  When click on a container go to > page with context (intent)
             private void gotToBeachMasterPage(){
@@ -167,14 +128,7 @@ import java.util.ArrayList;
                 intent.putExtra("beachName",beachList.get(pos).getName());
                 mainView.getContext().startActivity(intent);
             }
-
-
         }
-
-
-
-
-
 
         @Override
         public int getItemCount() {
@@ -184,8 +138,4 @@ import java.util.ArrayList;
           //  else
            //     return 0;
         }
-
-
-
-
 }

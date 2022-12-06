@@ -35,7 +35,7 @@ import java.util.Collections;
 public class beachLanding extends AppCompatActivity {
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    public String beachName;
+    public String beachName, parsedBeachName;
     public String landingBeachCapacityValue;
     public String landingBeachSandyOrRockyValue;
     public String landingBeachWheelChairRampValue;
@@ -45,7 +45,6 @@ public class beachLanding extends AppCompatActivity {
     public TextView landingBeachSandyOrRockyView;
     public TextView landingBeachWheelChairRampView;
     public TextView landingBeachNameView;
-    public TextView placeholder;
     public Double beachLat,beachLong;
     public String beachLocation;
     public Button mapsBtn;
@@ -56,21 +55,23 @@ public class beachLanding extends AppCompatActivity {
         if(bundle != null){
             if(bundle.getString("beachName")!=null) {
                 beachName = bundle.getString("beachName");
-
                 Log.d("beach Main Page Name ", " Name : " + beachName);
+                parsedBeachName = beachName.replace(" ", "+");
             }
         }
 
-       // spinnerSetup();
         getDataFromDB();
         mapsBtn = findViewById(R.id.mapsBtn);
         mapsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("geo:"+beachLocation));
-                Intent chooser = Intent.createChooser(intent,"Launch Maps");
-                startActivity(chooser);
+                //https://developers.google.com/maps/documentation/urls/android-intents#location_search
+                //if you want maps to launch directly into navigation switch out gmmIntentUri for below
+                //Uri gmmIntentUri = Uri.parse("google.navigation:q=" + parsedBeachName + "@" + beachLocation);
+                Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + parsedBeachName + "@" + beachLocation);
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                startActivity(mapIntent);
             }
         });
 
@@ -109,7 +110,7 @@ public class beachLanding extends AppCompatActivity {
                                 beachLat = geoPoint.getLatitude();
                                 beachLong = geoPoint.getLongitude();
                                 Log.d("Beach Location", "location"+ beachLat +", " + beachLong);
-                                beachLocation = beachLat + "" + beachLong;
+                                beachLocation = beachLat + "," + beachLong;
                             }
                         }
                         

@@ -10,57 +10,41 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/landingBeachNameTextView"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#0c68b5"
-            android:shadowColor="#0c68b5"
-            android:text="Beach landing page"
-            android:textColor="@color/white"
-            android:textSize="70px"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="-4dp" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:backgroundTint="#0c68b5">
 
             <TextView
-                android:id="@+id/Placeholder2"
-                android:layout_width="wrap_content"
+                android:id="@+id/landingBeachNameTextView"
+                android:layout_width="359dp"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:text="Lorum Ipsum"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.483"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:layout_editor_absoluteY="32dp" />
-
-            <Button
-                android:id="@+id/SurveyBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="0dp"
-                android:layout_marginEnd="22dp"
+                android:background="#0c68b5"
                 android:backgroundTint="#0c68b5"
                 android:fontFamily="@font/lexend_deca"
-                android:text="Check in"
-                android:textColor="@color/black"
+                android:shadowColor="#0c68b5"
+                android:text="Beach landing page"
+                android:textColor="@color/white"
+                android:textSize="70px"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintVertical_bias="0.5"
-                app:srcCompat="@drawable/rounded_button" />
+                app:layout_constraintHorizontal_bias="0.777"
+                app:layout_constraintStart_toEndOf="@+id/backButton"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </RelativeLayout>
+            <ImageButton
+                android:id="@+id/backButton"
+                android:layout_width="34dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="#0c68b5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/back_svgrepo_com"
+                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
             android:id="@+id/landingBeachImageView"
@@ -72,6 +56,33 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/landingBeachNameTextView"
             app:srcCompat="@drawable/black_brook_beach" />
+
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="380dp"
+            android:layout_height="250dp"
+            android:layout_marginStart="12dp"
+            android:adjustViewBounds="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView4"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/weather_api" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="380dp"
+            android:layout_height="200dp"
+            android:layout_marginStart="12dp"
+            android:adjustViewBounds="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.516"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/landingBeachImageView"
+            app:layout_constraintVertical_bias="0.011"
+            app:srcCompat="@drawable/map_api" />
 
         <TextView
             android:id="@+id/landingBeachCapacityTextView"
@@ -87,18 +98,93 @@
             app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="32dp" />
-<!--just comment ok-->
+        <!--just comment ok-->
         <TextView
             android:id="@+id/landingBeachSandyOrRockyTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="sansdryorrocky:" />
+            android:background="@color/white"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="32dp"
+            android:text="Sandy or Rocky:" />
 
         <TextView
-            android:id="@+id/landingBeachWheelChairRampTextView"
+            android:id="@+id/landingBeachVisualWaterConditionsTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="wheelchairrAmpo:" />
+            android:background="@color/white"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="32dp"
+            android:text="VisualWaterConditions:" />
+
+        <TextView
+            android:id="@+id/landingBeachWheelchairAccessibleTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="32dp"
+            android:text="@string/wheelchair_accessible" />
+
+        <TextView
+            android:id="@+id/landingBeachFloatingWheelchairTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="32dp"
+            android:text="@string/floating_wheelchair" />
+
+        <TextView
+            android:id="@+id/landingBeachParkingTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="32dp"
+            android:text="Parking:" />
+
+        <Button
+            android:id="@+id/checkInSurvey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="#0c68b5"
+            android:textColor="@color/black"
+            android:text="Check-in"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="660dp" />
 
         <RelativeLayout
             android:layout_width="match_parent"

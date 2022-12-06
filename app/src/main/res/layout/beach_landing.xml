@@ -57,18 +57,101 @@
             app:layout_constraintTop_toBottomOf="@+id/landingBeachNameTextView"
             app:srcCompat="@drawable/black_brook_beach" />
 
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="380dp"
-            android:layout_height="250dp"
-            android:layout_marginStart="12dp"
-            android:adjustViewBounds="true"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <TextView
+            android:id="@+id/weatherDescriptionTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="Description: "
+            android:textColor="#4486C7"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView4"
-            app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/weather_api" />
+            tools:layout_editor_absoluteY="32dp" />
+
+        <TextView
+            android:id="@+id/weatherTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="Weather: "
+            android:textColor="#4486C7"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="32dp" />
+
+        <TextView
+            android:id="@+id/temperatureTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="Temperature: "
+            android:textColor="#4486C7"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="32dp" />
+
+        <TextView
+            android:id="@+id/humidityTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="Humidity : "
+            android:textColor="#4486C7"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="32dp" />
+
+        <TextView
+            android:id="@+id/windTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="Wind Speed: "
+            android:textColor="#4486C7"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="32dp" />
+
+        <TextView
+            android:id="@+id/cloudsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="Cloud Cover: "
+            android:textColor="#4486C7"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="32dp" />
 
         <TextView
             android:id="@+id/landingBeachCapacityTextView"

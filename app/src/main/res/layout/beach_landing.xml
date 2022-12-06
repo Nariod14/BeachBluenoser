@@ -57,32 +57,104 @@
             app:layout_constraintTop_toBottomOf="@+id/landingBeachNameTextView"
             app:srcCompat="@drawable/black_brook_beach" />
 
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="380dp"
-            android:layout_height="250dp"
-            android:layout_marginStart="12dp"
-            android:adjustViewBounds="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView4"
-            app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/weather_api" />
-
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="380dp"
-            android:layout_height="200dp"
-            android:layout_marginStart="12dp"
-            android:adjustViewBounds="true"
-            app:layout_constraintBottom_toBottomOf="parent"
+<<<<<<< app/src/main/res/layout/beach_landing.xml
+=======
+        <TextView
+            android:id="@+id/weatherDescriptionTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="Description: "
+            android:textColor="#4486C7"
+            android:textSize="20dp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.516"
+            app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/landingBeachImageView"
-            app:layout_constraintVertical_bias="0.011"
-            app:srcCompat="@drawable/map_api" />
+            tools:layout_editor_absoluteY="32dp" />
+>>>>>>> app/src/main/res/layout/beach_landing.xml
+
+        <TextView
+            android:id="@+id/weatherTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="Weather: "
+            android:textColor="#4486C7"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="32dp" />
+
+        <TextView
+            android:id="@+id/temperatureTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="Temperature: "
+            android:textColor="#4486C7"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="32dp" />
+
+        <TextView
+            android:id="@+id/humidityTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="Humidity : "
+            android:textColor="#4486C7"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="32dp" />
+
+        <TextView
+            android:id="@+id/windTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="Wind Speed: "
+            android:textColor="#4486C7"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="32dp" />
+
+        <TextView
+            android:id="@+id/cloudsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="Cloud Cover: "
+            android:textColor="#4486C7"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="32dp" />
 
         <TextView
             android:id="@+id/landingBeachCapacityTextView"
@@ -98,7 +170,7 @@
             app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="32dp" />
-<!--just comment ok-->
+        <!--just comment ok-->
         <TextView
             android:id="@+id/landingBeachSandyOrRockyTextView"
             android:layout_width="match_parent"
@@ -176,9 +248,34 @@
 
         <Button
             android:id="@+id/checkInSurvey"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+<<<<<<< app/src/main/res/layout/beach_landing.xml
+=======
+            android:backgroundTint="#0c68b5"
+            android:textColor="@color/black"
+            android:text="Check-in"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="660dp" />
+
+        <Button
+            android:id="@+id/mapsBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:backgroundTint="#0c68b5"
+            android:fontFamily="@font/lexend_deca"
+            android:text="Directions"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:srcCompat="@drawable/rounded_button" />
+>>>>>>> app/src/main/res/layout/beach_landing.xml
 
             android:background="@color/black"
             android:text="Check-in"

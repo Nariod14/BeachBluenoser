@@ -70,15 +70,19 @@
         android:id="@+id/userSubmitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:layout_marginTop="107dp"
-        android:layout_marginBottom="84dp"
-        android:text="Submit"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:backgroundTint="#0c68b5"
+        android:fontFamily="@font/lexend_deca"
+        android:text="@string/submitButtonLabel"
+        android:textColor="@color/black"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/parkingConditionsSpinner" />
-
+        app:layout_constraintTop_toBottomOf="@+id/parkingConditionsSpinner"
+        app:layout_constraintVertical_bias="0.5"
+        app:srcCompat="@drawable/rounded_button" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 <!--RadioGroup radioGroup;

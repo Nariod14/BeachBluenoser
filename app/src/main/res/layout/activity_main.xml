@@ -10,7 +10,6 @@
     tools:context=".MainActivity">
 
     <!-- A Linear Layout for the TextInputLayout -->
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -28,12 +27,13 @@
             android:text="@string/beach_bluenoser"
             android:textColor="@color/white"
             android:textSize="19sp"
+            android:paddingEnd="10dp"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="3dp" />
 
         <Button
             android:id="@+id/LoginButton"
-            android:layout_width="101dp"
+            android:layout_width="wrap_content"
             android:layout_height="49dp"
             android:backgroundTint="#0c68b5"
             android:fontFamily="@font/lexend_deca"
@@ -45,7 +45,7 @@
 
         <Button
             android:id="@+id/HomeButton"
-            android:layout_width="101dp"
+            android:layout_width="wrap_content"
             android:layout_height="49dp"
             android:backgroundTint="#0c68b5"
             android:fontFamily="@font/lexend_deca"

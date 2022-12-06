@@ -33,9 +33,9 @@
     <string name= "Capacity">Beach Capacity</string>
     <string name="editBtnText">EDIT</string>
     <string name="sign_out_buttton">SIGN OUT</string>
-    <string name="user_name">User Name</string>
-    <string name="full_name">Full Name</string>
-    <string name="email_address">Email Address</string>
+    <string name="user_name">User Name:</string>
+    <string name="full_name">Full Name:</string>
+    <string name="email_address">Email Address:</string>
 
 
     <string-array name="visualWaterConditionsValues">

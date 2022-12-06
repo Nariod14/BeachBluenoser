@@ -26,16 +26,40 @@ public class userprofile extends AppCompatActivity {
     @SuppressLint({"WrongViewCast", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.profile);
+        setContentView(R.layout.user_profile);
         //edit = findViewById(R.id.editProfileBtn);
         signOutBtn = findViewById(R.id.SignOut);
         Email = findViewById(R.id.EmailTextView);
         FullName = findViewById(R.id.fullNameTextView);
         username = findViewById(R.id.usernameTextView);
-
-        //TODO: Not implemented edit profile page
+        
+        //Header Code
+        final Button homeBtn = findViewById(R.id.HomeButton);
+        final Button loginProfileBtn = findViewById(R.id.LoginButton);
+        if (beachBluenoserAuth.getCurrentUser() != null){
+            loginProfileBtn.setText("Profile");
+        }
+        homeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent homeIntent = new Intent(userprofile.this, MainActivity.class);
+                startActivity(homeIntent);
+            }
+        });
+        loginProfileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (beachBluenoserAuth.getCurrentUser() != null) {
+                    Intent profileIntent = new Intent(userprofile.this, userprofile.class);
+                    startActivity(profileIntent);
+                }
+            }
+        });
+        //End of Header Code
+        
+        
+        //TODO: Not implemented edit user_profile page
 //        edit.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {

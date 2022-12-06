@@ -29,6 +29,7 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 
 import javax.crypto.SecretKeyFactory;
@@ -125,17 +126,21 @@ public class Registration extends AppCompatActivity {
                 beachBluenoserAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener((task)->{
                     if (task.isSuccessful()){
                         Toast.makeText(Registration.this, "User Created.", Toast.LENGTH_SHORT).show();
-                        userID = beachBluenoserAuth.getCurrentUser().getUid();
-                        DocumentReference documentReference = beachBluenoserDB.collection("BBUsers").document(userID);
+                        userID = Objects.requireNonNull(beachBluenoserAuth.getCurrentUser()).getUid();
+                        DocumentReference documentReference = beachBluenoserDB.collection("BBUSERSTABLE-PROD").document(userID);
 
-                        Map<String, Object> user = new HashMap<>();
+/*
+                        User user = new User(username,fullname,email,hashedPassword);
+*/
+
+                        Map<String,Object > user= new HashMap<>();
                         user.put("Fullname", fullname);
                         user.put("Email", email);
                         user.put("Username", username);
                         user.put("Password", hashedPassword);
-                        user.put("userType", "user");
+                        user.put("userType", "User");
 
-                        Log.d(TAG,"onSuccess: hashedpasswordBae " + hashedPassword );
+                        Log.d(TAG,"onSuccess: hashedpasswordResult " + hashedPassword );
 
 
                         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -146,35 +151,23 @@ public class Registration extends AppCompatActivity {
                         });
                         startActivity(new Intent(Registration.this, MainActivity.class));
                     }else{
-                        Toast.makeText(Registration.this, "Error! "+task.getException().getMessage(), Toast.LENGTH_SHORT).show(); //example - It will show an error if email already exists
+                        Toast.makeText(Registration.this, "Error! "+ Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show(); //example - It will show an error if email already exists
                     }
                 });
             }
         });
     }
 
-    public static boolean isExpectedPassword(char[] password, String salt, char[] expectedHash) {
-        char[] pwdHash = hash(password, salt).toCharArray();
-        Arrays.fill(password, Character.MIN_VALUE);
-        if (pwdHash.length != expectedHash.length) return false;
-        for (int i = 0; i < pwdHash.length; i++) {
-            if (pwdHash[i] != expectedHash[i]) return false;
-        }
-        return true;
-    }
-
     public static String getNextSalt() {
         byte[] salt = new byte[16];
         Random RANDOM = new SecureRandom();
         RANDOM.nextBytes(salt);
-        Log.d(TAG,"onSuccess: SaltPreBae " + salt );
-
         return Base64.getEncoder().encodeToString(salt);
 
     }
 
     public static String hash(char[] password, String salt) {
-        Log.d(TAG,"onSuccess: SaltBae " + salt );
+        Log.d(TAG,"onSuccess: SaltCheck " + salt );
         PBEKeySpec spec = new PBEKeySpec(password, Base64.getDecoder().decode(salt), 10000, 256);
         Arrays.fill(password, Character.MIN_VALUE);
         try {

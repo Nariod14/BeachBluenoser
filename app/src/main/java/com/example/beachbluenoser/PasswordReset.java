@@ -52,8 +52,6 @@ public class PasswordReset extends AppCompatActivity {
                 beachBluenoserAuth.sendPasswordResetEmail(emailAddress)
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
-                                userID = beachBluenoserAuth.getUid();
-                                DocumentReference documentReference = beachBluenoserDB.collection("BBUsers").document(userID);
                                 Toast.makeText(PasswordReset.this, "Password reset link has been sent to your email", Toast.LENGTH_LONG).show();
 
                             } else {

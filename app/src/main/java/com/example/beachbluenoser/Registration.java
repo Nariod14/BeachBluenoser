@@ -135,6 +135,11 @@ public class Registration extends AppCompatActivity {
                         user.put("Password", hashedPassword);
                         user.put("userType", "user");
 
+                        Log.d(TAG,"onSuccess: hashedpasswordBae " + hashedPassword );
+
+
+
+
                         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
@@ -164,11 +169,14 @@ public class Registration extends AppCompatActivity {
         byte[] salt = new byte[16];
         Random RANDOM = new SecureRandom();
         RANDOM.nextBytes(salt);
+        Log.d(TAG,"onSuccess: SaltPreBae " + salt );
+
         return Base64.getEncoder().encodeToString(salt);
 
     }
 
     public static String hash(char[] password, String salt) {
+        Log.d(TAG,"onSuccess: SaltBae " + salt );
         PBEKeySpec spec = new PBEKeySpec(password, Base64.getDecoder().decode(salt), 10000, 256);
         Arrays.fill(password, Character.MIN_VALUE);
         try {

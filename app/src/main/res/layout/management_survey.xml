@@ -90,13 +90,18 @@
 
     <Button
         android:id="@+id/lifeGuardSurveyButton"
-        android:layout_width="101dp"
-        android:layout_height="49dp"
-        android:layout_marginTop="56dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:backgroundTint="#0c68b5"
+        android:fontFamily="@font/lexend_deca"
         android:text="@string/submitButtonLabel"
+        android:textColor="@color/black"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/floatingWheelchairSpinner" />
-
-
+        app:layout_constraintTop_toBottomOf="@+id/floatingWheelchairSpinner"
+        app:layout_constraintVertical_bias="0.5"
+        app:srcCompat="@drawable/rounded_button" />
 </androidx.constraintlayout.widget.ConstraintLayout>

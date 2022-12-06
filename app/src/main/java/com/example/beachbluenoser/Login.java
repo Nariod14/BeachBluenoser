@@ -3,7 +3,6 @@ package com.example.beachbluenoser;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
@@ -12,19 +11,20 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 
 public class Login extends AppCompatActivity {
 
-    EditText emailAddress, passwordField;
-    Button login, signUp;
+    EditText emailAddress;
+    EditText passwordField;
+    Button userLogin;
+    Button signUp;
+    Button forgotPassword;
     ImageButton rtnHome;
     private FirebaseAuth beachBluenoserAuth;
-    String emailAuth, passAuth;
+    String emailAuth;
+    String passAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,19 +32,34 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
 
-        login = findViewById(R.id.loginBtn);
+        userLogin = findViewById(R.id.loginBtn);
         signUp = findViewById(R.id.signupBtn);
+        forgotPassword = findViewById(R.id.forgotPasswordBtn);
         rtnHome = findViewById(R.id.returnHomeButton);
 
         beachBluenoserAuth = FirebaseAuth.getInstance();
+      /*  if (beachBluenoserAuth.getCurrentUser() != null) {
+            finish();
+            return;
+        }
+*/
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        login.setOnClickListener(new View.OnClickListener() {
+                Intent intent = new Intent(Login.this, PasswordReset.class);
+                startActivity(intent);
+
+            }
+        });
+        userLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 authenticateUser();
 
             }
         });
+
 
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +76,10 @@ public class Login extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+
+
     }
 
     private void authenticateUser() {
@@ -75,14 +94,11 @@ public class Login extends AppCompatActivity {
 
         } else {
             beachBluenoserAuth.signInWithEmailAndPassword(emailAuth, passAuth)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                showMainActivity();
-                            } else {
-                                Toast.makeText(Login.this, "Authentication Failed!", Toast.LENGTH_LONG).show();
-                            }
+                    .addOnCompleteListener(this, task -> {
+                        if (task.isSuccessful()) {
+                            showMainActivity();
+                        } else {
+                            Toast.makeText(Login.this, "Authentication Failed!", Toast.LENGTH_LONG).show();
                         }
                     });
         }

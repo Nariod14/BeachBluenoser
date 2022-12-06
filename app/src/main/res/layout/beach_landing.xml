@@ -70,20 +70,6 @@
             app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/weather_api" />
 
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="380dp"
-            android:layout_height="200dp"
-            android:layout_marginStart="12dp"
-            android:adjustViewBounds="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.516"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/landingBeachImageView"
-            app:layout_constraintVertical_bias="0.011"
-            app:srcCompat="@drawable/map_api" />
-
         <TextView
             android:id="@+id/landingBeachCapacityTextView"
             android:layout_width="match_parent"
@@ -176,7 +162,7 @@
 
         <Button
             android:id="@+id/checkInSurvey"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:backgroundTint="#0c68b5"
@@ -186,26 +172,21 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="660dp" />
 
-        <RelativeLayout
+        <Button
+            android:id="@+id/mapsBtn"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                android:id="@+id/mapsBtn"
-                android:layout_width="311dp"
-                android:layout_height="55dp"
-                android:layout_centerInParent="true"
-                android:backgroundTint="#0c68b5"
-                android:fontFamily="@font/lexend_deca"
-                android:text="Directions"
-                android:textColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintVertical_bias="0.5"
-                app:srcCompat="@drawable/rounded_button" />
-
-        </RelativeLayout>
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:backgroundTint="#0c68b5"
+            android:fontFamily="@font/lexend_deca"
+            android:text="Directions"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:srcCompat="@drawable/rounded_button" />
 
     </LinearLayout>
 </ScrollView>

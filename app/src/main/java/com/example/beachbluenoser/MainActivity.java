@@ -75,10 +75,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final Button homeBtn = findViewById(R.id.HomeButton);
-        final Button loginLogoutBtn = findViewById(R.id.LoginButton);
+        final Button loginProfileBtn = findViewById(R.id.LoginButton);
         //beachBluenoserAuth.signOut();
         if (beachBluenoserAuth.getCurrentUser() != null){
-            loginLogoutBtn.setText("Logout");
+            loginProfileBtn.setText("Profile");
         }
         Date c = Calendar.getInstance().getTime();
 
@@ -96,11 +96,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        loginLogoutBtn.setOnClickListener(new View.OnClickListener() {
+        loginProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (beachBluenoserAuth.getCurrentUser() != null){
-                    beachBluenoserAuth.signOut();
+                    Intent profileIntent = new Intent(MainActivity.this, userprofile.class);
+                    startActivity(profileIntent);
                 } else {
                     Intent loginIntent = new Intent(MainActivity.this, Login.class);
                     startActivity(loginIntent);
@@ -311,9 +312,13 @@ public class MainActivity extends AppCompatActivity {
                             capacityText  =document.getData().get("beachCapacityTextForTheDay").toString();
                         if(!(document.getData().get("beachVisualWaveConditionsTextForTheDay")==null))
                             visualWaterConditionsText  = document.getData().get("beachVisualWaveConditionsTextForTheDay").toString();
+
+
+
+
                        // showDataOnUI();
                     } else {
-                        Log.d("Beach Landing Query", "No such document: Not today");
+                        Log.d("Beach Landing Query", "No such document");
                        // showDataOnUI();
                     }
                 } else {

@@ -255,8 +255,8 @@ public class beachLanding extends AppCompatActivity {
                     JSONObject jsonObjectWeather = jsonArray.getJSONObject(0);
                     String description = jsonObjectWeather.getString("description");
                     JSONObject jsonObjectMain = jsonResponse.getJSONObject("main");
-                    double temp = jsonObjectMain.getDouble("temp") ;
-                    double feelsLike = jsonObjectMain.getDouble("feels_like") ;
+                    double temp = jsonObjectMain.getDouble("temp")- 273.15 ;
+                    double feelsLike = jsonObjectMain.getDouble("feels_like")- 273.15 ;
                     int humidity = jsonObjectMain.getInt("humidity");
                     JSONObject jsonObjectWind = jsonResponse.getJSONObject("wind");
                     String wind = jsonObjectWind.getString("speed");

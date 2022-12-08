@@ -1,0 +1,76 @@
+
+`
+java:S1192>"JDefine a constant instead of duplicating this literal "beachName" 3 times.(šŞ¼Â
+_
+java:S1192A"IDefine a constant instead of duplicating this literal "userType" 3 times.(é Ò½
+g	java:S117ˆ"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÑÕ¨
+l	java:S117‰"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(üÒøÿÿÿÿ
+>
+java:S1604G"(Make this anonymous inner class a lambda(»ıª©
+>
+java:S1604`"(Make this anonymous inner class a lambda(ã‘Àò
+C
+java:S1604h"(Make this anonymous inner class a lambda(ƒø…Òÿÿÿÿÿ
+?
+java:S1604‚"(Make this anonymous inner class a lambda(á¼«ö
+k
+java:S1104"PMake auth a static final constant or non-public and provide accessors if needed.(Ãéâ†ıÿÿÿÿ
+p
+java:S1104"UMake beachName a static final constant or non-public and provide accessors if needed.(¢ò¾ªúÿÿÿÿ
+y
+java:S1104"dMake landingBeachCapacityText a static final constant or non-public and provide accessors if needed.(Çúàk
+„
+java:S1104 "iMake landingBeachSandyOrRockyValue a static final constant or non-public and provide accessors if needed.(ËëÔÊüÿÿÿÿ
+†
+java:S1104!"pMake landingBeachWheelchairAccessibleText a static final constant or non-public and provide accessors if needed.(®şûã
+~
+java:S1104""cMake landingBeachImageSource a static final constant or non-public and provide accessors if needed.(ùÄÁ›ûÿÿÿÿ
+Œ
+java:S1104#"qMake landingBeachVisualWaterConditionsText a static final constant or non-public and provide accessors if needed.(§ªî¡ÿÿÿÿÿ
+y
+java:S1104$"cMake landingBeachParkingText a static final constant or non-public and provide accessors if needed.(¿å¦Ù
+„
+java:S1104%"nMake landingBeachFloatingWheelchairText a static final constant or non-public and provide accessors if needed.(—‡Ë
+|
+java:S1104'"aMake landingBeachImageView a static final constant or non-public and provide accessors if needed.(ªÃÎøÿÿÿÿ
+z
+java:S1104("dMake landingBeachCapacityView a static final constant or non-public and provide accessors if needed.(ÚÔ€›
+ƒ
+java:S1104)"hMake landingBeachSandyOrRockyView a static final constant or non-public and provide accessors if needed.(‚ñËÒøÿÿÿÿ
+†
+java:S1104*"pMake landingBeachWheelchairAccessibleView a static final constant or non-public and provide accessors if needed.(¤°Ï
+„
+java:S1104+"nMake landingBeachFloatingWheelchairView a static final constant or non-public and provide accessors if needed.(İ¥ü
+y
+java:S1104,"cMake landingBeachParkingView a static final constant or non-public and provide accessors if needed.(ØíÅ‹
+{
+java:S1104-"`Make landingBeachNameView a static final constant or non-public and provide accessors if needed.(³…®øúÿÿÿÿ
+Œ
+java:S1104."qMake landingBeachVisualWaterConditionsView a static final constant or non-public and provide accessors if needed.(É’Ôâúÿÿÿÿ
+m
+java:S1104/"WMake currentDate a static final constant or non-public and provide accessors if needed.(‹°¥¢
+m
+java:S11040"RMake userID a static final constant or non-public and provide accessors if needed.(Ëã¤æøÿÿÿÿ
+o
+java:S11041"TMake userType a static final constant or non-public and provide accessors if needed.(ïƒ­ûÿÿÿÿ
+g	java:S101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(û¦Ãùÿÿÿÿ
+O
+java:S2589Ï"8Remove this expression which always evaluates to "false"(‘ÑÈ©
+7
+java:S1116"Remove this empty statement.(Ãéâ†ıÿÿÿÿ
+m
+java:S37764"RRefactor this method to reduce its Cognitive Complexity from 21 to the 15 allowed.(¨Œşÿÿÿÿ
+U
+java:S11614":Add the "@Override" annotation above this method signature(¨Œşÿÿÿÿ
+i
+java:S3776€"RRefactor this method to reduce its Cognitive Complexity from 41 to the 15 allowed.(ÑŸ‹§
+@
+java:S1940‘")Use the opposite operator ("!=") instead.(²ı·ã
+@
+java:S1940–")Use the opposite operator ("!=") instead.(Ìâù
+E
+java:S1940›")Use the opposite operator ("!=") instead.(›òáØüÿÿÿÿ
+E
+java:S1940 ")Use the opposite operator ("!=") instead.(–Óäıÿÿÿÿ
+@
+java:S1940¨")Use the opposite operator ("!=") instead.(¯¢«ü

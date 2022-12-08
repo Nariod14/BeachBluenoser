@@ -77,7 +77,7 @@ public class userprofile extends AppCompatActivity {
             }
         });
         String userID = beachBluenoserAuth.getCurrentUser().getUid();
-        DocumentReference Ref = db.collection("BBUsers").document(userID);
+        DocumentReference Ref = db.collection("BBUSERSTABLE-PROD").document(userID);
         Ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {

@@ -49,12 +49,8 @@ public class beachLanding extends AppCompatActivity {
     public String landingBeachVisualWaterConditionsText;
     public String landingBeachParkingText;
     public String landingBeachFloatingWheelchairText;
-    public String weatherText;
     public String weatherDescriptionText;
-    public String humidityText;
     public String temperatureText;
-    public String windText;
-    public String cloudText;
 
     public ImageView landingBeachImageView;
     public TextView landingBeachCapacityView;

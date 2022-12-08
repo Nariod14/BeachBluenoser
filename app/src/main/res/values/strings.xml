@@ -1,3 +1,79 @@
 <resources>
     <string name="app_name">Beach Bluenoser</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="beach_bluenoser">BEACH BLUENOSER</string>
+    <string name="todo">TODO</string>
+    <string name="FilterPage">Beach Filter Page</string>
+    <string name="submit">Submit</string>
+    <string name="submit1">Submit</string>
+    <string name="choppy_waters">choppy waters</string>
+    <string name="visual_water_conditions">Visual Water conditions</string>
+    <string name="bluenoser_beach">Bluenoser Beach</string>
+    <string name="calm">calm</string>
+    <string name="a">a</string>
+    <string name="how_busy_is_the_beach">How busy is the beach</string>
+    <string name="a_few_people">A few people</string>
+    <string name="many_people">Many people</string>
+    <string name="little_to_no_people">little to no people</string>
+    <string name="Search">Search Beaches</string>
+    <string name="selectionDropdown">Please select an option</string>
+    <string name="beach_capacity_lable">Beach capacity</string>
+    <string name="submitButtonLabel">Submit</string>
+    <string name="beach_type">Beach type</string>
+    <string name="wheelchair_accessible">Wheelchair accessible</string>
+    <string name="floating_wheelchair">Floating Wheelchair on site</string>
+    <string name= "Capacity">Beach Capacity</string>
+    <string name="editBtnText">EDIT</string>
+    <string name="sign_out_buttton">SIGN OUT</string>
+    <string name="user_name">User Name:</string>
+    <string name="full_name">Full Name:</string>
+    <string name="email_address">Email Address:</string>
+
+
+    <string-array name="visualWaterConditionsValues">
+        <item>Calm waters</item>
+        <item>Medium waters</item>
+        <item>Rough waters</item>
+    </string-array>
+    <string-array name="beachCapacityValues">
+        <item>Low Capacity</item>
+        <item>Medium Capacity</item>
+        <item>High Capacity</item>
+    </string-array>
+    <string name="home">Home</string>
+    <string name="login">Login</string>
+
+    <string-array name="beachTypeValues">
+        <item>Rocky</item>
+        <item>Sandy</item>
+    </string-array>
+    <string-array name="wheelChairAccessibleValue">
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+    <string-array name="floatingWheelChairValue">
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+
+    <string-array name="parkingSpotValues">
+        <item>Many spots</item>
+        <item>Few spots</item>
+        <item>Little/No Spots</item>
+    </string-array>
+    <string-array name="CapacityValues">
+        <item>Many people</item>
+        <item>Few people</item>
+        <item>Little/No people</item>
+    </string-array>
+
+
 </resources>

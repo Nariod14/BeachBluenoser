@@ -20,38 +20,44 @@
 
          <ImageView
              android:id="@+id/BeachImage"
-             android:layout_width="70dp"
-             android:layout_height="70dp"
-             android:background="@drawable/ic_launcher_background" />
+             android:layout_width="125dp"
+             android:layout_height="125dp"
+             android:adjustViewBounds="true"
+             android:background="@drawable/ic_launcher_background"
+             android:scaleType="fitXY" />
      </LinearLayout>
 
-     <LinearLayout
-         android:layout_width="wrap_content"
-         android:layout_height="match_parent"
-         android:layout_weight="1"
-         android:gravity="center"
+    <LinearLayout
+        android:layout_width="290dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
 
-         android:orientation="vertical">
+        android:orientation="vertical">
 
-         <TextView
-             android:id="@+id/BeachName"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:text="Hello"
-             android:textColor="#000" />
+        <TextView
+            android:id="@+id/BeachName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hello"
+            android:textColor="#000"
+            android:textSize="16sp" />
 
 
-         <TextView
-             android:id="@+id/BeachDescription"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:text="------" />
+        <TextView
+            android:id="@+id/beachItemCapacityTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Capacity: "
+            android:textSize="16sp" />
 
-         <TextView
-             android:id="@+id/BeachRating"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:text="/5" />
-     </LinearLayout>
+        <TextView
+            android:id="@+id/visualWaterConditionsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Water Conditions:"
+            android:textSize="16sp" />
+
+    </LinearLayout>
 
 </LinearLayout>

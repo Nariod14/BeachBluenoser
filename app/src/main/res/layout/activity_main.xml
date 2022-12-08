@@ -1,18 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <!-- A Linear Layout for the TextInputLayout -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#1468B2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/AppHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#0c68b5"
+            android:fontFamily="@font/lexend_deca"
+            android:text="@string/beach_bluenoser"
+            android:textColor="@color/white"
+            android:textSize="19sp"
+            android:paddingEnd="10dp"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="3dp" />
+
+        <Button
+            android:id="@+id/LoginButton"
+            android:layout_width="wrap_content"
+            android:layout_height="49dp"
+            android:backgroundTint="#0c68b5"
+            android:fontFamily="@font/lexend_deca"
+            android:text="Login"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/AppHeader"
+            app:layout_constraintEnd_toStartOf="@+id/HomeButton" />
+
+        <Button
+            android:id="@+id/HomeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="49dp"
+            android:backgroundTint="#0c68b5"
+            android:fontFamily="@font/lexend_deca"
+            android:text="Home"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/AppHeader"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <!--This code is for the Search Beach Dropdown-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/beachTextInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="198dp"
+            android:layout_height="100dp"
+            android:layout_margin="2.5dp"
+            android:padding="10dp"
+            app:startIconDrawable="@drawable/ic_beach"
+            tools:ignore="LabelFor,MissingConstraints,RtlSymmetry">
+
+            <AutoCompleteTextView
+                android:id="@+id/auto_complete_textview"
+                android:layout_width="match_parent"
+                android:layout_height="73dp"
+                android:inputType="none"
+                android:text="@string/Search"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                tools:ignore="TextContrastCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--This code is for the Beach Capacity Dropdown-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/capacityTextInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_margin="2.5dp"
+            android:padding="10dp"
+            app:startIconDrawable="@drawable/ic_capacity">
+
+            <AutoCompleteTextView
+                android:id="@+id/auto_complete_textview2"
+                android:layout_width="match_parent"
+                android:layout_height="73dp"
+                android:inputType="none"
+                android:text="@string/Capacity"
+                android:textColor="#000000"
+                tools:ignore="TextContrastCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <!--This code is for the Toolbar that says 'Beach Filter Page'-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+        <!--android:background="@drawable/rounded_edit_text"-->
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/BeachMasterList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:autofillHints="Empty"
+            android:padding="10dp"
+            android:scrollbars="vertical">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

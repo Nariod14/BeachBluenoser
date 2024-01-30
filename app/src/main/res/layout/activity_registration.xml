@@ -9,26 +9,30 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <TextView
+    <Button
         android:id="@+id/lifeguardView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:backgroundTint="#edf1ec"
+        app:srcCompat="@drawable/rounded_button"
         android:fontFamily="@font/lexend_deca"
-        android:text="Are you a lifeguard?"
+        android:text="Lifeguard Registration"
         android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/switchUser"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signUpBtn"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintVertical_bias="0.5"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"/>
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="288dp"
         android:layout_height="121dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"
         android:src="@drawable/logo"
         app:layout_constraintBottom_toTopOf="@+id/registerView"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,6 +45,8 @@
         android:id="@+id/registerFullNameTxt"
         android:layout_width="313dp"
         android:layout_height="50dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"
         android:background="@drawable/rounded_button"
         android:backgroundTint="#edf1ec"
         android:ems="10"
@@ -61,6 +67,8 @@
         android:id="@+id/registerEmailAddressTxt"
         android:layout_width="313dp"
         android:layout_height="50dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"
         android:background="@drawable/rounded_button"
         android:backgroundTint="#edf1ec"
         android:ems="10"
@@ -81,6 +89,8 @@
         android:id="@+id/registerPasswordTxt"
         android:layout_width="313dp"
         android:layout_height="50dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"
         android:background="@drawable/rounded_button"
         android:backgroundTint="#edf1ec"
         android:ems="10"
@@ -101,6 +111,8 @@
         android:id="@+id/registerUsernameTxt"
         android:layout_width="311dp"
         android:layout_height="50dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"
         android:background="@drawable/rounded_button"
         android:backgroundTint="#edf1ec"
         android:ems="10"
@@ -131,7 +143,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintVertical_bias="0.5"
+        android:layout_marginBottom="25dp"/>
 
     <Button
         android:id="@+id/signUpBtn"
@@ -149,24 +162,12 @@
         app:layout_constraintTop_toBottomOf="@+id/registerPasswordTxt"
         app:layout_constraintVertical_bias="0.5" />
 
-    <Switch
-        android:id="@+id/switchUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minWidth="48dp"
-        android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lifeguardView"
-        app:layout_constraintVertical_bias="0.5" />
-
     <ImageButton
         android:id="@+id/backArrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"
         android:background="#0c68b5"
         android:minWidth="48dp"
         android:minHeight="48dp"

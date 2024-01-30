@@ -41,7 +41,7 @@ public class Registration extends AppCompatActivity {
     EditText userName, passwordField, fullName, emailAddress;
     FirebaseFirestore beachBluenoserDB;
     private FirebaseAuth beachBluenoserAuth;
-    Switch aSwitch;
+    Button lifeguardBtn;
     Button registerBtn;
     String username, email, fullname, password, userID;
     ImageButton backArrowkey;;
@@ -56,7 +56,7 @@ public class Registration extends AppCompatActivity {
         emailAddress = findViewById(R.id.registerEmailAddressTxt);
         fullName = findViewById(R.id.registerFullNameTxt);
         registerBtn = findViewById(R.id.signUpBtn);
-        aSwitch = findViewById(R.id.switchUser);
+        lifeguardBtn = findViewById(R.id.lifeguardView);
         backArrowkey = findViewById(R.id.backArrow);
 
         beachBluenoserDB = FirebaseFirestore.getInstance();
@@ -70,92 +70,89 @@ public class Registration extends AppCompatActivity {
             }
         });
 
-        aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        //Toggle switch for lifeguard that will take you to the LifeguardRegistration.java
+        lifeguardBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b == true){
-                    Intent intent = new Intent(Registration.this, LifeguardRegistration.class);
-                    startActivity(intent);
-                }else{
-                    finish();
-                }
+            public void onClick(View view) {
+                Intent intent = new Intent(Registration.this, LifeguardRegistration.class);
+                startActivity(intent);
             }
         });
 
-        registerBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                registerBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
 
-                username = userName.getText().toString();
-                fullname = fullName.getText().toString();
-                email = emailAddress.getText().toString().trim();
-                password = passwordField.getText().toString().trim();
+                        username = userName.getText().toString();
+                        fullname = fullName.getText().toString();
+                        email = emailAddress.getText().toString().trim();
+                        password = passwordField.getText().toString().trim();
 
-                if(TextUtils.isEmpty(username)){
-                    userName.setError("Please Enter a Username!");
-                }else if(username.contains("!")||username.contains("#")||username.contains("$")||username.contains("%")||username.contains("&")||username.contains("'")||username.contains("(")||username.contains(")")||username.contains("*")||username.contains("+")||username.contains(",")||username.contains("-")||username.contains(".")||username.contains("/")||username.contains(":")||username.contains(";")||username.contains("<")||username.contains("=")||username.contains(">")||username.contains("?")||username.contains("@")||username.contains("[")||username.contains("]")||username.contains("^")||username.contains("_")||username.contains("`")||username.contains("{")||username.contains("|")||username.contains("}")||username.contains("~")){
-                    userName.setError("Special symbols are not allowed!");
-                }else if(username.matches("[0-9]+")){
-                    userName.setError("Numbers are not allowed!");
-                }
+                        if (TextUtils.isEmpty(username)) {
+                            userName.setError("Please Enter a Username!");
+                        } else if (username.contains("!") || username.contains("#") || username.contains("$") || username.contains("%") || username.contains("&") || username.contains("'") || username.contains("(") || username.contains(")") || username.contains("*") || username.contains("+") || username.contains(",") || username.contains("-") || username.contains(".") || username.contains("/") || username.contains(":") || username.contains(";") || username.contains("<") || username.contains("=") || username.contains(">") || username.contains("?") || username.contains("@") || username.contains("[") || username.contains("]") || username.contains("^") || username.contains("_") || username.contains("`") || username.contains("{") || username.contains("|") || username.contains("}") || username.contains("~")) {
+                            userName.setError("Special symbols are not allowed!");
+                        } else if (username.matches("[0-9]+")) {
+                            userName.setError("Numbers are not allowed!");
+                        }
 
-                if(TextUtils.isEmpty(email)){
-                    emailAddress.setError("Please Enter an Email!");
-                    return;
-                }else if(!email.matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]{2,3}+")){
-                    emailAddress.setError("Email is Invalid.");
-                    return;
-                }
-                if(TextUtils.isEmpty(password)){
-                    passwordField.setError("Please Enter a Password!");
-                    return;
-                }else if(!(password.length() >= 8) && (!password.matches("[a-zA-Z0-9._-]"))){
-                    passwordField.setError("Password needs to be more than 8 characters and a mix of alphabets and numbers!");
-                    return;
-                }
+                        if (TextUtils.isEmpty(email)) {
+                            emailAddress.setError("Please Enter an Email!");
+                            return;
+                        } else if (!email.matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]{2,3}+")) {
+                            emailAddress.setError("Email is Invalid.");
+                            return;
+                        }
+                        if (TextUtils.isEmpty(password)) {
+                            passwordField.setError("Please Enter a Password!");
+                            return;
+                        } else if (!(password.length() >= 8) && (!password.matches("[a-zA-Z0-9._-]"))) {
+                            passwordField.setError("Password needs to be more than 8 characters and a mix of alphabets and numbers!");
+                            return;
+                        }
 
-                char[] passwordChar = new char[password.length()];
+                        char[] passwordChar = new char[password.length()];
 
-                for(int i = 0;i<password.length();i++){
-                    passwordChar[i] = password.charAt(i);
-                }
+                        for (int i = 0; i < password.length(); i++) {
+                            passwordChar[i] = password.charAt(i);
+                        }
 
-                String salty = getNextSalt();
-                String hashedPassword = hash(passwordChar,salty);
+                        String salty = getNextSalt();
+                        String hashedPassword = hash(passwordChar, salty);
 
-                beachBluenoserAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener((task)->{
-                    if (task.isSuccessful()){
-                        Toast.makeText(Registration.this, "User Created.", Toast.LENGTH_SHORT).show();
-                        userID = Objects.requireNonNull(beachBluenoserAuth.getCurrentUser()).getUid();
-                        DocumentReference documentReference = beachBluenoserDB.collection("BBUSERSTABLE-PROD").document(userID);
+                        beachBluenoserAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener((task) -> {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(Registration.this, "User Created.", Toast.LENGTH_SHORT).show();
+                                userID = Objects.requireNonNull(beachBluenoserAuth.getCurrentUser()).getUid();
+                                DocumentReference documentReference = beachBluenoserDB.collection("BBUSERSTABLE-PROD").document(userID);
 
 /*
                         User user = new User(username,fullname,email,hashedPassword);
 */
 
-                        Map<String,Object > user= new HashMap<>();
-                        user.put("Fullname", fullname);
-                        user.put("Email", email);
-                        user.put("Username", username);
-                        user.put("Password", hashedPassword);
-                        user.put("userType", "User");
+                                Map<String, Object> user = new HashMap<>();
+                                user.put("Fullname", fullname);
+                                user.put("Email", email);
+                                user.put("Username", username);
+                                user.put("Password", hashedPassword);
+                                user.put("userType", "User");
 
-                        Log.d(TAG,"onSuccess: hashedpasswordResult " + hashedPassword );
+                                Log.d(TAG, "onSuccess: hashedpasswordResult " + hashedPassword);
 
 
-                        documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                Log.d(TAG,"onSuccess: user Profile is created for " + userID );
+                                documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Log.d(TAG, "onSuccess: user Profile is created for " + userID);
+                                    }
+                                });
+                                startActivity(new Intent(Registration.this, MainActivity.class));
+                            } else {
+                                Toast.makeText(Registration.this, "Error! " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show(); //example - It will show an error if email already exists
                             }
                         });
-                        startActivity(new Intent(Registration.this, MainActivity.class));
-                    }else{
-                        Toast.makeText(Registration.this, "Error! "+ Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show(); //example - It will show an error if email already exists
                     }
                 });
-            }
-        });
     }
 
     public static String getNextSalt() {

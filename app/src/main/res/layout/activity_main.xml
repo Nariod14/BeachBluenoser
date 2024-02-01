@@ -67,6 +67,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
+
+
         <!--This code is for the Search Beach Dropdown which was commeented out-->
       <!--  <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/beachTextInputLayout"

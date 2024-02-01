@@ -67,8 +67,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-        <!--This code is for the Search Beach Dropdown-->
-        <com.google.android.material.textfield.TextInputLayout
+        <!--This code is for the Search Beach Dropdown which was commeented out-->
+      <!--  <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/beachTextInputLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="198dp"
@@ -78,7 +78,7 @@
             app:startIconDrawable="@drawable/ic_beach"
             tools:ignore="LabelFor,MissingConstraints,RtlSymmetry">
 
-            <AutoCompleteTextView
+         <AutoCompleteTextView
                 android:id="@+id/auto_complete_textview"
                 android:layout_width="match_parent"
                 android:layout_height="73dp"
@@ -87,10 +87,10 @@
                 android:textColor="#000000"
                 android:textSize="14sp"
                 tools:ignore="TextContrastCheck" />
-        </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>-->
 
-        <!--This code is for the Beach Capacity Dropdown-->
-        <com.google.android.material.textfield.TextInputLayout
+        <!-- This code is for the Beach Capacity Dropdown which  has been commented out -->
+        <!-- <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/capacityTextInputLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="200dp"
@@ -107,7 +107,7 @@
                 android:text="@string/Capacity"
                 android:textColor="#000000"
                 tools:ignore="TextContrastCheck" />
-        </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>-->
     </LinearLayout>
 
     <!--This code is for the Toolbar that says 'Beach Filter Page'-->
@@ -121,7 +121,8 @@
         <!--android:background="@drawable/rounded_edit_text"-->
 
 
-        <androidx.recyclerview.widget.RecyclerView
+        <!--Code to show the filtered items-->
+     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/BeachMasterList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

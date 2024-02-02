@@ -1,5 +1,6 @@
 package com.example.beachbluenoser;
 
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.content.Intent;
@@ -80,7 +81,7 @@ public class beachLanding extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         Button btn = findViewById(R.id.checkInSurvey);
         ImageButton backBtn = findViewById(R.id.backButton);
-
+        final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
         if (bundle != null) {
             if (bundle.getString("beachName") != null) {
                 beachName = bundle.getString("beachName");
@@ -121,6 +122,7 @@ public class beachLanding extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mp.start();
                 Intent backIntent = new Intent(beachLanding.this, MainActivity.class);
                 startActivity(backIntent);
             }
@@ -129,6 +131,7 @@ public class beachLanding extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mp.start();
                 Intent intent;
                 if (userType.equals("Manager")) {
                     intent = new Intent(beachLanding.this, ManagementDataSurvey.class);
@@ -147,6 +150,7 @@ public class beachLanding extends AppCompatActivity {
         mapsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mp.start();
                 beachLocation = beachLat + "," + beachLong;
                 //https://developers.google.com/maps/documentation/urls/android-intents#location_search
                 //if you want maps to launch directly into navigation switch out gmmIntentUri for below

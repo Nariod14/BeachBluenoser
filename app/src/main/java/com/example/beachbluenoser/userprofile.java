@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -37,12 +38,14 @@ public class userprofile extends AppCompatActivity {
         //Header Code
         final Button homeBtn = findViewById(R.id.HomeButton);
         final Button loginProfileBtn = findViewById(R.id.LoginButton);
+        final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
         if (beachBluenoserAuth.getCurrentUser() != null){
             loginProfileBtn.setText("Profile");
         }
         homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mp.start();
                 Intent homeIntent = new Intent(userprofile.this, MainActivity.class);
                 startActivity(homeIntent);
             }
@@ -51,6 +54,7 @@ public class userprofile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (beachBluenoserAuth.getCurrentUser() != null) {
+                    mp.start();
                     Intent profileIntent = new Intent(userprofile.this, userprofile.class);
                     startActivity(profileIntent);
                 }
@@ -71,6 +75,7 @@ public class userprofile extends AppCompatActivity {
         signOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mp.start();
                 Intent intent = new Intent(userprofile.this, MainActivity.class);
                 beachBluenoserAuth.signOut();
                 startActivity(intent);

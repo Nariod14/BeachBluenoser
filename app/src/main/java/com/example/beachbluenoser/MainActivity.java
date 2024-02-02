@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -76,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         final Button homeBtn = findViewById(R.id.HomeButton);
         final Button loginProfileBtn = findViewById(R.id.LoginButton);
+        final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
         //beachBluenoserAuth.signOut();
         if (beachBluenoserAuth.getCurrentUser() != null){
             loginProfileBtn.setText("Profile");
@@ -91,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mp.start();
                 Intent homeIntent = new Intent(MainActivity.this, MainActivity.class);
                 startActivity(homeIntent);
             }
@@ -100,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (beachBluenoserAuth.getCurrentUser() != null){
+                    mp.start();
                     Intent profileIntent = new Intent(MainActivity.this, userprofile.class);
                     startActivity(profileIntent);
                 } else {

@@ -126,10 +126,11 @@ public class MainActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
                 if(b) {
-                    filterBeachItem = "All Beaches";
+                    filterBeachItem="";
                 }
                 else{
-                    filterBeachItem="";
+
+                    filterBeachItem = "All Beaches";
                 }
                 getDataFromDbAndShowOnUI();
             }

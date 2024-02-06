@@ -62,14 +62,21 @@
 
     <GridLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="505dp"
-        android:layout_height="234dp"
+        android:layout_width="495dp"
+        android:layout_height="255dp"
         android:layout_marginTop="8dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+
+
+
+
+
+
 
         <!--new Code Tanatswa-->
 
@@ -106,7 +113,7 @@
             android:id="@+id/Sandy"
             android:layout_width="97dp"
             android:layout_height="60dp"
-            android:layout_row="1"
+            android:layout_row="2"
             android:layout_column="0"
             android:layout_marginTop="@dimen/cardview_compat_inset_shadow"
             android:text="Sandy"
@@ -147,7 +154,7 @@
             android:id="@+id/HighCapcity"
             android:layout_width="98dp"
             android:layout_height="wrap_content"
-            android:layout_row="2"
+            android:layout_row="1"
             android:layout_column="0"
             android:layout_marginTop="@dimen/cardview_compat_inset_shadow"
             android:text="High"

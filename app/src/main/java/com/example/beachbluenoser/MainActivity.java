@@ -523,6 +523,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    //
 
     private void loadMasterBeachList() {
         createRecyclerView(beachList);

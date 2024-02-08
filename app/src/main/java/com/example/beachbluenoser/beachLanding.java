@@ -78,8 +78,8 @@ public class beachLanding extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.beach_landing);
         Bundle bundle = getIntent().getExtras();
-        Button btn = findViewById(R.id.checkInSurvey);
-        ImageButton backBtn = findViewById(R.id.backButton);
+        Button btn = findViewById(R.id.checkInSurvey); //Check-in button
+        ImageButton backBtn = findViewById(R.id.backButton); //Back button
 
         if (bundle != null) {
             if (bundle.getString("beachName") != null) {

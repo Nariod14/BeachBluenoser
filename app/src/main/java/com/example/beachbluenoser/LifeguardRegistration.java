@@ -3,6 +3,7 @@ package com.example.beachbluenoser;
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -40,6 +41,8 @@ public class LifeguardRegistration extends AppCompatActivity {
     FirebaseFirestore beachBluenoserDB, beachBluenoserDBB;
     private FirebaseAuth beachBluenoserAuth;
 
+    final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +60,7 @@ public class LifeguardRegistration extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mp.start();
                 Intent intent = new Intent(LifeguardRegistration.this, Registration.class);
                 startActivity(intent);
             }
@@ -65,6 +69,7 @@ public class LifeguardRegistration extends AppCompatActivity {
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mp.start();
                 email = emailAdd.getText().toString().trim();
                 AccToken = accessToken.getText().toString().trim();
 

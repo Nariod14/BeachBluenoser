@@ -75,13 +75,15 @@ public class beachLanding extends AppCompatActivity {
     public Double beachLat,beachLong;
     public String beachLocation;
     public Button mapsBtn;
+
+    final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.beach_landing);
         Bundle bundle = getIntent().getExtras();
         Button btn = findViewById(R.id.checkInSurvey);
         ImageButton backBtn = findViewById(R.id.backButton);
-        final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
+
         if (bundle != null) {
             if (bundle.getString("beachName") != null) {
                 beachName = bundle.getString("beachName");

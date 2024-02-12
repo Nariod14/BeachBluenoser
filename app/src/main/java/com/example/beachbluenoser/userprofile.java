@@ -24,6 +24,8 @@ public class userprofile extends AppCompatActivity {
     public Button edit, signOutBtn;
     public TextView Email, username, FullName;
 
+    final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
+
     @SuppressLint({"WrongViewCast", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,7 @@ public class userprofile extends AppCompatActivity {
         //Header Code
         final Button homeBtn = findViewById(R.id.HomeButton);
         final Button loginProfileBtn = findViewById(R.id.LoginButton);
-        final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
+
         if (beachBluenoserAuth.getCurrentUser() != null){
             loginProfileBtn.setText("Profile");
         }

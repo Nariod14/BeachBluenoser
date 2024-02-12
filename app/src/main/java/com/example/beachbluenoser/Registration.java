@@ -47,11 +47,12 @@ public class Registration extends AppCompatActivity {
     String username, email, fullname, password, userID;
     ImageButton backArrowkey;;
 
+    final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-        final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
         userName = findViewById(R.id.registerUsernameTxt);
         passwordField = findViewById(R.id.registerPasswordTxt);
         emailAddress = findViewById(R.id.registerEmailAddressTxt);

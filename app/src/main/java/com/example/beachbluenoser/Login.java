@@ -27,12 +27,13 @@ public class Login extends AppCompatActivity {
     String emailAuth;
     String passAuth;
 
+    final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
         userLogin = findViewById(R.id.loginBtn);
         signUp = findViewById(R.id.signupBtn);
         forgotPassword = findViewById(R.id.forgotPasswordBtn);
@@ -47,7 +48,7 @@ public class Login extends AppCompatActivity {
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mp.start();
                 Intent intent = new Intent(Login.this, PasswordReset.class);
                 startActivity(intent);
 

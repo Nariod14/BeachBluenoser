@@ -67,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
     AutoCompleteTextView beachType; //Beach
     AutoCompleteTextView capacityVolume; //Capacity
 
+    final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
+
     interface MyCallback {
         void callbackCall();
     }
@@ -77,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         final Button homeBtn = findViewById(R.id.HomeButton);
         final Button loginProfileBtn = findViewById(R.id.LoginButton);
-        final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
         //beachBluenoserAuth.signOut();
         if (beachBluenoserAuth.getCurrentUser() != null){
             loginProfileBtn.setText("Profile");
@@ -264,6 +265,7 @@ public class MainActivity extends AppCompatActivity {
         beachType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                mp.start();
                 String beachItem = adapterView.getItemAtPosition(position).toString();
                 Toast.makeText(MainActivity.this, beachItem + " Option", Toast.LENGTH_SHORT).show();
                 beachList.clear();
@@ -288,6 +290,7 @@ public class MainActivity extends AppCompatActivity {
         capacityVolume.setOnItemClickListener((new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                mp.start();
                 //dropdown item
                 String capacityItem = adapterView.getItemAtPosition(position).toString();
                 Toast.makeText(MainActivity.this, capacityItem, Toast.LENGTH_SHORT).show();

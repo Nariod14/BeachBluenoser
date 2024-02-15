@@ -28,7 +28,6 @@
                 android:layout_width="359dp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#0c68b5"
-                android:fontFamily="@font/lexend_deca"
                 android:shadowColor="#0c68b5"
                 android:text="Beach landing page"
                 android:textColor="@color/black"
@@ -37,7 +36,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-
+                android:fontFamily="@font/comfertaa_light"
                 />
 
 
@@ -84,7 +83,6 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:text="Description: "
-            android:typeface=""
             android:textColor="#ff99cc"
             android:textSize="25sp"
             android:textStyle="bold"
@@ -94,6 +92,7 @@
             tools:layout_editor_absoluteY="32dp"
             android:background="@drawable/rounded_corner_background2"
             android:backgroundTint="#000000"
+            android:fontFamily="@font/comfertaa_light"
             />
 
 
@@ -114,6 +113,7 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="32dp"
             android:backgroundTint="#000000"
+            android:fontFamily="@font/comfertaa_light"
             />
 
         <TextView
@@ -132,7 +132,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="32dp" />
+            tools:layout_editor_absoluteY="32dp"
+            android:fontFamily="@font/comfertaa_light"
+            />
 
         <TextView
             android:id="@+id/humidityTextView"
@@ -150,7 +152,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="32dp" />
+            tools:layout_editor_absoluteY="32dp"
+            android:fontFamily="@font/comfertaa_light"
+            />
 
         <TextView
             android:id="@+id/windTextView"
@@ -169,6 +173,7 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="32dp"
             android:backgroundTint="#056c89"
+            android:fontFamily="@font/comfertaa_light"
             />
 
         <TextView
@@ -188,6 +193,7 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="32dp"
             android:backgroundTint="#056c89"
+            android:fontFamily="@font/comfertaa_light"
             />
 
         <TextView
@@ -206,6 +212,7 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="32dp"
             android:backgroundTint="#0f969c"
+            android:fontFamily="@font/comfertaa_light"
             />
         <!--just comment ok-->
         <TextView
@@ -224,6 +231,7 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="32dp"
             android:backgroundTint="#0f969c"
+            android:fontFamily="@font/comfertaa_light"
             />
 
         <TextView
@@ -243,6 +251,7 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="32dp"
             android:backgroundTint="#88B4BE"
+            android:fontFamily="@font/comfertaa_light"
             />
 
         <TextView
@@ -262,6 +271,7 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="32dp"
             android:backgroundTint="#88B4BE"
+            android:fontFamily="@font/comfertaa_light"
             />
 
         <TextView
@@ -280,6 +290,7 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="32dp"
             android:backgroundTint="#EEEEEE"
+            android:fontFamily="@font/comfertaa_light"
             />
 
         <TextView
@@ -298,6 +309,7 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="32dp"
             android:backgroundTint="#EEEEEE"
+            android:fontFamily="@font/comfertaa_light"
             />
 
         <Button
@@ -313,6 +325,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="-35dp"
             tools:layout_editor_absoluteY="660dp"
+            android:fontFamily="@font/comfertaa_light"
             />
 
         <Button
@@ -320,7 +333,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#EAB875"
-            android:fontFamily="@font/lexend_deca"
             android:layout_marginTop="-40dp"
             android:text="Directions"
             android:height="120dp"
@@ -331,6 +343,7 @@
             app:layout_constraintVertical_bias="0.5"
             app:srcCompat="@drawable/rounded_button"
             android:background="@drawable/wavy_background"
+            android:fontFamily="@font/comfertaa_light"
             />
 
     </LinearLayout>

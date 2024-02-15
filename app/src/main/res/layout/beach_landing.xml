@@ -28,7 +28,11 @@
                 android:layout_width="359dp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#0c68b5"
+<<<<<<< HEAD
                 android:fontFamily="@font/comfertaa_light"
+=======
+                android:fontFamily="@font/lexend_deca"
+>>>>>>> 9e3fa6f120c756a8d4f948529355c2bb0860b160
                 android:shadowColor="#0c68b5"
                 android:text="Beach landing page"
                 android:textColor="@color/black"
@@ -92,8 +96,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
+<<<<<<< HEAD
             tools:layout_editor_absoluteY="32dp"
             android:fontFamily="@font/comfertaa_light"/>
+=======
+            tools:layout_editor_absoluteY="32dp" />
+>>>>>>> 9e3fa6f120c756a8d4f948529355c2bb0860b160
 
         <TextView
             android:id="@+id/weatherTextView"
@@ -112,7 +120,10 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="32dp"
             android:backgroundTint="#0f969c"
+<<<<<<< HEAD
             android:fontFamily="@font/comfertaa_light"
+=======
+>>>>>>> 9e3fa6f120c756a8d4f948529355c2bb0860b160
             />
 
         <TextView
@@ -131,8 +142,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
+<<<<<<< HEAD
             tools:layout_editor_absoluteY="32dp"
             android:fontFamily="@font/comfertaa_light"/>
+=======
+            tools:layout_editor_absoluteY="32dp" />
+>>>>>>> 9e3fa6f120c756a8d4f948529355c2bb0860b160
 
         <TextView
             android:id="@+id/humidityTextView"
@@ -150,8 +165,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
+<<<<<<< HEAD
             tools:layout_editor_absoluteY="32dp"
             android:fontFamily="@font/comfertaa_light"/>
+=======
+            tools:layout_editor_absoluteY="32dp" />
+>>>>>>> 9e3fa6f120c756a8d4f948529355c2bb0860b160
 
         <TextView
             android:id="@+id/windTextView"
@@ -170,7 +189,10 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="32dp"
             android:backgroundTint="#0f969c"
+<<<<<<< HEAD
             android:fontFamily="@font/comfertaa_light"
+=======
+>>>>>>> 9e3fa6f120c756a8d4f948529355c2bb0860b160
             />
 
         <TextView
@@ -190,7 +212,10 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="32dp"
             android:backgroundTint="#0f969c"
+<<<<<<< HEAD
             android:fontFamily="@font/comfertaa_light"
+=======
+>>>>>>> 9e3fa6f120c756a8d4f948529355c2bb0860b160
             />
 
         <TextView
@@ -210,7 +235,10 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="32dp"
             android:backgroundTint="#88B4BE"
+<<<<<<< HEAD
             android:fontFamily="@font/comfertaa_light"
+=======
+>>>>>>> 9e3fa6f120c756a8d4f948529355c2bb0860b160
             />
         <!--just comment ok-->
         <TextView
@@ -224,14 +252,34 @@
             android:text="Sandy or Rocky:"
             android:textSize="25sp"
             android:textStyle="bold"
+<<<<<<< HEAD
             android:textColor="@color/white"
+=======
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="32dp"
             android:backgroundTint="#88B4BE"
-            android:fontFamily="@font/comfertaa_light"
             />
+
+        <TextView
+            android:id="@+id/landingBeachVisualWaterConditionsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="103dp"
+            android:layout_marginTop="-20dp"
+            android:background="@drawable/rounded_corner_background2"
+            android:backgroundTint="#0f969c"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="Visual Water Conditions:"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            android:textStyle="bold"
+>>>>>>> 9e3fa6f120c756a8d4f948529355c2bb0860b160
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="32dp" />
 
         <TextView
             android:id="@+id/landingBeachVisualWaterConditionsTextView"
@@ -269,7 +317,10 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="32dp"
             android:backgroundTint="#0f969c"
+<<<<<<< HEAD
             android:fontFamily="@font/comfertaa_light"
+=======
+>>>>>>> 9e3fa6f120c756a8d4f948529355c2bb0860b160
             />
 
         <TextView
@@ -278,7 +329,11 @@
             android:layout_height="110dp"
             android:layout_marginTop="-20dp"
             android:background="@drawable/rounded_corner_background2"
+<<<<<<< HEAD
             android:backgroundTint="#88B4BE"
+=======
+            android:backgroundTint="#EEEEEE"
+>>>>>>> 9e3fa6f120c756a8d4f948529355c2bb0860b160
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:textColor="@color/white"
@@ -288,8 +343,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
+<<<<<<< HEAD
             tools:layout_editor_absoluteY="32dp"
             android:fontFamily="@font/comfertaa_light"/>
+=======
+            tools:layout_editor_absoluteY="32dp" />
+>>>>>>> 9e3fa6f120c756a8d4f948529355c2bb0860b160
 
         <TextView
             android:id="@+id/landingBeachParkingTextView"
@@ -307,8 +366,12 @@
             app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="32dp"
+<<<<<<< HEAD
             android:backgroundTint="#88B4BE"
             android:fontFamily="@font/comfertaa_light"
+=======
+            android:backgroundTint="#EEEEEE"
+>>>>>>> 9e3fa6f120c756a8d4f948529355c2bb0860b160
             />
 
         <Button
@@ -326,7 +389,6 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="-35dp"
             tools:layout_editor_absoluteY="660dp"
-            android:fontFamily="@font/comfertaa_light"
             />
 
         <Button
@@ -334,7 +396,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#EAB875"
+<<<<<<< HEAD
             android:fontFamily="@font/comfertaa_light"
+=======
+            android:fontFamily="@font/lexend_deca"
+>>>>>>> 9e3fa6f120c756a8d4f948529355c2bb0860b160
             android:layout_marginTop="-40dp"
             android:text="Directions"
             android:height="120dp"

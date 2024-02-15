@@ -31,13 +31,16 @@
 
         <TextView
             android:id="@+id/BeachName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="195dp"
+            android:layout_height="40dp"
             android:background="#66000000"
             android:text="Hello"
             android:textColor="#FFFFFF"
-            android:textSize="11sp"
-            android:translationY="115dp" />
+            android:textSize="14sp"
+            android:translationY="90dp"
+            android:singleLine="false"
+            />
+
         <!--deleting the textviews below causes the app to crash -->
         <TextView
             android:id="@+id/beachItemCapacityTextView"

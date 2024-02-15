@@ -1,6 +1,7 @@
 package com.example.beachbluenoser;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,11 +27,12 @@ public class Login extends AppCompatActivity {
     String emailAuth;
     String passAuth;
 
+    final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
 
         userLogin = findViewById(R.id.loginBtn);
         signUp = findViewById(R.id.signupBtn);
@@ -46,7 +48,7 @@ public class Login extends AppCompatActivity {
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mp.start();
                 Intent intent = new Intent(Login.this, PasswordReset.class);
                 startActivity(intent);
 
@@ -55,6 +57,7 @@ public class Login extends AppCompatActivity {
         userLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mp.start();
                 authenticateUser();
 
             }
@@ -64,6 +67,7 @@ public class Login extends AppCompatActivity {
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mp.start();
                 Intent intent = new Intent(Login.this, Registration.class);
                 startActivity(intent);
             }
@@ -72,6 +76,7 @@ public class Login extends AppCompatActivity {
         rtnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mp.start();
                 Intent intent = new Intent(Login.this, MainActivity.class);
                 startActivity(intent);
             }

@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -66,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
     AutoCompleteTextView beachType; //Beach
     AutoCompleteTextView capacityVolume; //Capacity
 
+    final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
+
     interface MyCallback {
         void callbackCall();
     }
@@ -91,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
         homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mp.start();
                 Intent homeIntent = new Intent(MainActivity.this, MainActivity.class);
                 startActivity(homeIntent);
             }
@@ -100,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (beachBluenoserAuth.getCurrentUser() != null){
+                    mp.start();
                     Intent profileIntent = new Intent(MainActivity.this, userprofile.class);
                     startActivity(profileIntent);
                 } else {
@@ -260,6 +265,7 @@ public class MainActivity extends AppCompatActivity {
         beachType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                mp.start();
                 String beachItem = adapterView.getItemAtPosition(position).toString();
                 Toast.makeText(MainActivity.this, beachItem + " Option", Toast.LENGTH_SHORT).show();
                 beachList.clear();
@@ -284,6 +290,7 @@ public class MainActivity extends AppCompatActivity {
         capacityVolume.setOnItemClickListener((new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                mp.start();
                 //dropdown item
                 String capacityItem = adapterView.getItemAtPosition(position).toString();
                 Toast.makeText(MainActivity.this, capacityItem, Toast.LENGTH_SHORT).show();

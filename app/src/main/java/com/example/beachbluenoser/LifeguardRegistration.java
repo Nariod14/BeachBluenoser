@@ -41,7 +41,7 @@ public class LifeguardRegistration extends AppCompatActivity {
     FirebaseFirestore beachBluenoserDB, beachBluenoserDBB;
     private FirebaseAuth beachBluenoserAuth;
 
-    final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
+    MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +52,7 @@ public class LifeguardRegistration extends AppCompatActivity {
         accessToken = findViewById(R.id.editAccessToken);
         backBtn = findViewById(R.id.backButton);
         registerBtn = findViewById(R.id.registerBtn);
+        mp = MediaPlayer.create(this, R.raw.click)
 
         beachBluenoserDB = FirebaseFirestore.getInstance();
         beachBluenoserDBB = FirebaseFirestore.getInstance();

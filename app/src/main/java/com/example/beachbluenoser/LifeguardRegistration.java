@@ -52,7 +52,7 @@ public class LifeguardRegistration extends AppCompatActivity {
         accessToken = findViewById(R.id.editAccessToken);
         backBtn = findViewById(R.id.backButton);
         registerBtn = findViewById(R.id.registerBtn);
-        mp = MediaPlayer.create(this, R.raw.click)
+        mp = MediaPlayer.create(this, R.raw.click);
 
         beachBluenoserDB = FirebaseFirestore.getInstance();
         beachBluenoserDBB = FirebaseFirestore.getInstance();

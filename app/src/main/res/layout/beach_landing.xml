@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#76b6c4">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,31 +15,37 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#0c68b5"
-            android:backgroundTint="#0c68b5">
+            android:backgroundTint="@color/white">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@android:color/black"
+                tools:ignore="MissingConstraints" />
 
             <TextView
                 android:id="@+id/landingBeachNameTextView"
                 android:layout_width="359dp"
                 android:layout_height="wrap_content"
-                android:background="#0c68b5"
                 android:backgroundTint="#0c68b5"
-                android:fontFamily="@font/lexend_deca"
+                android:fontFamily="@font/comfertaa_light"
                 android:shadowColor="#0c68b5"
                 android:text="Beach landing page"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="70px"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.777"
-                app:layout_constraintStart_toEndOf="@+id/backButton"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+
+                />
+
 
             <ImageButton
                 android:id="@+id/backButton"
                 android:layout_width="34dp"
                 android:layout_height="40dp"
-                android:backgroundTint="#0c68b5"
+                android:backgroundTint="@color/white"
                 android:contentDescription="TODO"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -46,230 +53,301 @@
                 tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck,DuplicateSpeakableTextCheck" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@android:color/black" />
+
         <ImageView
             android:id="@+id/landingBeachImageView"
-            android:layout_width="380dp"
-            android:layout_height="206dp"
+            android:layout_width="389dp"
+            android:layout_height="196dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
             android:adjustViewBounds="true"
+            android:contentDescription="TODO"
+            android:backgroundTint="#76b6c4"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/landingBeachNameTextView"
             app:srcCompat="@drawable/black_brook_beach"
-            android:contentDescription="TODO" />
+            android:background="@drawable/wavy_background"
+            android:fontFamily="@font/comfertaa_light"
+            android:scaleType="fitXY"
+            />
+
 
         <TextView
             android:id="@+id/weatherDescriptionTextView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:layout_height="110dp"
+            android:background="@drawable/rounded_corner_background2"
+            android:backgroundTint="#0f969c"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:text="Description: "
-            android:textColor="#4486C7"
-            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="32dp" />
-
+            tools:layout_editor_absoluteY="32dp"
+            android:fontFamily="@font/comfertaa_light"/>
 
         <TextView
             android:id="@+id/weatherTextView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:layout_height="115dp"
+            android:layout_marginTop="-20dp"
+            android:background="@drawable/rounded_corner_background2"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:text="Weather: "
-            android:textColor="#4486C7"
-            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="32dp" />
+            tools:layout_editor_absoluteY="32dp"
+            android:backgroundTint="#0f969c"
+            android:fontFamily="@font/comfertaa_light"
+            />
 
         <TextView
             android:id="@+id/temperatureTextView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:layout_height="110dp"
+            android:layout_marginTop="-20dp"
+            android:background="@drawable/rounded_corner_background2"
+            android:backgroundTint="#88B4BE"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:text="Temperature: "
-            android:textColor="#4486C7"
-            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="32dp" />
+            tools:layout_editor_absoluteY="32dp"
+            android:fontFamily="@font/comfertaa_light"/>
 
         <TextView
             android:id="@+id/humidityTextView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:layout_height="103dp"
+            android:layout_marginTop="-20dp"
+            android:background="@drawable/rounded_corner_background2"
+            android:backgroundTint="#88B4BE"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:text="Humidity : "
-            android:textColor="#4486C7"
-            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="32dp" />
+            tools:layout_editor_absoluteY="32dp"
+            android:fontFamily="@font/comfertaa_light"/>
 
         <TextView
             android:id="@+id/windTextView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:layout_height="110dp"
+            android:background="@drawable/rounded_corner_background2"
+            android:layout_marginTop="-20dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:text="Wind Speed: "
-            android:textColor="#4486C7"
-            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="32dp" />
+            tools:layout_editor_absoluteY="32dp"
+            android:backgroundTint="#0f969c"
+            android:fontFamily="@font/comfertaa_light"
+            />
 
         <TextView
             android:id="@+id/cloudsTextView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:layout_height="110dp"
+            android:background="@drawable/rounded_corner_background2"
+            android:layout_marginTop="-20dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:text="Cloud Cover: "
-            android:textColor="#4486C7"
-            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="32dp" />
+            tools:layout_editor_absoluteY="32dp"
+            android:backgroundTint="#0f969c"
+            android:fontFamily="@font/comfertaa_light"
+            />
 
         <TextView
             android:id="@+id/landingBeachCapacityTextView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:layout_height="110dp"
+            android:background="@drawable/rounded_corner_background2"
+            android:layout_marginTop="-20dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:text="Capacity: "
-            android:textSize="20sp"
+            android:textSize="25sp"
             android:textStyle="bold"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="32dp" />
+            tools:layout_editor_absoluteY="32dp"
+            android:backgroundTint="#88B4BE"
+            android:fontFamily="@font/comfertaa_light"
+            />
         <!--just comment ok-->
         <TextView
             android:id="@+id/landingBeachSandyOrRockyTextView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:layout_height="110dp"
+            android:background="@drawable/rounded_corner_background2"
+            android:layout_marginTop="-20dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:textSize="20sp"
+            android:text="Sandy or Rocky:"
+            android:textSize="25sp"
             android:textStyle="bold"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="32dp"
-            android:text="Sandy or Rocky:" />
+            android:backgroundTint="#88B4BE"
+            android:fontFamily="@font/comfertaa_light"
+            />
 
         <TextView
             android:id="@+id/landingBeachVisualWaterConditionsTextView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:layout_height="103dp"
+            android:layout_marginTop="-20dp"
+            android:background="@drawable/rounded_corner_background2"
+            android:backgroundTint="#0f969c"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:textSize="20sp"
+            android:text="Visual Water Conditions:"
+            android:textColor="@color/black"
+            android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="32dp"
-            android:text="VisualWaterConditions:" />
+            android:fontFamily="@font/comfertaa_light"/>
 
         <TextView
             android:id="@+id/landingBeachWheelchairAccessibleTextView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:layout_height="110dp"
+            android:background="@drawable/rounded_corner_background2"
+            android:layout_marginTop="-20dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:textSize="20sp"
+            android:text="@string/wheelchair_accessible"
+            android:textSize="25sp"
             android:textStyle="bold"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="32dp"
-            android:text="@string/wheelchair_accessible" />
+            android:backgroundTint="#0f969c"
+            android:fontFamily="@font/comfertaa_light"
+            />
 
         <TextView
             android:id="@+id/landingBeachFloatingWheelchairTextView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:layout_height="110dp"
+            android:layout_marginTop="-20dp"
+            android:background="@drawable/rounded_corner_background2"
+            android:backgroundTint="#88B4BE"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:text="@string/floating_wheelchair"
+            android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="32dp"
-            android:text="@string/floating_wheelchair" />
+            android:fontFamily="@font/comfertaa_light"/>
 
         <TextView
             android:id="@+id/landingBeachParkingTextView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:layout_height="120dp"
+            android:background="@drawable/rounded_corner_background2"
+            android:layout_marginTop="-20dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:textSize="20sp"
+            android:text="Parking:"
+            android:textSize="25sp"
             android:textStyle="bold"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="32dp"
-            android:text="Parking:" />
+            android:backgroundTint="#88B4BE"
+            android:fontFamily="@font/comfertaa_light"
+            />
 
         <Button
             android:id="@+id/checkInSurvey"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="426dp"
+            android:layout_height="130dp"
             android:layout_gravity="center"
-            android:backgroundTint="#0c68b5"
-            android:textColor="@color/black"
+            android:backgroundTint="#EAB875"
+            android:background="@drawable/wave"
             android:text="Check-in"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="660dp" />
+            android:layout_marginTop="-35dp"
+            tools:layout_editor_absoluteY="660dp"
+            android:fontFamily="@font/comfertaa_light"
+            />
 
         <Button
             android:id="@+id/mapsBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#0c68b5"
-            android:fontFamily="@font/lexend_deca"
+            android:backgroundTint="#EAB875"
+            android:fontFamily="@font/comfertaa_light"
+            android:layout_marginTop="-40dp"
             android:text="Directions"
-            android:textColor="@color/black"
+            android:height="120dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintVertical_bias="0.5"
-            app:srcCompat="@drawable/rounded_button" />
+            app:srcCompat="@drawable/rounded_button"
+            android:background="@drawable/wave"
+            />
 
     </LinearLayout>
 </ScrollView>

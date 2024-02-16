@@ -51,4 +51,4 @@ public class editprofile extends AppCompatActivity {
     public void Upload(User user){
         db.collection("users").add(user);
     }
-}
+    }

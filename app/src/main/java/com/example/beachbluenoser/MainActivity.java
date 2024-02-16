@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     AutoCompleteTextView beachType; //Beach
     AutoCompleteTextView capacityVolume; //Capacity
 
-    final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
+    MediaPlayer mp;
 
     interface MyCallback {
         void callbackCall();
@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         final Button homeBtn = findViewById(R.id.HomeButton);
         final Button loginProfileBtn = findViewById(R.id.LoginButton);
+        mp = MediaPlayer.create(this, R.raw.click);
         //beachBluenoserAuth.signOut();
         if (beachBluenoserAuth.getCurrentUser() != null){
             loginProfileBtn.setText("Profile");
@@ -108,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent profileIntent = new Intent(MainActivity.this, userprofile.class);
                     startActivity(profileIntent);
                 } else {
+                    mp.start();
                     Intent loginIntent = new Intent(MainActivity.this, Login.class);
                     startActivity(loginIntent);
                 }

@@ -77,7 +77,6 @@ public class beachLanding extends AppCompatActivity {
     public Button mapsBtn;
 
     MediaPlayer mp;
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.beach_landing);

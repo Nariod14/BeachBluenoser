@@ -27,7 +27,7 @@ public class Login extends AppCompatActivity {
     String emailAuth;
     String passAuth;
 
-    final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
+    MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +38,8 @@ public class Login extends AppCompatActivity {
         signUp = findViewById(R.id.signupBtn);
         forgotPassword = findViewById(R.id.forgotPasswordBtn);
         rtnHome = findViewById(R.id.returnHomeButton);
+
+        mp = MediaPlayer.create(this, R.raw.click);
 
         beachBluenoserAuth = FirebaseAuth.getInstance();
       /*  if (beachBluenoserAuth.getCurrentUser() != null) {

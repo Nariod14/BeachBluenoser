@@ -47,7 +47,7 @@ public class Registration extends AppCompatActivity {
     String username, email, fullname, password, userID;
     ImageButton backArrowkey;;
 
-    final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
+    MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +63,8 @@ public class Registration extends AppCompatActivity {
 
         beachBluenoserDB = FirebaseFirestore.getInstance();
         beachBluenoserAuth = FirebaseAuth.getInstance();
+
+        mp = MediaPlayer.create(this, R.raw.click);
 
         backArrowkey.setOnClickListener(new View.OnClickListener() {
             @Override

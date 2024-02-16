@@ -41,7 +41,7 @@ import java.util.Locale;
 public class beachLanding extends AppCompatActivity {
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    public FirebaseAuth auth = FirebaseAuth.getInstance();;
+    public FirebaseAuth auth = FirebaseAuth.getInstance();
     public String beachName, parsedBeachName;
     public String landingBeachCapacityText;
     public String landingBeachSandyOrRockyText;
@@ -76,13 +76,16 @@ public class beachLanding extends AppCompatActivity {
     public String beachLocation;
     public Button mapsBtn;
 
-    final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
+    MediaPlayer mp;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.beach_landing);
         Bundle bundle = getIntent().getExtras();
-        Button btn = findViewById(R.id.checkInSurvey); //Check-in button
-        ImageButton backBtn = findViewById(R.id.backButton); //Back button
+
+        Button btn = findViewById(R.id.checkInSurvey);
+        ImageButton backBtn = findViewById(R.id.backButton);
+        mp = MediaPlayer.create(this, R.raw.click);
 
         if (bundle != null) {
             if (bundle.getString("beachName") != null) {

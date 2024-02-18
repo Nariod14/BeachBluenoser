@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -49,9 +50,12 @@ public class UserDataSurvey extends AppCompatActivity implements AdapterView.OnI
     public int lowCapacityCount=0;
     public int mediumCapacityCount=0;
     public int highCapacityCount=0;
+    ImageButton backArrowkey;;
+
 
 
     protected void onCreate(Bundle savedInstanceState) {
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_survey);
@@ -85,6 +89,15 @@ public class UserDataSurvey extends AppCompatActivity implements AdapterView.OnI
         UserbeachCapacitySpinner.setOnItemSelectedListener(this);
 
         Button btn = findViewById(R.id.userSubmitButton);
+
+        backArrowkey = findViewById(R.id.backArrow);
+        backArrowkey.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UserDataSurvey.this,beachLanding.class);
+                startActivity(intent);
+            }
+        });
 
         btn.setOnClickListener(new View.OnClickListener(){
             @Override

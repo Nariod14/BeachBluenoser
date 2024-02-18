@@ -1,5 +1,6 @@
 package com.example.beachbluenoser;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -49,8 +51,10 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
     public int lowCapacityCount=0;
     public int mediumCapacityCount=0;
     public int highCapacityCount=0;
+    ImageButton backArrowkey;;
 
 
+    @SuppressLint("MissingInflatedId")
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -72,6 +76,14 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
 
         name = findViewById(R.id.surveyTitle);
         name.setText(beachName);
+        backArrowkey = findViewById(R.id.backArrow);
+        backArrowkey.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LifeguardDataSurvey.this,userprofile.class);
+                startActivity(intent);
+            }
+        });
 
         Spinner visualWaveConditionSpinner = findViewById(R.id.visualWaterConditionsSpinner);
         ArrayAdapter<CharSequence> adapterVWCSpinner = ArrayAdapter.createFromResource(this,R.array.visualWaterConditionsValues, android.R.layout.simple_spinner_item);

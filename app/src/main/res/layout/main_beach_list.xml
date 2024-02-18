@@ -15,7 +15,6 @@
         android:background="#F3F3F3"
         android:orientation="vertical">
 
-
         <TextView
             android:id="@+id/textView11"
             android:layout_width="match_parent"
@@ -66,6 +65,18 @@
     </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>
+
+    <Button
+        android:id="@+id/HomeButton"
+        android:layout_width="131dp"
+        android:layout_height="59dp"
+        android:backgroundTint="#0c68b5"
+        android:fontFamily="@font/lexend_deca"
+        android:text="Home"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/AppHeader"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.example.beachbluenoser;
 
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.content.Intent;
@@ -40,7 +41,7 @@ import java.util.Locale;
 public class beachLanding extends AppCompatActivity {
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    public FirebaseAuth auth = FirebaseAuth.getInstance();;
+    public FirebaseAuth auth = FirebaseAuth.getInstance();
     public String beachName, parsedBeachName;
     public String landingBeachCapacityText;
     public String landingBeachSandyOrRockyText;
@@ -74,12 +75,16 @@ public class beachLanding extends AppCompatActivity {
     public Double beachLat,beachLong;
     public String beachLocation;
     public Button mapsBtn;
+
+    MediaPlayer mp;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.beach_landing);
         Bundle bundle = getIntent().getExtras();
+
         Button btn = findViewById(R.id.checkInSurvey);
         ImageButton backBtn = findViewById(R.id.backButton);
+        mp = MediaPlayer.create(this, R.raw.click);
 
         if (bundle != null) {
             if (bundle.getString("beachName") != null) {
@@ -121,6 +126,7 @@ public class beachLanding extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mp.start();
                 Intent backIntent = new Intent(beachLanding.this, MainActivity.class);
                 startActivity(backIntent);
             }
@@ -129,6 +135,7 @@ public class beachLanding extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mp.start();
                 Intent intent;
                 if (userType.equals("Manager")) {
                     intent = new Intent(beachLanding.this, ManagementDataSurvey.class);
@@ -147,6 +154,7 @@ public class beachLanding extends AppCompatActivity {
         mapsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mp.start();
                 beachLocation = beachLat + "," + beachLong;
                 //https://developers.google.com/maps/documentation/urls/android-intents#location_search
                 //if you want maps to launch directly into navigation switch out gmmIntentUri for below

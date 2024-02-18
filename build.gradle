@@ -1,19 +1,12 @@
 buildscript {
     dependencies {
         classpath 'com.google.gms:google-services:4.3.14'
-<<<<<<< dbb73fac7710a0c6a810811b8eb8da66453f25eb
-        classpath 'com.android.tools.build:gradle:8.2.1'
+
+        classpath 'com.android.tools.build:gradle:8.2.2'
     }
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
-    id 'com.android.application' version '8.2.1' apply false
-    id 'com.android.library' version '8.2.1' apply false
-=======
-        classpath 'com.android.tools.build:gradle:7.4.2'
+    id 'com.android.application' version '8.2.2' apply false
+    id 'com.android.library' version '8.2.2' apply false
+
     }
-}// Top-level build file where you can add configuration options common to all sub-projects/modules.
-plugins {
-    id 'com.android.application' version '7.4.2' apply false
-    id 'com.android.library' version '7.4.2' apply false
->>>>>>> 0281d24a70dfa6b0afebecb3307ff108f3e4cfa8
-}

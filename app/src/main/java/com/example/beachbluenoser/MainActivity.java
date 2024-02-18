@@ -12,6 +12,7 @@ import com.google.android.gms.tasks.Task;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -40,10 +41,13 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Map;
 
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -51,8 +55,32 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth beachBluenoserAuth = FirebaseAuth.getInstance();
     ArrayList<BeachItem> beachList;
 
-    String[] beach = {"All Beaches", "Rocky", "Sandy", "Wheelchair Accessible", "Floating Wheelchair"};
-    String[] capacity = {"Any Capacity", "High", "Medium", "Low"};
+   // String[] beach = {"All Beaches", "Rocky", "Sandy", "Wheelchair Accessible", "Floating Wheelchair"};
+    //String[] capacity = {"Any Capacity", "High", "Medium", "Low"};
+
+    // new code for Beaches
+
+    CheckBox rockyCheckbox;
+    CheckBox  anyBeachCheckbox;
+    CheckBox  WheelChair;
+
+    CheckBox sandyCheckbox;
+
+    CheckBox floatingWheel;
+
+    // Capacilty
+
+    CheckBox anyCap;
+    CheckBox lowCap;
+    CheckBox highCap;
+    CheckBox medCap;
+
+
+
+
+
+
+
     String filterBeachItem = "";
     String filterCapacityItem = "";
 
@@ -77,6 +105,162 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // new code beaches
+        rockyCheckbox = findViewById(R.id.Rocky);
+        anyBeachCheckbox = findViewById(R.id.All_Beaches);
+        sandyCheckbox = findViewById(R.id.Sandy);
+        WheelChair = findViewById(R.id.Wheelchair_Accessible);
+        floatingWheel= findViewById(R.id.Wheelchair_foatable);
+
+        anyCap = findViewById(R.id.AnyCapcity);
+        lowCap = findViewById(R.id.low_capcity);
+        medCap = findViewById(R.id.medium_capcity);
+        highCap = findViewById(R.id.HighCapcity);
+
+
+
+
+
+
+        // OncheckedChangeListners
+
+        anyBeachCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                if(b) {
+                    filterBeachItem="";
+                }
+                else{
+
+                    filterBeachItem = "All Beaches";
+                }
+                getDataFromDbAndShowOnUI();
+            }
+        });
+
+        rockyCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                if(b) {
+                    filterBeachItem = "Rocky";
+                }
+                else{
+                    filterBeachItem="";
+                }
+                getDataFromDbAndShowOnUI();
+            }
+        });
+
+        sandyCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                if(b) {
+                    filterBeachItem = "Sandy";
+                }
+                else{
+                    filterBeachItem="";
+                }
+                getDataFromDbAndShowOnUI();
+            }
+        });
+
+        WheelChair.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                if(b) {
+                    filterBeachItem = "Wheelchair Accessible";
+                }
+                else{
+                    filterBeachItem="";
+                }
+                getDataFromDbAndShowOnUI();
+            }
+        });
+
+       floatingWheel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                if(b) {
+                    filterBeachItem = "Floating Wheelchair";
+                }
+                else{
+                    filterBeachItem="";
+                }
+                getDataFromDbAndShowOnUI();
+            }
+
+        });
+
+       // capacity\
+        anyCap.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                if(b) {
+                    filterCapacityItem = "";
+                }
+                else{
+
+                }
+                getDataFromDbAndShowOnUI();
+            }
+
+        });
+
+        highCap.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                if(b) {
+                    filterCapacityItem = "Beach Capacity: High Capacity";
+                }
+                else{
+
+                }
+                getDataFromDbAndShowOnUI();
+            }
+
+        });
+
+        lowCap.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                if(b) {
+                    filterCapacityItem = "Beach Capacity: Low Capacity";
+                }
+                else{
+
+                }
+                getDataFromDbAndShowOnUI();
+            }
+
+        });
+
+        medCap.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                if(b) {
+                    filterCapacityItem = "Beach Capacity: Medium Capacity";
+                }
+                else{
+
+                }
+                getDataFromDbAndShowOnUI();
+            }
+
+        });
+
+
+
+
         final Button homeBtn = findViewById(R.id.HomeButton);
         final Button loginProfileBtn = findViewById(R.id.LoginButton);
         mp = MediaPlayer.create(this, R.raw.click);
@@ -115,6 +299,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+
     }
 
 
@@ -260,8 +446,19 @@ public class MainActivity extends AppCompatActivity {
                 });
 
         //filters
-        beachType = findViewById(R.id.auto_complete_textview);
-        adapterItems = new ArrayAdapter<String>(this, R.layout.beach_list, beach);
+
+            // filters new code
+
+
+
+
+
+
+
+
+
+
+        /*adapterItems = new ArrayAdapter<String>(this, R.layout.beach_list, beach);
         beachType.setAdapter(adapterItems);
 
         beachType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -279,12 +476,12 @@ public class MainActivity extends AppCompatActivity {
                 getDataFromDbAndShowOnUI();
             }
 
-        });
+        });*/
 
         //Capacity
-        capacityVolume = findViewById(R.id.auto_complete_textview2);
 
-        ArrayAdapter<String> adapterItems2; //For Capacity
+
+       /* ArrayAdapter<String> adapterItems2; //For Capacity
         adapterItems2 = new ArrayAdapter<String>(this, R.layout.capacity_list, capacity);
         capacityVolume.setAdapter(adapterItems2);
 
@@ -305,7 +502,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 getDataFromDbAndShowOnUI();
             }
-        }));
+        }));*/
     }
 
     private void retrieveAdditionalDataFromDB(){
@@ -336,6 +533,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    //
 
     private void loadMasterBeachList() {
         createRecyclerView(beachList);
@@ -349,7 +547,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.BeachMasterList);
 
         // using a linear layout manager
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(layoutManager);
 
         RecyclerView.Adapter mAdapter = new MasterBeachListAdapter(beachList);

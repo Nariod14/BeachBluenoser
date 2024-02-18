@@ -1,5 +1,6 @@
 package com.example.beachbluenoser;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -22,6 +24,7 @@ import com.google.firebase.firestore.SetOptions;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class ManagementDataSurvey extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -30,7 +33,9 @@ public class ManagementDataSurvey extends AppCompatActivity implements AdapterVi
     public String floatingWheelchairValue;
     public String beachName;
     public TextView name;
+    ImageButton backArrowkey;;
 
+    @SuppressLint("MissingInflatedId")
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -42,6 +47,14 @@ public class ManagementDataSurvey extends AppCompatActivity implements AdapterVi
                 beachName = bundle.getString("beachName");
             }
         }
+        backArrowkey = findViewById(R.id.backArrow);
+        backArrowkey.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ManagementDataSurvey.this,MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         name = findViewById(R.id.surveyTitle);
         name.setText(beachName);

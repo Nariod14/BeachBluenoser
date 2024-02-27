@@ -1,5 +1,6 @@
 package com.example.beachbluenoser;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -10,10 +11,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import android.widget.Toast;
+
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+
 
 public class editprofile extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -22,18 +29,20 @@ public class editprofile extends AppCompatActivity {
     EditText password;
     EditText Pass;
     Button Save;
-    ImageButton backArrowkey;;
+    ImageButton backArrowkey;
     @SuppressLint({"MissingInflatedId", "WrongViewCast"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_user_profile);
+
         name = findViewById(R.id.EditName);
         Email = findViewById(R.id.EditEmail);
         password = findViewById(R.id.EditPassword);
         Pass = findViewById(R.id.FullName);
         Save = findViewById(R.id.save);
         backArrowkey = findViewById(R.id.backArrow);
+
         backArrowkey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -41,6 +50,31 @@ public class editprofile extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        //Make reference to data on Firebase
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DocumentReference userRef = db.collection("BBUSERSTABLE-PROD").document(userId);
+        //Using Snapshot to display data
+        userRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            //Get real time updates with Firestore
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+                if (snapshot.exists()) {
+                    // Retrieve user data using documentSnapshot
+                    name.setText(snapshot.getString("Username"));
+                    Pass.setText(snapshot.getString("Fullname"));
+                    Email.setText(snapshot.getString("Email"));
+
+                    //Confidential data displayed in form of "*"
+                    String passwordStar = snapshot.getString("Password");
+                    StringBuilder asterisks = new StringBuilder();
+                    for (int i = 0; i < passwordStar.length(); i++) {
+                        asterisks.append("*");
+                    }
+                    password.setText(asterisks.toString());
+                }
+            }
+        });
+
         //Modified
         Save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +93,7 @@ public class editprofile extends AppCompatActivity {
                     }
                     //Invalid email address
                     else if (!email.contains("@")){
-                        Toast.makeText(editprofile.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(editprofile.this, "Invalid email address", Toast.LENGTH_SHORT).show();
                     }
                     else {
                         // All fields are filled, proceed to upload

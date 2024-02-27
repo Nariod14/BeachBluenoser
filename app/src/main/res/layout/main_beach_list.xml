@@ -53,18 +53,18 @@
             android:textSize="16sp" />
         <!--android:text="@string/emptyStringMessage"-->
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:padding="10dp"
-        android:id="@+id/BeachMasterList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:autofillHints="Empty"
-        android:scrollbars="vertical">
+        <androidx.recyclerview.widget.RecyclerView
+            android:padding="10dp"
+            android:id="@+id/BeachMasterList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:autofillHints="Empty"
+            android:scrollbars="vertical">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        </androidx.recyclerview.widget.RecyclerView>
 
-</LinearLayout>
+    </LinearLayout>
 
     <Button
         android:id="@+id/HomeButton"

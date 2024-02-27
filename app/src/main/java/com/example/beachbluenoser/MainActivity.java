@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth beachBluenoserAuth = FirebaseAuth.getInstance();
     ArrayList<BeachItem> beachList;
 
-   // String[] beach = {"All Beaches", "Rocky", "Sandy", "Wheelchair Accessible", "Floating Wheelchair"};
+    // String[] beach = {"All Beaches", "Rocky", "Sandy", "Wheelchair Accessible", "Floating Wheelchair"};
     //String[] capacity = {"Any Capacity", "High", "Medium", "Low"};
 
     // new code for Beaches
@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-       floatingWheel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        floatingWheel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-       // capacity\
+        // capacity\
         anyCap.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -361,7 +361,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-        private void getDataFromDbAndShowOnUI() {
+    private void getDataFromDbAndShowOnUI() {
         // to toggle between the "deleted posts" and active posts button
         // resetToggle();
         final ArrayList<BeachItem> beachItemArrayList = new ArrayList<>();
@@ -379,12 +379,12 @@ public class MainActivity extends AppCompatActivity {
                                 String beachCapacityTextForTheDay ="";
                                 String beachVisualWaveConditionsTextForTheDay = "";
                                 if(!(document.getData().get("beachCapacityTextForTheDay")==null)) {
-                                     beachCapacityTextForTheDay = document.getData().get("beachCapacityTextForTheDay").toString();
+                                    beachCapacityTextForTheDay = document.getData().get("beachCapacityTextForTheDay").toString();
                                 }else{
                                     beachCapacityTextForTheDay="Beach Capacity: No data today!";
                                 }
                                 if(!(document.getData().get("beachVisualWaveConditionsTextForTheDay")==null)) {
-                                     beachVisualWaveConditionsTextForTheDay = document.getData().get("beachVisualWaveConditionsTextForTheDay").toString();
+                                    beachVisualWaveConditionsTextForTheDay = document.getData().get("beachVisualWaveConditionsTextForTheDay").toString();
                                 }else{
                                     beachVisualWaveConditionsTextForTheDay ="Water Conditions: No data today!";
                                 }
@@ -447,7 +447,7 @@ public class MainActivity extends AppCompatActivity {
 
         //filters
 
-            // filters new code
+        // filters new code
 
 
 
@@ -522,10 +522,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                       // showDataOnUI();
+                        // showDataOnUI();
                     } else {
                         Log.d("Beach Landing Query", "No such document");
-                       // showDataOnUI();
+                        // showDataOnUI();
                     }
                 } else {
                     Log.d("Beach Landing Query", "get failed with ", task.getException());

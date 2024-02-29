@@ -56,25 +56,8 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth beachBluenoserAuth = FirebaseAuth.getInstance();
     ArrayList<BeachItem> beachList;
 
-    // String[] beach = {"All Beaches", "Rocky", "Sandy", "Wheelchair Accessible", "Floating Wheelchair"};
-    //String[] capacity = {"Any Capacity", "High", "Medium", "Low"};
-
-    // new code for Beaches
-
-    CheckBox rockyCheckbox;
-    CheckBox  anyBeachCheckbox;
-    CheckBox  WheelChair;
-
-    CheckBox sandyCheckbox;
-
-    CheckBox floatingWheel;
-
-    // Capacilty
-
-    CheckBox anyCap;
-    CheckBox lowCap;
-    CheckBox highCap;
-    CheckBox medCap;
+    String[] beach = {"All Beaches", "Rocky", "Sandy", "Wheelchair Accessible", "Floating Wheelchair"};
+    String[] capacity = {"Any Capacity", "High", "Medium", "Low"};
 
     SwitchCompat itemToggle;
 
@@ -107,157 +90,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // new code beaches
-        rockyCheckbox = findViewById(R.id.Rocky);
-        anyBeachCheckbox = findViewById(R.id.All_Beaches);
-        sandyCheckbox = findViewById(R.id.Sandy);
-        WheelChair = findViewById(R.id.Wheelchair_Accessible);
-        floatingWheel= findViewById(R.id.Wheelchair_foatable);
-
-        anyCap = findViewById(R.id.AnyCapcity);
-        lowCap = findViewById(R.id.low_capcity);
-        medCap = findViewById(R.id.medium_capcity);
-        highCap = findViewById(R.id.HighCapcity);
         itemToggle = findViewById(R.id.itemToggle);
 
 
 
 
-
-        // OncheckedChangeListners
-
-        anyBeachCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-                if(b) {
-                    filterBeachItem="";
-                }
-                else{
-
-                    filterBeachItem = "All Beaches";
-                }
-                getDataFromDbAndShowOnUI();
-            }
-        });
-
-        rockyCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-                if(b) {
-                    filterBeachItem = "Rocky";
-                }
-                else{
-                    filterBeachItem="";
-                }
-                getDataFromDbAndShowOnUI();
-            }
-        });
-
-        sandyCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-                if(b) {
-                    filterBeachItem = "Sandy";
-                }
-                else{
-                    filterBeachItem="";
-                }
-                getDataFromDbAndShowOnUI();
-            }
-        });
-
-        WheelChair.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-                if(b) {
-                    filterBeachItem = "Wheelchair Accessible";
-                }
-                else{
-                    filterBeachItem="";
-                }
-                getDataFromDbAndShowOnUI();
-            }
-        });
-
-        floatingWheel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-                if(b) {
-                    filterBeachItem = "Floating Wheelchair";
-                }
-                else{
-                    filterBeachItem="";
-                }
-                getDataFromDbAndShowOnUI();
-            }
-
-        });
-
-        // capacity\
-        anyCap.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-                if(b) {
-                    filterCapacityItem = "";
-                }
-                else{
-
-                }
-                getDataFromDbAndShowOnUI();
-            }
-
-        });
-
-        highCap.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-                if(b) {
-                    filterCapacityItem = "Beach Capacity: High Capacity";
-                }
-                else{
-
-                }
-                getDataFromDbAndShowOnUI();
-            }
-
-        });
-
-        lowCap.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-                if(b) {
-                    filterCapacityItem = "Beach Capacity: Low Capacity";
-                }
-                else{
-
-                }
-                getDataFromDbAndShowOnUI();
-            }
-
-        });
-
-        medCap.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-                if(b) {
-                    filterCapacityItem = "Beach Capacity: Medium Capacity";
-                }
-                else{
-
-                }
-                getDataFromDbAndShowOnUI();
-            }
-
-        });
 
         itemToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -454,23 +291,14 @@ public class MainActivity extends AppCompatActivity {
         //filters
 
         // filters new code
-
-
-
-
-
-
-
-
-
-
-        /*adapterItems = new ArrayAdapter<String>(this, R.layout.beach_list, beach);
+        //filters
+        beachType = findViewById(R.id.auto_complete_textview);
+        adapterItems = new ArrayAdapter<String>(this, R.layout.beach_list, beach);
         beachType.setAdapter(adapterItems);
 
         beachType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                mp.start();
                 String beachItem = adapterView.getItemAtPosition(position).toString();
                 Toast.makeText(MainActivity.this, beachItem + " Option", Toast.LENGTH_SHORT).show();
                 beachList.clear();
@@ -482,12 +310,12 @@ public class MainActivity extends AppCompatActivity {
                 getDataFromDbAndShowOnUI();
             }
 
-        });*/
+        });
 
         //Capacity
+        capacityVolume = findViewById(R.id.auto_complete_textview2);
 
-
-       /* ArrayAdapter<String> adapterItems2; //For Capacity
+        ArrayAdapter<String> adapterItems2; //For Capacity
         adapterItems2 = new ArrayAdapter<String>(this, R.layout.capacity_list, capacity);
         capacityVolume.setAdapter(adapterItems2);
 
@@ -495,7 +323,6 @@ public class MainActivity extends AppCompatActivity {
         capacityVolume.setOnItemClickListener((new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                mp.start();
                 //dropdown item
                 String capacityItem = adapterView.getItemAtPosition(position).toString();
                 Toast.makeText(MainActivity.this, capacityItem, Toast.LENGTH_SHORT).show();
@@ -508,8 +335,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 getDataFromDbAndShowOnUI();
             }
-        }));*/
+        }));
     }
+
 
     private void retrieveAdditionalDataFromDB(){
         DocumentReference landingBeachRef = db.collection("survey").document(currentDate).collection(beachName).document(currentDate);

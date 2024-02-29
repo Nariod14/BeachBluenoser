@@ -18,16 +18,6 @@
         app:srcCompat="@drawable/back_svgrepo_com"
         tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck,DuplicateSpeakableTextCheck" />
 
-    <EditText
-        android:id="@+id/FullName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditPassword" />
 
     <EditText
         android:id="@+id/EditName"
@@ -54,6 +44,17 @@
         app:layout_constraintTop_toBottomOf="@+id/EditName" />
 
     <EditText
+        android:id="@+id/FullName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EditEmail" />
+
+    <EditText
         android:id="@+id/EditPassword"
         android:layout_width="210dp"
         android:layout_height="39dp"
@@ -62,16 +63,17 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditEmail"
+        app:layout_constraintTop_toBottomOf="@+id/FullName"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <Button
         android:id="@+id/save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="37dp"
+        android:layout_marginTop="64dp"
         android:text="SAVE"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/FullName" />
 
@@ -128,7 +130,7 @@
         android:text="Password"
         app:layout_constraintBottom_toTopOf="@+id/EditPassword"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.286"
+        app:layout_constraintHorizontal_bias="0.292"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView

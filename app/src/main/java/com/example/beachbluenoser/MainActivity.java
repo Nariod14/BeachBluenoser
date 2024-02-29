@@ -12,6 +12,7 @@ import com.google.android.gms.tasks.Task;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     CheckBox highCap;
     CheckBox medCap;
 
-
+    SwitchCompat itemToggle;
 
 
 
@@ -117,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         lowCap = findViewById(R.id.low_capcity);
         medCap = findViewById(R.id.medium_capcity);
         highCap = findViewById(R.id.HighCapcity);
-
+        itemToggle = findViewById(R.id.itemToggle);
 
 
 
@@ -258,7 +259,12 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-
+        itemToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                updateRecyclerView(beachList,isChecked);
+            }
+        });
 
 
         final Button homeBtn = findViewById(R.id.HomeButton);
@@ -553,4 +559,22 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.Adapter mAdapter = new MasterBeachListAdapter(beachList);
         recyclerView.setAdapter(mAdapter);
     }
+
+    private void updateRecyclerView(ArrayList<BeachItem> beachList,  boolean useSecondLayout) {
+        RecyclerView recyclerView = findViewById(R.id.BeachMasterList);
+
+        RecyclerView.LayoutManager layoutManager;
+
+        if (useSecondLayout) {
+            layoutManager = new LinearLayoutManager(this);
+        } else {
+            layoutManager = new GridLayoutManager(this, 2);
+        }
+
+        recyclerView.setLayoutManager(layoutManager);
+
+        RecyclerView.Adapter mAdapter = new MasterBeachListAdapter(beachList, useSecondLayout);
+        recyclerView.setAdapter(mAdapter);
+    }
+
 }

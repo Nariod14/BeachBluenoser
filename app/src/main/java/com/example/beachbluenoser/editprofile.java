@@ -49,6 +49,7 @@ public class editprofile extends AppCompatActivity {
         name = findViewById(R.id.EditName);
         Email = findViewById(R.id.EditEmail);
         password = findViewById(R.id.EditPassword);
+        password.setTransformationMethod(new PasswordTransformationMethod());
         Pass = findViewById(R.id.FullName);
         Save = findViewById(R.id.save);
         backArrowkey = findViewById(R.id.backArrow);
@@ -140,4 +141,6 @@ public class editprofile extends AppCompatActivity {
                 "Email",user.getEmail(),
                 "Password",user.getPassword());
     }
-    }
+
+
+}

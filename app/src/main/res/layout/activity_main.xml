@@ -230,8 +230,14 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
         <!--android:background="@drawable/rounded_edit_text"-->
 
-
         <!--Code to show the filtered items-->
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/itemToggle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Switch View"
+            android:textColor="@color/black" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/BeachMasterList"
             android:layout_width="match_parent"

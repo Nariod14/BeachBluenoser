@@ -12,6 +12,7 @@ import com.google.android.gms.tasks.Task;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth beachBluenoserAuth = FirebaseAuth.getInstance();
     ArrayList<BeachItem> beachList;
 
-   // String[] beach = {"All Beaches", "Rocky", "Sandy", "Wheelchair Accessible", "Floating Wheelchair"};
+    // String[] beach = {"All Beaches", "Rocky", "Sandy", "Wheelchair Accessible", "Floating Wheelchair"};
     //String[] capacity = {"Any Capacity", "High", "Medium", "Low"};
 
     // new code for Beaches
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     CheckBox highCap;
     CheckBox medCap;
 
-
+    SwitchCompat itemToggle;
 
 
 
@@ -117,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         lowCap = findViewById(R.id.low_capcity);
         medCap = findViewById(R.id.medium_capcity);
         highCap = findViewById(R.id.HighCapcity);
-
+        itemToggle = findViewById(R.id.itemToggle);
 
 
 
@@ -182,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-       floatingWheel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        floatingWheel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
@@ -197,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-       // capacity\
+        // capacity\
         anyCap.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -258,7 +259,12 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-
+        itemToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                updateRecyclerView(beachList,isChecked);
+            }
+        });
 
 
         final Button homeBtn = findViewById(R.id.HomeButton);
@@ -361,7 +367,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-        private void getDataFromDbAndShowOnUI() {
+    private void getDataFromDbAndShowOnUI() {
         // to toggle between the "deleted posts" and active posts button
         // resetToggle();
         final ArrayList<BeachItem> beachItemArrayList = new ArrayList<>();
@@ -379,12 +385,12 @@ public class MainActivity extends AppCompatActivity {
                                 String beachCapacityTextForTheDay ="";
                                 String beachVisualWaveConditionsTextForTheDay = "";
                                 if(!(document.getData().get("beachCapacityTextForTheDay")==null)) {
-                                     beachCapacityTextForTheDay = document.getData().get("beachCapacityTextForTheDay").toString();
+                                    beachCapacityTextForTheDay = document.getData().get("beachCapacityTextForTheDay").toString();
                                 }else{
                                     beachCapacityTextForTheDay="Beach Capacity: No data today!";
                                 }
                                 if(!(document.getData().get("beachVisualWaveConditionsTextForTheDay")==null)) {
-                                     beachVisualWaveConditionsTextForTheDay = document.getData().get("beachVisualWaveConditionsTextForTheDay").toString();
+                                    beachVisualWaveConditionsTextForTheDay = document.getData().get("beachVisualWaveConditionsTextForTheDay").toString();
                                 }else{
                                     beachVisualWaveConditionsTextForTheDay ="Water Conditions: No data today!";
                                 }
@@ -447,7 +453,7 @@ public class MainActivity extends AppCompatActivity {
 
         //filters
 
-            // filters new code
+        // filters new code
 
 
 
@@ -522,10 +528,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                       // showDataOnUI();
+                        // showDataOnUI();
                     } else {
                         Log.d("Beach Landing Query", "No such document");
-                       // showDataOnUI();
+                        // showDataOnUI();
                     }
                 } else {
                     Log.d("Beach Landing Query", "get failed with ", task.getException());
@@ -553,4 +559,22 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.Adapter mAdapter = new MasterBeachListAdapter(beachList);
         recyclerView.setAdapter(mAdapter);
     }
+
+    private void updateRecyclerView(ArrayList<BeachItem> beachList,  boolean useSecondLayout) {
+        RecyclerView recyclerView = findViewById(R.id.BeachMasterList);
+
+        RecyclerView.LayoutManager layoutManager;
+
+        if (useSecondLayout) {
+            layoutManager = new LinearLayoutManager(this);
+        } else {
+            layoutManager = new GridLayoutManager(this, 2);
+        }
+
+        recyclerView.setLayoutManager(layoutManager);
+
+        RecyclerView.Adapter mAdapter = new MasterBeachListAdapter(beachList, useSecondLayout);
+        recyclerView.setAdapter(mAdapter);
+    }
+
 }

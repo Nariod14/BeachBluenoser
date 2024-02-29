@@ -1,5 +1,9 @@
 package com.example.beachbluenoser;
 
+import static com.example.beachbluenoser.Registration.getNextSalt;
+import static com.example.beachbluenoser.Registration.hash;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +16,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import android.widget.Toast;
@@ -22,6 +29,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
 
+
+
 public class editprofile extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     EditText name;
@@ -30,6 +39,7 @@ public class editprofile extends AppCompatActivity {
     EditText Pass;
     Button Save;
     ImageButton backArrowkey;
+    private FirebaseAuth beachBluenoserAuth;
     @SuppressLint({"MissingInflatedId", "WrongViewCast"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +53,7 @@ public class editprofile extends AppCompatActivity {
         Save = findViewById(R.id.save);
         backArrowkey = findViewById(R.id.backArrow);
 
+        beachBluenoserAuth = FirebaseAuth.getInstance();
         backArrowkey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,14 +74,6 @@ public class editprofile extends AppCompatActivity {
                     name.setText(snapshot.getString("Username"));
                     Pass.setText(snapshot.getString("Fullname"));
                     Email.setText(snapshot.getString("Email"));
-
-                    //Confidential data displayed in form of "*"
-                    String passwordStar = snapshot.getString("Password");
-                    StringBuilder asterisks = new StringBuilder();
-                    for (int i = 0; i < passwordStar.length(); i++) {
-                        asterisks.append("*");
-                    }
-                    password.setText(asterisks.toString());
                 }
             }
         });
@@ -86,6 +89,7 @@ public class editprofile extends AppCompatActivity {
                     String fullName = Pass.getText().toString();
                     String email = Email.getText().toString();
                     String Password = password.getText().toString();
+
                     //No blank allowed
                     if (TextUtils.isEmpty(NAME) || TextUtils.isEmpty(fullName) || TextUtils.isEmpty(email) || TextUtils.isEmpty(Password)) {
                         // Show error message or dialog indicating fields cannot be blank
@@ -96,10 +100,25 @@ public class editprofile extends AppCompatActivity {
                         Toast.makeText(editprofile.this, "Invalid email address", Toast.LENGTH_SHORT).show();
                     }
                     else {
-                        // All fields are filled, proceed to upload
-                        User user = new User(NAME, fullName, email, Password);
-                        Upload(user);
-                        startActivity(new Intent(editprofile.this, userprofile.class));
+                        //Authenticate user
+                        beachBluenoserAuth.signInWithEmailAndPassword(email, Password)
+                                .addOnCompleteListener(editprofile.this, new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+                                            //Password correct, proceed to upload
+                                            User user = new User(NAME, fullName, email, Password);
+                                            Upload(user);
+                                            startActivity(new Intent(editprofile.this, userprofile.class));
+                                            Toast.makeText(editprofile.this, "Profile Updated", Toast.LENGTH_LONG).show();
+
+                                        } else {
+                                            Toast.makeText(editprofile.this, "Incorrect Password", Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                });
+
+
                     }
                 }
             }

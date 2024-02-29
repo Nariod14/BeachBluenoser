@@ -23,8 +23,6 @@ import java.util.ArrayList;
         public MasterBeachListAdapter(ArrayList<BeachItem> beaches) {
             this.beaches = beaches;
         }
-        private static final int VIEW_TYPE_1 = 1;
-        private static final int VIEW_TYPE_2 = 2;
 
         private boolean useLayout2; // Toggle state
 

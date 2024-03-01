@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -11,6 +12,8 @@ import com.google.android.gms.tasks.Task;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,11 +42,20 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Map;
 
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
     final  FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -52,6 +64,13 @@ public class MainActivity extends AppCompatActivity {
 
     String[] beach = {"All Beaches", "Rocky", "Sandy", "Wheelchair Accessible", "Floating Wheelchair"};
     String[] capacity = {"Any Capacity", "High", "Medium", "Low"};
+
+    SwitchCompat itemToggle;
+
+
+
+
+
     String filterBeachItem = "";
     String filterCapacityItem = "";
 
@@ -66,6 +85,10 @@ public class MainActivity extends AppCompatActivity {
     AutoCompleteTextView beachType; //Beach
     AutoCompleteTextView capacityVolume; //Capacity
 
+    MediaPlayer mp;
+    private RecyclerView beachMasterList;
+
+
     interface MyCallback {
         void callbackCall();
     }
@@ -74,8 +97,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        itemToggle = findViewById(R.id.itemToggle);
+
+
+
+
+
+        itemToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                updateRecyclerView(beachList,isChecked);
+            }
+        });
+
+
         final Button homeBtn = findViewById(R.id.HomeButton);
         final Button loginProfileBtn = findViewById(R.id.LoginButton);
+        mp = MediaPlayer.create(this, R.raw.click);
         //beachBluenoserAuth.signOut();
         if (beachBluenoserAuth.getCurrentUser() != null){
             loginProfileBtn.setText("Profile");
@@ -91,8 +130,7 @@ public class MainActivity extends AppCompatActivity {
         homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent homeIntent = new Intent(MainActivity.this, MainActivity.class);
-                startActivity(homeIntent);
+                beachMasterList.smoothScrollToPosition(0);
             }
         });
 
@@ -100,14 +138,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (beachBluenoserAuth.getCurrentUser() != null){
+                    mp.start();
                     Intent profileIntent = new Intent(MainActivity.this, userprofile.class);
                     startActivity(profileIntent);
                 } else {
+                    mp.start();
                     Intent loginIntent = new Intent(MainActivity.this, Login.class);
                     startActivity(loginIntent);
                 }
             }
         });
+
+
     }
 
 
@@ -168,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-        private void getDataFromDbAndShowOnUI() {
+    private void getDataFromDbAndShowOnUI() {
         // to toggle between the "deleted posts" and active posts button
         // resetToggle();
         final ArrayList<BeachItem> beachItemArrayList = new ArrayList<>();
@@ -186,12 +228,12 @@ public class MainActivity extends AppCompatActivity {
                                 String beachCapacityTextForTheDay ="";
                                 String beachVisualWaveConditionsTextForTheDay = "";
                                 if(!(document.getData().get("beachCapacityTextForTheDay")==null)) {
-                                     beachCapacityTextForTheDay = document.getData().get("beachCapacityTextForTheDay").toString();
+                                    beachCapacityTextForTheDay = document.getData().get("beachCapacityTextForTheDay").toString();
                                 }else{
                                     beachCapacityTextForTheDay="Beach Capacity: No data today!";
                                 }
                                 if(!(document.getData().get("beachVisualWaveConditionsTextForTheDay")==null)) {
-                                     beachVisualWaveConditionsTextForTheDay = document.getData().get("beachVisualWaveConditionsTextForTheDay").toString();
+                                    beachVisualWaveConditionsTextForTheDay = document.getData().get("beachVisualWaveConditionsTextForTheDay").toString();
                                 }else{
                                     beachVisualWaveConditionsTextForTheDay ="Water Conditions: No data today!";
                                 }
@@ -253,6 +295,9 @@ public class MainActivity extends AppCompatActivity {
                 });
 
         //filters
+
+        // filters new code
+        //filters
         beachType = findViewById(R.id.auto_complete_textview);
         adapterItems = new ArrayAdapter<String>(this, R.layout.beach_list, beach);
         beachType.setAdapter(adapterItems);
@@ -299,6 +344,7 @@ public class MainActivity extends AppCompatActivity {
         }));
     }
 
+
     private void retrieveAdditionalDataFromDB(){
         DocumentReference landingBeachRef = db.collection("survey").document(currentDate).collection(beachName).document(currentDate);
         landingBeachRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -316,10 +362,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                       // showDataOnUI();
+                        // showDataOnUI();
                     } else {
                         Log.d("Beach Landing Query", "No such document");
-                       // showDataOnUI();
+                        // showDataOnUI();
                     }
                 } else {
                     Log.d("Beach Landing Query", "get failed with ", task.getException());
@@ -327,6 +373,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    //
 
     private void loadMasterBeachList() {
         createRecyclerView(beachList);
@@ -340,10 +387,28 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.BeachMasterList);
 
         // using a linear layout manager
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(layoutManager);
 
         RecyclerView.Adapter mAdapter = new MasterBeachListAdapter(beachList);
         recyclerView.setAdapter(mAdapter);
     }
+
+    private void updateRecyclerView(ArrayList<BeachItem> beachList,  boolean useSecondLayout) {
+        RecyclerView recyclerView = findViewById(R.id.BeachMasterList);
+
+        RecyclerView.LayoutManager layoutManager;
+
+        if (useSecondLayout) {
+            layoutManager = new LinearLayoutManager(this);
+        } else {
+            layoutManager = new GridLayoutManager(this, 2);
+        }
+
+        recyclerView.setLayoutManager(layoutManager);
+
+        RecyclerView.Adapter mAdapter = new MasterBeachListAdapter(beachList, useSecondLayout);
+        recyclerView.setAdapter(mAdapter);
+    }
+
 }

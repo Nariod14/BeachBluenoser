@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import android.media.MediaPlayer;
 
 public class LifeguardDataSurvey extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -52,6 +53,7 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
     public int mediumCapacityCount=0;
     public int highCapacityCount=0;
     ImageButton backArrowkey;;
+    MediaPlayer mp;
 
 
     @SuppressLint("MissingInflatedId")
@@ -82,6 +84,15 @@ public class LifeguardDataSurvey extends AppCompatActivity implements AdapterVie
             public void onClick(View view) {
                 Intent intent = new Intent(LifeguardDataSurvey.this,userprofile.class);
                 startActivity(intent);
+            }
+        });
+        final Button homeBtn = findViewById(R.id.HomeButton);
+        homeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mp.start();
+                Intent homeIntent = new Intent(LifeguardDataSurvey.this, MainActivity.class);
+                startActivity(homeIntent);
             }
         });
 

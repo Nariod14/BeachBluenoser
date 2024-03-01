@@ -3,6 +3,7 @@ package com.example.beachbluenoser;
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -46,11 +47,12 @@ public class Registration extends AppCompatActivity {
     String username, email, fullname, password, userID;
     ImageButton backArrowkey;;
 
+    MediaPlayer mp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-
         userName = findViewById(R.id.registerUsernameTxt);
         passwordField = findViewById(R.id.registerPasswordTxt);
         emailAddress = findViewById(R.id.registerEmailAddressTxt);
@@ -62,9 +64,12 @@ public class Registration extends AppCompatActivity {
         beachBluenoserDB = FirebaseFirestore.getInstance();
         beachBluenoserAuth = FirebaseAuth.getInstance();
 
+        mp = MediaPlayer.create(this, R.raw.click);
+
         backArrowkey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mp.start();
                 Intent intent = new Intent(Registration.this,Login.class);
                 startActivity(intent);
             }
@@ -74,6 +79,7 @@ public class Registration extends AppCompatActivity {
         lifeguardBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mp.start();
                 Intent intent = new Intent(Registration.this, LifeguardRegistration.class);
                 startActivity(intent);
             }
@@ -82,7 +88,7 @@ public class Registration extends AppCompatActivity {
                 registerBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        mp.start();
                         username = userName.getText().toString();
                         fullname = fullName.getText().toString();
                         email = emailAddress.getText().toString().trim();

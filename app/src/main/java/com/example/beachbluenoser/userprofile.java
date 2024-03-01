@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,12 +24,14 @@ public class userprofile extends AppCompatActivity {
     public Button edit, signOutBtn;
     public TextView Email, username, FullName;
 
+    MediaPlayer mp;
+
     @SuppressLint({"WrongViewCast", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_profile);
-        //edit = findViewById(R.id.editProfileBtn);
+        edit = findViewById(R.id.editProfileBtn);
         signOutBtn = findViewById(R.id.SignOut);
         Email = findViewById(R.id.EmailTextView);
         FullName = findViewById(R.id.fullNameTextView);
@@ -37,12 +40,15 @@ public class userprofile extends AppCompatActivity {
         //Header Code
         final Button homeBtn = findViewById(R.id.HomeButton);
         final Button loginProfileBtn = findViewById(R.id.LoginButton);
+        mp = MediaPlayer.create(this, R.raw.click);
+
         if (beachBluenoserAuth.getCurrentUser() != null){
             loginProfileBtn.setText("Profile");
         }
         homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mp.start();
                 Intent homeIntent = new Intent(userprofile.this, MainActivity.class);
                 startActivity(homeIntent);
             }
@@ -51,6 +57,7 @@ public class userprofile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (beachBluenoserAuth.getCurrentUser() != null) {
+                    mp.start();
                     Intent profileIntent = new Intent(userprofile.this, userprofile.class);
                     startActivity(profileIntent);
                 }
@@ -59,18 +66,19 @@ public class userprofile extends AppCompatActivity {
         //End of Header Code
         
         
-        //TODO: Not implemented edit user_profile page
-//        edit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(userprofile.this, editprofile.class);
-//                startActivity(intent);
-//            }
-//        });
+        //In progress
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(userprofile.this, editprofile.class);
+                startActivity(intent);
+            }
+        });
 
         signOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mp.start();
                 Intent intent = new Intent(userprofile.this, MainActivity.class);
                 beachBluenoserAuth.signOut();
                 startActivity(intent);

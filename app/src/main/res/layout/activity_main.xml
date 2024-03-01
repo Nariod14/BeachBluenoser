@@ -57,6 +57,9 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+    <!--This code is for the Toolbar that says 'Beach Filter Page'-->
+
+
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="409dp"
@@ -110,7 +113,6 @@
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
-    <!--This code is for the Toolbar that says 'Beach Filter Page'-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -120,14 +122,21 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
         <!--android:background="@drawable/rounded_edit_text"-->
 
+        <!--Code to show the filtered items-->
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/itemToggle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Switch View"
+            android:textColor="@color/black" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/BeachMasterList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="1030dp"
             android:layout_gravity="bottom"
             android:autofillHints="Empty"
-            android:padding="10dp"
+            android:padding="1dp"
             android:scrollbars="vertical">
 
         </androidx.recyclerview.widget.RecyclerView>

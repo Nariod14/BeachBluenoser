@@ -88,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
     MediaPlayer mp;
     private RecyclerView beachMasterList;
 
-
     interface MyCallback {
         void callbackCall();
     }
@@ -130,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
         homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                beachMasterList = findViewById(R.id.BeachMasterList);
                 beachMasterList.smoothScrollToPosition(0);
             }
         });

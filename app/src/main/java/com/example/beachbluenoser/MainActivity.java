@@ -295,6 +295,28 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        checkDate();
+
+        homeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent homeIntent = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(homeIntent);
+            }
+        });
+
+        loginProfileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (beachBluenoserAuth.getCurrentUser() != null){
+                    Intent profileIntent = new Intent(MainActivity.this, userprofile.class);
+                    startActivity(profileIntent);
+                } else {
+                    Intent loginIntent = new Intent(MainActivity.this, Login.class);
+                    startActivity(loginIntent);
+                }
+            }
+        });
     }
 
 

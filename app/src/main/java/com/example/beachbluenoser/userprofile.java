@@ -31,7 +31,7 @@ public class userprofile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_profile);
-        //edit = findViewById(R.id.editProfileBtn);
+        edit = findViewById(R.id.editProfileBtn);
         signOutBtn = findViewById(R.id.SignOut);
         Email = findViewById(R.id.EmailTextView);
         FullName = findViewById(R.id.fullNameTextView);
@@ -66,14 +66,14 @@ public class userprofile extends AppCompatActivity {
         //End of Header Code
         
         
-        //TODO: Not implemented edit user_profile page
-//        edit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(userprofile.this, editprofile.class);
-//                startActivity(intent);
-//            }
-//        });
+        //In progress
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(userprofile.this, editprofile.class);
+                startActivity(intent);
+            }
+        });
 
         signOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override

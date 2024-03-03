@@ -23,30 +23,35 @@
                 android:background="@android:color/black"
                 tools:ignore="MissingConstraints" />
 
+
             <TextView
                 android:id="@+id/landingBeachNameTextView"
-                android:layout_width="394dp"
+                android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:backgroundTint="#0c68b5"
+                android:background="#0f969c"
                 android:fontFamily="@font/comfertaa_light"
                 android:shadowColor="#0c68b5"
                 android:text="Beach landing page"
                 android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="70px"
+                android:textColor="@color/white"
+                android:textSize="20sp"
                 android:textStyle="bold"
+
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-
                 app:layout_constraintTop_toTopOf="parent" />
 
 
             <ImageButton
                 android:id="@+id/backButton"
-                android:layout_width="34dp"
-                android:layout_height="40dp"
-                android:backgroundTint="@color/white"
+                android:layout_width="33dp"
+                android:layout_height="35dp"
+                android:background="#0f969c"
+                android:backgroundTint="#0f969c"
                 android:contentDescription="TODO"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -66,7 +71,7 @@
             android:layout_height="205dp"
             android:adjustViewBounds="true"
             android:background="@drawable/wavy_background"
-            android:backgroundTint="#76b6c4"
+            android:backgroundTint="#0f969c"
             android:contentDescription="TODO"
             android:fontFamily="@font/comfertaa_light"
             android:scaleType="fitXY"

@@ -130,7 +130,7 @@
             android:id="@+id/itemToggle"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="Switch View"
+            android:text="   Switch View"
             android:textColor="@color/black" />
 
         <androidx.recyclerview.widget.RecyclerView

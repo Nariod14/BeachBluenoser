@@ -179,7 +179,9 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                         // set text on textView
-                        textView.setText(stringBuilder.toString());
+                        if(!stringBuilder.toString().equals("")) {
+                            textView.setText(stringBuilder.toString());
+                        }
                         String itemList;
                         itemList = stringBuilder.toString();
                         ArrayList<String> beachTagList = new ArrayList<>(Arrays.asList(itemList.split(",")));

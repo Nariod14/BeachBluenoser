@@ -24,43 +24,44 @@ import java.util.ArrayList;
             this.beaches = beaches;
         }
 
+        private boolean useLayout2; // Toggle state
+
+        public MasterBeachListAdapter(ArrayList<BeachItem> beaches, boolean useLayout2) {
+            this.beaches = beaches;
+            this.useLayout2 = useLayout2;
+        }
         //Create new views (invoked by the layout manager)
         @Override
         public ListItem onCreateViewHolder(ViewGroup parent, int viewType) {
-
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            View v = inflater.inflate(R.layout.beachitem, parent, false);
 
-            return (new ListItem(v,beaches));
+            // Use different layouts based on the switch state
+            int layoutRes = useLayout2 ? R.layout.beachitem2 : R.layout.beachitem;
+
+            View v = inflater.inflate(layoutRes, parent, false);
+            return new ListItem(v, beaches);
         }
 
         @Override
         public void onBindViewHolder(ListItem listItem, int position) {
             // - replace the contents of the view with that element
-            int pos = beaches.size() - (position + 1);//to reverse order
+            int pos = beaches.size() - (position + 1);
+
             String beachImageFileName = beaches.get(pos).getImageSource();
             listItem.beachName.setText(beaches.get(pos).getName());
 
-            Log.d("beachesPosCap","CAP222;  " +beaches.get(pos).getcapacity()+";");
-            if(beaches.get(pos).getcapacity()==null||beaches.get(pos).getcapacity()==""){
-
+            if (beaches.get(pos).getcapacity() == null || beaches.get(pos).getcapacity().equals("")) {
                 listItem.beachItemCapacity.setText("Capacity:");
-            }else {
+            } else {
                 listItem.beachItemCapacity.setText(beaches.get(pos).getcapacity());
             }
-            if(beaches.get(pos).getsandyOrRocky()==null||beaches.get(pos).getsandyOrRocky()==""){
 
-              //  listItem.beachItemSandyOrRocky.setText("Sandy / Rocky:");
-            }else {
-              //  listItem.beachItemSandyOrRocky.setText("Sandy or Rocky: "+beaches.get(pos).getsandyOrRocky());
-            }
-            if(beaches.get(pos).getvisualWaterConditions()==null||beaches.get(pos).getvisualWaterConditions()==""){
-
+            if (beaches.get(pos).getvisualWaterConditions() == null || beaches.get(pos).getvisualWaterConditions().equals("")) {
                 listItem.beachItemVisualWaterConditions.setText("Visual Water Conditions:");
-            }else {
+            } else {
                 listItem.beachItemVisualWaterConditions.setText(beaches.get(pos).getvisualWaterConditions());
             }
-            String desc = beaches.get(pos).getDescription();
+
             listItem.setBeachImage(beachImageFileName);
         }
 

@@ -6,12 +6,17 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.view.ViewGroup;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,35 +52,32 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.Checkable;
 import android.widget.CompoundButton;
+import android.widget.GridLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
+import java.util.Arrays;
+import android.content.DialogInterface;
 
+import android.os.Bundle;
+import android.view.View;
+
+import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
+import java.util.HashSet;
+import java.util.Set;
+import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
     final  FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth beachBluenoserAuth = FirebaseAuth.getInstance();
     ArrayList<BeachItem> beachList;
 
-   // String[] beach = {"All Beaches", "Rocky", "Sandy", "Wheelchair Accessible", "Floating Wheelchair"};
-    //String[] capacity = {"Any Capacity", "High", "Medium", "Low"};
+    // String[] beach = {"All Beaches", "Rocky", "Sandy", "Wheelchair Accessible", "Floating Wheelchair"};
+    String[] capacity = {"Any Capacity", "High", "Medium", "Low"};
 
-    // new code for Beaches
-
-    CheckBox rockyCheckbox;
-    CheckBox  anyBeachCheckbox;
-    CheckBox  WheelChair;
-
-    CheckBox sandyCheckbox;
-
-    CheckBox floatingWheel;
-
-    // Capacilty
-
-    CheckBox anyCap;
-    CheckBox lowCap;
-    CheckBox highCap;
-    CheckBox medCap;
-
-
+    SwitchCompat itemToggle;
 
 
 
@@ -97,6 +99,9 @@ public class MainActivity extends AppCompatActivity {
 
     MediaPlayer mp;
 
+    // making Hash Set
+    Set<String> selectedItems = new HashSet<>();
+
     interface MyCallback {
         void callbackCall();
     }
@@ -106,157 +111,147 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // new code beaches
-        rockyCheckbox = findViewById(R.id.Rocky);
-        anyBeachCheckbox = findViewById(R.id.All_Beaches);
-        sandyCheckbox = findViewById(R.id.Sandy);
-        WheelChair = findViewById(R.id.Wheelchair_Accessible);
-        floatingWheel= findViewById(R.id.Wheelchair_foatable);
+        itemToggle = findViewById(R.id.itemToggle);
 
-        anyCap = findViewById(R.id.AnyCapcity);
-        lowCap = findViewById(R.id.low_capcity);
-        medCap = findViewById(R.id.medium_capcity);
-        highCap = findViewById(R.id.HighCapcity);
-
-
-
-
-
-
-        // OncheckedChangeListners
-
-        anyBeachCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        itemToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-                if(b) {
-                    filterBeachItem="";
-                }
-                else{
-
-                    filterBeachItem = "All Beaches";
-                }
-                getDataFromDbAndShowOnUI();
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                updateRecyclerView(beachList,isChecked);
             }
         });
 
-        rockyCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
-                if(b) {
-                    filterBeachItem = "Rocky";
-                }
-                else{
-                    filterBeachItem="";
-                }
-                getDataFromDbAndShowOnUI();
+
+
+        beachList = new ArrayList<>();
+
+
+        String[] beachItems = {"Rocky", "Sandy", "Wheelchair Accessible", "Floating Wheelchair"};
+        ArrayList<Integer> tagList = new ArrayList<>();
+        boolean[] selected = new boolean[beachItems.length];
+
+
+        ArrayAdapter<String> beachAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, beachItems);
+
+        beachAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        beachs.setAdapter(beachAdapter);
+//
+        AutoCompleteTextView textView = findViewById(R.id.auto_complete_textview);
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder build = new AlertDialog.Builder(MainActivity.this);
+                build.setTitle("Select Beaches");
+
+                build.setCancelable(false);
+                build.setMultiChoiceItems(beachItems, selected, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i, boolean b) {
+                        // check condition
+                        if (b) {
+                            // when checkbox selected
+                            // Add position  in lang list
+                            tagList.add(i);
+                            // Sort array list
+                            Collections.sort(tagList);
+                        } else {
+                            // when checkbox unselected
+                            // Remove position from langList
+                            tagList.remove(Integer.valueOf(i));
+                        }
+                    }
+                });
+                build.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // Initialize string builder
+                        StringBuilder stringBuilder = new StringBuilder();
+                        // use for loop
+                        for (int j = 0; j < tagList.size(); j++) {
+                            // concat array value
+                            stringBuilder.append(beachItems[tagList.get(j)]);
+                            // check condition
+                            if (j != tagList.size() - 1) {
+                                // When j value  not equal
+                                // to lang list size - 1
+                                // add comma
+                                stringBuilder.append(",");
+                            }
+                        }
+                        // set text on textView
+                        if(!stringBuilder.toString().equals("")) {
+                            textView.setText(stringBuilder.toString());
+                        }
+                        String itemList;
+                        itemList = stringBuilder.toString();
+                        ArrayList<String> beachTagList = new ArrayList<>(Arrays.asList(itemList.split(",")));
+
+                        // Loop through the array list
+                        for (String element : beachTagList) {
+                            // Do something with each element
+                            filterBeachItem = element;
+                            Log.d("ELEMENT",element);
+                            getDataFromDbAndShowOnUI();
+                        }
+
+                    }
+                });
+
+                build.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // dismiss dialog
+                        dialogInterface.dismiss();
+                    }
+                });
+                build.setNeutralButton("Clear All", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // use for loop
+                        for (int j = 0; j < selected.length; j++) {
+                            // remove all selection
+                            selected[j] = false;
+                            // clear language list
+                            tagList.clear();
+                            // clear text view value
+                            textView.setText("Beaches");
+                        }
+                        filterBeachItem = "";
+                        getDataFromDbAndShowOnUI();
+                    }
+                });
+                // show dialog
+                build.show();
             }
         });
 
-        sandyCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+
+        capacityVolume = findViewById(R.id.auto_complete_textview2);
+
+        ArrayAdapter<String> adapterItems2; //For Capacity
+        adapterItems2 = new ArrayAdapter<String>(this, R.layout.capacity_list, capacity);
+        capacityVolume.setAdapter(adapterItems2);
+
+        // Capacity
+        capacityVolume.setOnItemClickListener((new AdapterView.OnItemClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-                if(b) {
-                    filterBeachItem = "Sandy";
-                }
-                else{
-                    filterBeachItem="";
-                }
-                getDataFromDbAndShowOnUI();
-            }
-        });
-
-        WheelChair.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-                if(b) {
-                    filterBeachItem = "Wheelchair Accessible";
-                }
-                else{
-                    filterBeachItem="";
-                }
-                getDataFromDbAndShowOnUI();
-            }
-        });
-
-       floatingWheel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-                if(b) {
-                    filterBeachItem = "Floating Wheelchair";
-                }
-                else{
-                    filterBeachItem="";
-                }
-                getDataFromDbAndShowOnUI();
-            }
-
-        });
-
-       // capacity\
-        anyCap.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-                if(b) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                //dropdown item
+                String capacityItem = adapterView.getItemAtPosition(position).toString();
+                Toast.makeText(MainActivity.this, capacityItem, Toast.LENGTH_SHORT).show();
+                beachList.clear();
+                if (capacityItem.equals("Any Capacity")) {
                     filterCapacityItem = "";
                 }
-                else{
-
+                else {
+                    filterCapacityItem = "Beach Capacity: "+ capacityItem + " Capacity";
                 }
                 getDataFromDbAndShowOnUI();
             }
+        }));
 
-        });
 
-        highCap.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-                if(b) {
-                    filterCapacityItem = "Beach Capacity: High Capacity";
-                }
-                else{
-
-                }
-                getDataFromDbAndShowOnUI();
-            }
-
-        });
-
-        lowCap.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-                if(b) {
-                    filterCapacityItem = "Beach Capacity: Low Capacity";
-                }
-                else{
-
-                }
-                getDataFromDbAndShowOnUI();
-            }
-
-        });
-
-        medCap.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-                if(b) {
-                    filterCapacityItem = "Beach Capacity: Medium Capacity";
-                }
-                else{
-
-                }
-                getDataFromDbAndShowOnUI();
-            }
-
-        });
 
 
 
@@ -288,6 +283,7 @@ public class MainActivity extends AppCompatActivity {
         loginProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ;
                 if (beachBluenoserAuth.getCurrentUser() != null){
                     mp.start();
                     Intent profileIntent = new Intent(MainActivity.this, userprofile.class);
@@ -324,6 +320,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
 
     @Override
@@ -383,7 +380,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-        private void getDataFromDbAndShowOnUI() {
+    private void getDataFromDbAndShowOnUI() {
         // to toggle between the "deleted posts" and active posts button
         // resetToggle();
         final ArrayList<BeachItem> beachItemArrayList = new ArrayList<>();
@@ -401,12 +398,12 @@ public class MainActivity extends AppCompatActivity {
                                 String beachCapacityTextForTheDay ="";
                                 String beachVisualWaveConditionsTextForTheDay = "";
                                 if(!(document.getData().get("beachCapacityTextForTheDay")==null)) {
-                                     beachCapacityTextForTheDay = document.getData().get("beachCapacityTextForTheDay").toString();
+                                    beachCapacityTextForTheDay = document.getData().get("beachCapacityTextForTheDay").toString();
                                 }else{
                                     beachCapacityTextForTheDay="Beach Capacity: No data today!";
                                 }
                                 if(!(document.getData().get("beachVisualWaveConditionsTextForTheDay")==null)) {
-                                     beachVisualWaveConditionsTextForTheDay = document.getData().get("beachVisualWaveConditionsTextForTheDay").toString();
+                                    beachVisualWaveConditionsTextForTheDay = document.getData().get("beachVisualWaveConditionsTextForTheDay").toString();
                                 }else{
                                     beachVisualWaveConditionsTextForTheDay ="Water Conditions: No data today!";
                                 }
@@ -454,6 +451,8 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 }
 
+
+
                             }
                         } else {
                             Log.w(TAG, "Error getting documents.", task.getException());
@@ -467,20 +466,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        //filters
 
-            // filters new code
-
-
-
-
-
-
-
-
-
-
-        /*adapterItems = new ArrayAdapter<String>(this, R.layout.beach_list, beach);
+       /* adapterItems = new ArrayAdapter<String>(this, R.layout.beach_list, beachItems);
         beachType.setAdapter(adapterItems);
 
         beachType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -503,29 +490,30 @@ public class MainActivity extends AppCompatActivity {
         //Capacity
 
 
-       /* ArrayAdapter<String> adapterItems2; //For Capacity
-        adapterItems2 = new ArrayAdapter<String>(this, R.layout.capacity_list, capacity);
-        capacityVolume.setAdapter(adapterItems2);
-
-        // Capacity
-        capacityVolume.setOnItemClickListener((new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                mp.start();
-                //dropdown item
-                String capacityItem = adapterView.getItemAtPosition(position).toString();
-                Toast.makeText(MainActivity.this, capacityItem, Toast.LENGTH_SHORT).show();
-                beachList.clear();
-                if (capacityItem.equals("Any Capacity")) {
-                    filterCapacityItem = "";
-                }
-                else {
-                    filterCapacityItem = "Beach Capacity: "+ capacityItem + " Capacity";
-                }
-                getDataFromDbAndShowOnUI();
-            }
-        }));*/
     }
+    private void updateRecyclerView(ArrayList<BeachItem> beachList,  boolean useSecondLayout) {
+        RecyclerView recyclerView = findViewById(R.id.BeachMasterList);
+
+        RecyclerView.LayoutManager layoutManager;
+
+        if (useSecondLayout) {
+            layoutManager = new LinearLayoutManager(this);
+        } else {
+            layoutManager = new GridLayoutManager(this, 2);
+        }
+
+        recyclerView.setLayoutManager(layoutManager);
+
+        RecyclerView.Adapter mAdapter = new MasterBeachListAdapter(beachList, useSecondLayout);
+        recyclerView.setAdapter(mAdapter);
+    }
+
+
+
+
+
+
+
 
     private void retrieveAdditionalDataFromDB(){
         DocumentReference landingBeachRef = db.collection("survey").document(currentDate).collection(beachName).document(currentDate);
@@ -544,10 +532,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                       // showDataOnUI();
+                        // showDataOnUI();
                     } else {
                         Log.d("Beach Landing Query", "No such document");
-                       // showDataOnUI();
+                        // showDataOnUI();
                     }
                 } else {
                     Log.d("Beach Landing Query", "get failed with ", task.getException());
@@ -576,3 +564,5 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
     }
 }
+
+

@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
     AutoCompleteTextView capacityVolume; //Capacity
 
     MediaPlayer mp;
+    private RecyclerView beachMasterList;
 
     // making Hash Set
     Set<String> selectedItems = new HashSet<>();
@@ -274,9 +275,8 @@ public class MainActivity extends AppCompatActivity {
         homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mp.start();
-                Intent homeIntent = new Intent(MainActivity.this, MainActivity.class);
-                startActivity(homeIntent);
+                beachMasterList = findViewById(R.id.BeachMasterList);
+                beachMasterList.smoothScrollToPosition(0);
             }
         });
 

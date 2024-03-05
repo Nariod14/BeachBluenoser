@@ -1,7 +1,6 @@
 package com.example.beachbluenoser;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -52,7 +51,6 @@ public class UserDataSurvey extends AppCompatActivity implements AdapterView.OnI
     public int mediumCapacityCount=0;
     public int highCapacityCount=0;
     ImageButton backArrowkey;;
-    MediaPlayer mp;
 
 
 
@@ -98,15 +96,6 @@ public class UserDataSurvey extends AppCompatActivity implements AdapterView.OnI
             public void onClick(View view) {
                 Intent intent = new Intent(UserDataSurvey.this,beachLanding.class);
                 startActivity(intent);
-            }
-        });
-        final Button homeBtn = findViewById(R.id.HomeButton);
-        homeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mp.start();
-                Intent homeIntent = new Intent(UserDataSurvey.this, MainActivity.class);
-                startActivity(homeIntent);
             }
         });
 

@@ -92,7 +92,6 @@
                 tools:ignore="TextContrastCheck" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!--This code is for the Beach Capacity Dropdown-->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/capacityTextInputLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
@@ -106,11 +105,15 @@
                 android:id="@+id/auto_complete_textview2"
                 android:layout_width="match_parent"
                 android:layout_height="73dp"
+                android:layout_row="3"
+                android:layout_column="1"
                 android:inputType="none"
                 android:text="@string/Capacity"
                 android:textColor="#000000"
                 tools:ignore="TextContrastCheck" />
         </com.google.android.material.textfield.TextInputLayout>
+
+
     </LinearLayout>
 
 
@@ -127,7 +130,7 @@
             android:id="@+id/itemToggle"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="Switch View"
+            android:text="   Switch View"
             android:textColor="@color/black" />
 
         <androidx.recyclerview.widget.RecyclerView

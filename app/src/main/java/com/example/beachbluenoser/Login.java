@@ -3,6 +3,7 @@ package com.example.beachbluenoser;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,7 +14,8 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Login extends AppCompatActivity {
 
@@ -42,11 +44,10 @@ public class Login extends AppCompatActivity {
         mp = MediaPlayer.create(this, R.raw.click);
 
         beachBluenoserAuth = FirebaseAuth.getInstance();
-      /*  if (beachBluenoserAuth.getCurrentUser() != null) {
+        /*if (beachBluenoserAuth.getCurrentUser() != null) {
             finish();
             return;
-        }
-*/
+        }*/
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,7 +66,6 @@ public class Login extends AppCompatActivity {
             }
         });
 
-
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,10 +83,6 @@ public class Login extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-
-
     }
 
     private void authenticateUser() {
@@ -98,18 +94,63 @@ public class Login extends AppCompatActivity {
 
         if (emailAuth.isEmpty() || passAuth.isEmpty()) {
             Toast.makeText(Login.this, "Please enter a valid email address and password", Toast.LENGTH_LONG).show();
+        }
+        else {
 
-        } else {
-            beachBluenoserAuth.signInWithEmailAndPassword(emailAuth, passAuth)
-                    .addOnCompleteListener(this, task -> {
-                        if (task.isSuccessful()) {
-                            showMainActivity();
-                        } else {
-                            Toast.makeText(Login.this, "Authentication Failed!", Toast.LENGTH_LONG).show();
-                        }
-                    });
+            checkIfEmailExists(emailAuth);
         }
     }
+    private void checkIfEmailExists(String email) {
+
+        String users = "users";
+        FirebaseFirestore.getInstance().collection(users)
+                .whereEqualTo("Identifier", email)
+
+
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        if (!task.getResult().isEmpty()) {
+
+                            signInUser(email, passAuth);
+                        } else {
+
+                           showSnackbar("The entered email does not exist. Either enter the correct email address or create a " +
+                                    "new account by navigating to the registration page");
+                        }
+                    } else {
+
+                        Toast.makeText(Login.this, "Error checking email existence", Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+
+    private void showSnackbar(String message) {
+        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_INDEFINITE)
+                .setAction("OK", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
+
+
+        snackbar.show();
+    }
+
+    private void signInUser(String email, String password) {
+        beachBluenoserAuth.signInWithEmailAndPassword(email, password)
+
+                .addOnCompleteListener(this, task -> {
+
+                    if (task.isSuccessful()) {
+                        showMainActivity();
+                    } else {
+                        Toast.makeText(Login.this, "Authentication Failed!", Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+
     private void showMainActivity() {
         Intent intent = new Intent(Login.this,MainActivity.class);
         startActivity(intent);

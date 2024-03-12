@@ -259,17 +259,7 @@ public class UserDataSurvey extends AppCompatActivity implements AdapterView.OnI
 
     }
     public void setCapacityAndVisualConditionText(){
-
-        if(lowParkingCount > mediumParkingCount && lowParkingCount > highParkingCount){
-            surveyParkingTextForTheDay = "Parking Availability: Many Spots";
-        }
-        else if(mediumParkingCount >= lowParkingCount && mediumParkingCount >= highParkingCount){
-            surveyParkingTextForTheDay = "Parking Availability: Few Spots";
-        }
-        else if(highParkingCount >= mediumParkingCount && highParkingCount >= mediumParkingCount){
-            surveyParkingTextForTheDay = "Parking Availability: Little/No Spots";
-        }
-
+        //Capacity
         if(lowCapacityCount > mediumCapacityCount && lowCapacityCount > highCapacityCount){
             surveyCapacityTextForTheDay = "Beach Capacity: Low Capacity";
         }
@@ -279,14 +269,32 @@ public class UserDataSurvey extends AppCompatActivity implements AdapterView.OnI
         else if(highCapacityCount >= lowCapacityCount && highCapacityCount >= mediumCapacityCount){
             surveyCapacityTextForTheDay = "Beach Capacity: High Capacity";
         }
-
-        if(lowCapacityCount ==0 && mediumCapacityCount ==0 && highCapacityCount==0){
+        else if(lowCapacityCount ==0 && mediumCapacityCount ==0 && highCapacityCount==0){
             surveyCapacityTextForTheDay = "Beach Capacity: No data today!";
         }
-        if(lowParkingCount ==0 && mediumParkingCount ==0 && highParkingCount==0){
+        // All counts are equal
+        else {
+            surveyCapacityTextForTheDay = "Beach Capacity: Medium Capacity";
+        }
+        //Parking
+        if(lowParkingCount > mediumParkingCount && lowParkingCount > highParkingCount){
+            surveyParkingTextForTheDay = "Parking Availability: Many Spots";
+        }
+        else if(mediumParkingCount >= lowParkingCount && mediumParkingCount >= highParkingCount){
+            surveyParkingTextForTheDay = "Parking Availability: Few Spots";
+        }
+        else if(highParkingCount >= mediumParkingCount && highParkingCount >= lowParkingCount){
+            surveyParkingTextForTheDay = "Parking Availability: Little/No Spots";
+        }
+        else if(lowParkingCount ==0 && mediumParkingCount ==0 && highParkingCount==0){
             surveyParkingTextForTheDay = "Parking Availability: No data today!";
         }
+        // All counts are equal
+        else {
+            surveyParkingTextForTheDay = "Parking Availability: Medium";
+        }
     }
+
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long length) {

@@ -101,25 +101,20 @@ public class Login extends AppCompatActivity {
         }
     }
     private void checkIfEmailExists(String email) {
-
-        String users = "users";
-        FirebaseFirestore.getInstance().collection(users)
-                .whereEqualTo("Identifier", email)
-
-
+        FirebaseFirestore.getInstance().collection("BBUSERSTABLE-PROD")
+                .whereEqualTo("Email", email)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         if (!task.getResult().isEmpty()) {
-
+                            // Email exists in the database
                             signInUser(email, passAuth);
                         } else {
-
-                           showSnackbar("The entered email does not exist. Either enter the correct email address or create a " +
-                                    "new account by navigating to the registration page");
+                            // Email does not exist in the database
+                            showSnackbar("The entered email does not exist. Either enter the correct email address or create a new account by navigating to the registration page");
                         }
                     } else {
-
+                        // Error occurred while checking email existence
                         Toast.makeText(Login.this, "Error checking email existence", Toast.LENGTH_LONG).show();
                     }
                 });

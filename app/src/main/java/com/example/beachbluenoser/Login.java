@@ -1,6 +1,7 @@
 package com.example.beachbluenoser;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import com.google.android.material.snackbar.Snackbar;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -122,13 +124,21 @@ public class Login extends AppCompatActivity {
 
     private void showSnackbar(String message) {
         Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_INDEFINITE)
-                .setAction("OK", new View.OnClickListener() {
+                .setTextMaxLines(48)
+
+                .setAction("Ok", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
                     }
                 });
 
+
+
+       // CODE TO ADJUST TEXT SIXE AND SNACKBAR SIZE
+        TextView snackbarTextView = snackbar.getView().findViewById(com.google.android.material.R.id.snackbar_text);
+        snackbarTextView.setMaxLines(20);
+        snackbarTextView.setPadding(60, 40, 37, 36); // Adjust padding as needed
 
         snackbar.show();
     }

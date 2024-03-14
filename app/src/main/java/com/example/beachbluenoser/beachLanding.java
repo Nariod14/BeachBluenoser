@@ -76,6 +76,9 @@ public class beachLanding extends AppCompatActivity {
     public String beachLocation;
     public Button mapsBtn;
 
+    public ImageButton imageFwdButton;
+    public ImageButton imageBackButton;
+
     //number of images on page = 3
     public String[] imageSources = new String[3];
 
@@ -168,6 +171,8 @@ public class beachLanding extends AppCompatActivity {
                 startActivity(mapIntent);
             }
         });
+
+
     }
 
     @Override
@@ -370,5 +375,22 @@ public class beachLanding extends AppCompatActivity {
 
         landingBeachImageView = findViewById(R.id.landingBeachImageView);
         landingBeachImageView.setImageResource(fileID);
+    }
+
+    public void onPreviousImageClicked(View view) {
+        switchToPreviousImage();
+    }
+
+    public void onNextImageClicked(View view) {
+        switchToNextImage();
+    }
+
+    public void switchToNextImage(){
+        currentImageIndex++;
+        setBeachImage();
+    }
+    public void switchToPreviousImage(){
+        currentImageIndex--;
+        setBeachImage();
     }
 }

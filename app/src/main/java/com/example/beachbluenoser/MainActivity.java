@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<BeachItem> beachList;
 
     // String[] beach = {"All Beaches", "Rocky", "Sandy", "Wheelchair Accessible", "Floating Wheelchair"};
-    String[] capacity = {"Any Capacity", "High", "Medium", "Low"};
+    String[] capacity = {"Any Capacity", "High", "Medium", "Low","Parking Availability","Many spots","Few spots","No Spots"};
 
     SwitchCompat itemToggle;
 

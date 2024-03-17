@@ -178,54 +178,57 @@ public class beachLanding extends AppCompatActivity {
         });
 
         favBtn = findViewById(R.id.favBtn);
-
         RemovefavBtn = findViewById(R.id.RemovefavBtn);
 
-        favBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseUser currentUser = auth.getCurrentUser();
-                AddFavBeach addBeach = new AddFavBeach(currentUser);
+        if(auth.getCurrentUser() == null){
+            favBtn.setVisibility(View.GONE);
+            RemovefavBtn.setVisibility(View.GONE);
+        } else {
 
-                //List<String> favBeaches = (List<String>) documentSnapshot.get("favBeaches");
+            favBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FirebaseUser currentUser = auth.getCurrentUser();
+                    AddFavBeach addBeach = new AddFavBeach(currentUser);
 
-                //Log.d("FavoriteBeachList", "List: " + favBeaches);
+                    //List<String> favBeaches = (List<String>) documentSnapshot.get("favBeaches");
 
-
-                // if (favBtn.getText().toString().equals("Add to Favorites")) {
-                addBeach.addFavoriteBeach(beachName);
-                Toast.makeText(beachLanding.this, beachName+" Added to Favorites", Toast.LENGTH_LONG).show();
-
-                Intent refreshIntent = getIntent();
-                finish();
-                startActivity(refreshIntent);
-                //     favBtn.setText("Remove from Favorites");
-                //}
-                //else if (favBtn.getText().toString().equals("Remove from Favorites")) {
-                // favBtn.setText("Remove from Favorites");
-                //  addBeach.removeFavoriteBeach(beachName);
-                //   favBtn.setText("Add to Favorites");
-                // }
-            }
-
-        });
+                    //Log.d("FavoriteBeachList", "List: " + favBeaches);
 
 
+                    // if (favBtn.getText().toString().equals("Add to Favorites")) {
+                    addBeach.addFavoriteBeach(beachName);
+                    Toast.makeText(beachLanding.this, beachName + " Added to Favorites", Toast.LENGTH_LONG).show();
 
-        RemovefavBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                FirebaseUser currentUser = auth.getCurrentUser();
-                AddFavBeach addBeach = new AddFavBeach(currentUser);
-                addBeach.removeFavoriteBeach(beachName);
-                Toast.makeText(beachLanding.this, beachName+" Removed from Favorites", Toast.LENGTH_LONG).show();
-                Intent refreshIntent = getIntent();
-                finish();
-                startActivity(refreshIntent);
-            }
+                    Intent refreshIntent = getIntent();
+                    finish();
+                    startActivity(refreshIntent);
+                    //     favBtn.setText("Remove from Favorites");
+                    //}
+                    //else if (favBtn.getText().toString().equals("Remove from Favorites")) {
+                    // favBtn.setText("Remove from Favorites");
+                    //  addBeach.removeFavoriteBeach(beachName);
+                    //   favBtn.setText("Add to Favorites");
+                    // }
+                }
 
-        });
+            });
 
+
+            RemovefavBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FirebaseUser currentUser = auth.getCurrentUser();
+                    AddFavBeach addBeach = new AddFavBeach(currentUser);
+                    addBeach.removeFavoriteBeach(beachName);
+                    Toast.makeText(beachLanding.this, beachName + " Removed from Favorites", Toast.LENGTH_LONG).show();
+                    Intent refreshIntent = getIntent();
+                    finish();
+                    startActivity(refreshIntent);
+                }
+
+            });
+        }
         mapsBtn = findViewById(R.id.mapsBtn);
         mapsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -241,19 +244,20 @@ public class beachLanding extends AppCompatActivity {
                 startActivity(mapIntent);
             }
         });
-
-        main.getUserfavbeaches(new MainActivity.FavBeachesCallback() {
-            @Override
-            public void onFavBeachesReceived(ArrayList<String> favBeaches) {
-                if (favBeaches.contains(beachName)) {
-                    setRemoveFavBtnVisibility(true);
-                    setFavBtnVisibility(false);
-                } else {
-                    setFavBtnVisibility(true);
-                    setRemoveFavBtnVisibility(false);
+        if(auth.getCurrentUser() != null) {
+            main.getUserfavbeaches(new MainActivity.FavBeachesCallback() {
+                @Override
+                public void onFavBeachesReceived(ArrayList<String> favBeaches) {
+                    if (favBeaches.contains(beachName)) {
+                        setRemoveFavBtnVisibility(true);
+                        setFavBtnVisibility(false);
+                    } else {
+                        setFavBtnVisibility(true);
+                        setRemoveFavBtnVisibility(false);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     @Override

@@ -1,5 +1,8 @@
 package com.example.beachbluenoser;
 
+import static androidx.constraintlayout.widget.StateSet.TAG;
+
+import android.annotation.SuppressLint;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,18 +27,31 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import java.util.List;
+import androidx.annotation.NonNull;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class beachLanding extends AppCompatActivity {
@@ -75,6 +91,9 @@ public class beachLanding extends AppCompatActivity {
     public Double beachLat,beachLong;
     public String beachLocation;
     public Button mapsBtn;
+    public Button favBtn;
+    public Button RemovefavBtn;
+
 
     public ImageButton imageFwdButton;
     public ImageButton imageBackButton;
@@ -83,10 +102,12 @@ public class beachLanding extends AppCompatActivity {
     public String[] imageSources = new String[3];
 
     MediaPlayer mp;
+    @SuppressLint("MissingInflatedId")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.beach_landing);
         Bundle bundle = getIntent().getExtras();
+        MainActivity main = new MainActivity();
 
         Button btn = findViewById(R.id.checkInSurvey);
         ImageButton backBtn = findViewById(R.id.backButton);
@@ -156,6 +177,55 @@ public class beachLanding extends AppCompatActivity {
             }
         });
 
+        favBtn = findViewById(R.id.favBtn);
+
+        RemovefavBtn = findViewById(R.id.RemovefavBtn);
+
+        favBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseUser currentUser = auth.getCurrentUser();
+                AddFavBeach addBeach = new AddFavBeach(currentUser);
+
+                //List<String> favBeaches = (List<String>) documentSnapshot.get("favBeaches");
+
+                //Log.d("FavoriteBeachList", "List: " + favBeaches);
+
+
+                // if (favBtn.getText().toString().equals("Add to Favorites")) {
+                addBeach.addFavoriteBeach(beachName);
+                Toast.makeText(beachLanding.this, beachName+" Added to Favorites", Toast.LENGTH_LONG).show();
+
+                Intent refreshIntent = getIntent();
+                finish();
+                startActivity(refreshIntent);
+                //     favBtn.setText("Remove from Favorites");
+                //}
+                //else if (favBtn.getText().toString().equals("Remove from Favorites")) {
+                // favBtn.setText("Remove from Favorites");
+                //  addBeach.removeFavoriteBeach(beachName);
+                //   favBtn.setText("Add to Favorites");
+                // }
+            }
+
+        });
+
+
+
+        RemovefavBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                FirebaseUser currentUser = auth.getCurrentUser();
+                AddFavBeach addBeach = new AddFavBeach(currentUser);
+                addBeach.removeFavoriteBeach(beachName);
+                Toast.makeText(beachLanding.this, beachName+" Removed from Favorites", Toast.LENGTH_LONG).show();
+                Intent refreshIntent = getIntent();
+                finish();
+                startActivity(refreshIntent);
+            }
+
+        });
+
         mapsBtn = findViewById(R.id.mapsBtn);
         mapsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,7 +242,18 @@ public class beachLanding extends AppCompatActivity {
             }
         });
 
-
+        main.getUserfavbeaches(new MainActivity.FavBeachesCallback() {
+            @Override
+            public void onFavBeachesReceived(ArrayList<String> favBeaches) {
+                if (favBeaches.contains(beachName)) {
+                    setRemoveFavBtnVisibility(true);
+                    setFavBtnVisibility(false);
+                } else {
+                    setFavBtnVisibility(true);
+                    setRemoveFavBtnVisibility(false);
+                }
+            }
+        });
     }
 
     @Override
@@ -181,6 +262,17 @@ public class beachLanding extends AppCompatActivity {
         super.onResume();
     }
 
+    public void setFavBtnVisibility(boolean visible) {
+        if (favBtn != null) {
+            favBtn.setVisibility(visible ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    public void setRemoveFavBtnVisibility(boolean visible) {
+        if (RemovefavBtn != null) {
+            RemovefavBtn.setVisibility(visible ? View.VISIBLE : View.GONE);
+        }
+    }
     private void getPreliminaryDataFromDB() {
         DocumentReference landingBeachRef = db.collection("beach").document(beachName);
         landingBeachRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

@@ -76,6 +76,12 @@ public class beachLanding extends AppCompatActivity {
     public String beachLocation;
     public Button mapsBtn;
 
+    public ImageButton imageFwdButton;
+    public ImageButton imageBackButton;
+
+    //number of images on page = 3
+    public String[] imageSources = new String[3];
+
     MediaPlayer mp;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -165,6 +171,8 @@ public class beachLanding extends AppCompatActivity {
                 startActivity(mapIntent);
             }
         });
+
+
     }
 
     @Override
@@ -188,7 +196,23 @@ public class beachLanding extends AppCompatActivity {
                         } else {
                             DataImageValue = document.getData().get("image").toString();
                         }
-                        landingBeachImageSource = DataImageValue;
+                        Object DataImage2 = document.getData().get("image2");
+                        String DataImageValue2;
+                        if (DataImage2 == null) {
+                            DataImageValue2 = "imageNotFound";
+                        } else {
+                            DataImageValue2 = document.getData().get("image2").toString();
+                        }
+                        Object DataImage3 = document.getData().get("image3");
+                        String DataImageValue3;
+                        if (DataImage3 == null) {
+                            DataImageValue3 = "imageNotFound";
+                        } else {
+                            DataImageValue3 = document.getData().get("image3").toString();
+                        }
+                        imageSources[0] = DataImageValue;
+                        imageSources[1] = DataImageValue2;
+                        imageSources[2] = DataImageValue3;
                     }
                     if (!(document.getData().get("beachCapacityTextForTheDay") == null)) {
                         landingBeachCapacityText = document.getData().get("beachCapacityTextForTheDay").toString();
@@ -324,28 +348,49 @@ public class beachLanding extends AppCompatActivity {
         cloudView = findViewById(R.id.cloudsTextView);
     }
 
+    private int currentImageIndex = 0;
+
     public void setBeachImage() {
-
-        if (landingBeachImageSource.equals("") || landingBeachImageSource == null) {
-            landingBeachImageSource = "default1.jpg";
+        if (currentImageIndex < 0 || currentImageIndex >= imageSources.length) {
+            currentImageIndex = 0; // Reset index if out of bounds
         }
-        landingBeachImageSource = landingBeachImageSource.replace('-', '_');
-        int fileExtension = landingBeachImageSource.indexOf('.');
 
-        landingBeachImageSource = landingBeachImageSource.substring(0, fileExtension);
-        String uri = "@drawable/" + landingBeachImageSource;
+        String imageName = imageSources[currentImageIndex];
+
+        imageName = imageName.replace('-', '_');
+        int fileExtension = imageName.indexOf('.');
+        imageName = imageName.substring(0, fileExtension);
+
+        String uri = "@drawable/" + imageName;
         Log.d("SetImage", " this is the file path: " + uri);
-        int fileID = 0;
 
+        int fileID = 0;
         try {
-            fileID = R.drawable.class.getField(landingBeachImageSource).getInt(null);
+            fileID = R.drawable.class.getField(imageName).getInt(null);
         } catch (IllegalAccessException e) {
             Log.d("getImageIDError", "Error getting image");
         } catch (NoSuchFieldException e2) {
             Log.d("getImageIDError", "no Icon found");
         }
+
         landingBeachImageView = findViewById(R.id.landingBeachImageView);
         landingBeachImageView.setImageResource(fileID);
+    }
 
+    public void onPreviousImageClicked(View view) {
+        switchToPreviousImage();
+    }
+
+    public void onNextImageClicked(View view) {
+        switchToNextImage();
+    }
+
+    public void switchToNextImage(){
+        currentImageIndex++;
+        setBeachImage();
+    }
+    public void switchToPreviousImage(){
+        currentImageIndex--;
+        setBeachImage();
     }
 }

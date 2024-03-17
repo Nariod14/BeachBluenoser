@@ -1,8 +1,11 @@
 package com.example.beachbluenoser;
 
+import java.util.ArrayList;
+
 public class User{
 
     String username, fullName, email, password;
+    ArrayList<BeachItem> favBeaches;
 
     public User() {}
 
@@ -11,6 +14,7 @@ public class User{
         this.fullName = fullName;
         this.email = email;
         this.password = password;
+        this.favBeaches = new ArrayList<>();
     }
 
     // Getter Methods
@@ -27,6 +31,10 @@ public class User{
         return email;
     }
 
+    public ArrayList<BeachItem> getFavBeaches(){
+        return favBeaches;
+    }
+
     // Setter Methods
     public void setPassword(String password) {
         this.password = password;
@@ -40,5 +48,7 @@ public class User{
     public void setEmail(String email) {
         this.email = email;
     }
-
+    public void AddToFavBeaches(ArrayList<BeachItem> favBeaches){
+        this.favBeaches = favBeaches;
+    }
 }

@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
     AutoCompleteTextView capacityVolume; //Capacity
 
     MediaPlayer mp;
+    private RecyclerView beachMasterList;
 
     // making Hash Set
     Set<String> selectedItems = new HashSet<>();
@@ -274,9 +275,8 @@ public class MainActivity extends AppCompatActivity {
         homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mp.start();
-                Intent homeIntent = new Intent(MainActivity.this, MainActivity.class);
-                startActivity(homeIntent);
+                beachMasterList = findViewById(R.id.BeachMasterList);
+                beachMasterList.smoothScrollToPosition(0);
             }
         });
 
@@ -380,6 +380,33 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public interface FavBeachesCallback {
+        void onFavBeachesReceived(ArrayList<String> favBeaches);
+    }
+
+
+    public void getUserfavbeaches(FavBeachesCallback callback) {
+        String userID = beachBluenoserAuth.getCurrentUser().getUid();
+        DocumentReference Ref = db.collection("BBUSERSTABLE-PROD").document(userID);
+        Ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot documentSnapshot = task.getResult();
+                    if (documentSnapshot.exists()) {
+                        ArrayList<String> userFavBeaches = (ArrayList<String>) documentSnapshot.getData().get("favBeaches");
+                        if (userFavBeaches != null) {
+                            callback.onFavBeachesReceived(userFavBeaches);
+                        } else {
+                            callback.onFavBeachesReceived(new ArrayList<>());
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+
     private void getDataFromDbAndShowOnUI() {
         // to toggle between the "deleted posts" and active posts button
         // resetToggle();
@@ -443,6 +470,7 @@ public class MainActivity extends AppCompatActivity {
                                 //beachItemArrayList.add(beachItem);
                                 Log.d("beachdetails:","wheelchair: "+beachItem.getwheelchairAccess() + " floating: "+beachItem.getFloatingWheelchair() +" sandy or rocky: "+beachItem.getsandyOrRocky());
                                 Log.d("FilterItem:","filterItem:"+filterCapacityItem);
+
 
 
                                 if (Objects.equals(filterBeachItem, "") || Objects.equals(beachItem.getsandyOrRocky(), filterBeachItem) || Objects.equals(beachItem.getwheelchairAccess(), filterBeachItem) || Objects.equals(beachItem.getFloatingWheelchair(), filterBeachItem)) {

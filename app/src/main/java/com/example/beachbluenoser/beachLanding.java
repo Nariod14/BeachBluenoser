@@ -188,6 +188,11 @@ public class beachLanding extends AppCompatActivity {
 
                 // if (favBtn.getText().toString().equals("Add to Favorites")) {
                 addBeach.addFavoriteBeach(beachName);
+                Toast.makeText(beachLanding.this, "Add to Favorite Button clicked", Toast.LENGTH_LONG).show();
+
+                Intent refreshIntent = getIntent();
+                finish();
+                startActivity(refreshIntent);
                 //     favBtn.setText("Remove from Favorites");
                 //}
                 //else if (favBtn.getText().toString().equals("Remove from Favorites")) {
@@ -207,6 +212,10 @@ public class beachLanding extends AppCompatActivity {
                 FirebaseUser currentUser = auth.getCurrentUser();
                 AddFavBeach addBeach = new AddFavBeach(currentUser);
                 addBeach.removeFavoriteBeach(beachName);
+                Toast.makeText(beachLanding.this, "Remove from Favorite Button clicked", Toast.LENGTH_LONG).show();
+                Intent refreshIntent = getIntent();
+                finish();
+                startActivity(refreshIntent);
             }
 
         });

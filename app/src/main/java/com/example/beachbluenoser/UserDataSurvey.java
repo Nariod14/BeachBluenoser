@@ -44,12 +44,12 @@ public class UserDataSurvey extends AppCompatActivity implements AdapterView.OnI
     public long currentParkingValue;
     public long currentBeachCapacityValue;
 
-    public int lowParkingCount=0;
-    public int mediumParkingCount=0;
-    public int highParkingCount=0;
-    public int lowCapacityCount=0;
-    public int mediumCapacityCount=0;
-    public int highCapacityCount=0;
+    public int lowParkingCount = 0;
+    public int mediumParkingCount = 0;
+    public int highParkingCount = 0;
+    public int lowCapacityCount = 0;
+    public int mediumCapacityCount = 0;
+    public int highCapacityCount = 0;
     ImageButton backArrowkey;;
 
 
@@ -147,12 +147,12 @@ public class UserDataSurvey extends AppCompatActivity implements AdapterView.OnI
                         }
                         Log.d("ValsCurrent","Current: "+currentBeachCapacityValue + " "+ currentParkingValue);
 
-                        if(!(document.getData().get("Low Parking")==null))
-                            lowParkingCount  = Integer.parseInt(document.getData().get("Low Parking").toString());
-                        if(!(document.getData().get("Medium waters")==null))
-                            mediumParkingCount  = Integer.parseInt(document.getData().get("Medium Parking").toString());
-                        if(!(document.getData().get("Rough waters")==null))
-                            highParkingCount  = Integer.parseInt(document.getData().get("High Parking").toString());
+                        if(!(document.getData().get("Many spots")==null))
+                            lowParkingCount  = Integer.parseInt(document.getData().get("Many spots").toString());
+                        if(!(document.getData().get("Few spots")==null))
+                            mediumParkingCount  = Integer.parseInt(document.getData().get("Few spots").toString());
+                        if(!(document.getData().get("Little/No Spots")==null))
+                            highParkingCount  = Integer.parseInt(document.getData().get("Little/No Spots").toString());
                         if(!(document.getData().get("Low Capacity")==null))
                             lowCapacityCount  = Integer.parseInt(document.getData().get("Low Capacity").toString());
                         if(!(document.getData().get("Medium Capacity")==null))
@@ -190,9 +190,9 @@ public class UserDataSurvey extends AppCompatActivity implements AdapterView.OnI
         if(parkingValue.equals("Many spots"))
             lowParkingCount++;
         if(parkingValue.equals("Few spots"))
-            mediumCapacityCount++;
-        if(parkingValue.equals("Little/No spots"))
-            highCapacityCount++;
+            mediumParkingCount++;
+        if(parkingValue.equals("Little/No Spots"))
+            highParkingCount++;
         if(beachCapacityValue.equals("Low Capacity"))
             lowCapacityCount++;
         if(beachCapacityValue.equals("Medium Capacity"))
@@ -259,34 +259,43 @@ public class UserDataSurvey extends AppCompatActivity implements AdapterView.OnI
 
     }
     public void setCapacityAndVisualConditionText(){
-
-        if(lowParkingCount > mediumParkingCount && lowParkingCount > highParkingCount){
-            surveyParkingTextForTheDay = "Parking Availability: Many Spots";
-        }
-        else if(mediumParkingCount >= lowParkingCount && mediumParkingCount >= highParkingCount){
-            surveyParkingTextForTheDay = "Parking Availability: Few Spots";
-        }
-        else if(highParkingCount >= mediumParkingCount && highParkingCount >= mediumParkingCount){
-            surveyParkingTextForTheDay = "Parking Availability: Little/No Spots";
-        }
-
+        //Capacity
         if(lowCapacityCount > mediumCapacityCount && lowCapacityCount > highCapacityCount){
             surveyCapacityTextForTheDay = "Beach Capacity: Low Capacity";
         }
         else if(mediumCapacityCount >= lowCapacityCount && mediumCapacityCount >= highCapacityCount){
             surveyCapacityTextForTheDay = "Beach Capacity: Medium Capacity";
         }
-        else if(highCapacityCount >= lowCapacityCount && highCapacityCount >= mediumCapacityCount){
+        else if(highCapacityCount > lowCapacityCount && highCapacityCount > mediumCapacityCount){
             surveyCapacityTextForTheDay = "Beach Capacity: High Capacity";
         }
-
-        if(lowCapacityCount ==0 && mediumCapacityCount ==0 && highCapacityCount==0){
+        else if(lowCapacityCount ==0 && mediumCapacityCount ==0 && highCapacityCount==0){
             surveyCapacityTextForTheDay = "Beach Capacity: No data today!";
         }
-        if(lowParkingCount ==0 && mediumParkingCount ==0 && highParkingCount==0){
+        // All counts are equal
+        else {
+            surveyCapacityTextForTheDay = "Beach Capacity: Medium Capacity";
+        }
+        //Parking
+        if(lowParkingCount > mediumParkingCount && lowParkingCount > highParkingCount){
+            surveyParkingTextForTheDay = "Parking Availability: Many Spots";
+        }
+        else if(mediumParkingCount >= lowParkingCount && mediumParkingCount >= highParkingCount){
+            surveyParkingTextForTheDay = "Parking Availability: Few Spots";
+        }
+        else if(highParkingCount > mediumParkingCount && highParkingCount > lowParkingCount){
+            surveyParkingTextForTheDay = "Parking Availability: Little/No Spots";
+        }
+        else if(lowParkingCount ==0 && mediumParkingCount ==0 && highParkingCount==0){
             surveyParkingTextForTheDay = "Parking Availability: No data today!";
         }
+        // All counts are equal
+        else {
+            surveyParkingTextForTheDay = "Parking Availability: Few Spots";
+        }
+
     }
+
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long length) {

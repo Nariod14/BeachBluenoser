@@ -48,7 +48,7 @@
 
             <ImageButton
                 android:id="@+id/backButton"
-                android:layout_width="33dp"
+                android:layout_width="0dp"
                 android:layout_height="35dp"
                 android:background="#0f969c"
                 android:backgroundTint="#0f969c"
@@ -65,19 +65,72 @@
             android:background="@android:color/black" />
 
 
-        <ImageView
-            android:id="@+id/landingBeachImageView"
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/landingBeachImageView"
+                android:layout_width="match_parent"
+                android:layout_height="205dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/wavy_background"
+                android:backgroundTint="#0f969c"
+                android:contentDescription="TODO"
+                android:fontFamily="@font/comfertaa_light"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/black_brook_beach"
+                />
+
+            <ImageButton
+                android:id="@+id/imageBackButton"
+                android:layout_width="60dp"
+                android:layout_height="35dp"
+                android:translationY="100dp"
+                android:background="@null"
+                android:onClick="onPreviousImageClicked"
+                android:contentDescription="TODO"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/back_svgrepo_com"
+                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck,DuplicateSpeakableTextCheck" />
+
+            />
+
+            <ImageButton
+                android:id="@+id/imageFwdButton"
+                android:layout_width="60dp"
+                android:layout_height="35dp"
+                android:background="@null"
+                android:contentDescription="TODO"
+                android:onClick="onNextImageClicked"
+                android:scaleX="-1"
+                android:translationX="350dp"
+                android:translationY="100dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/back_svgrepo_com"
+                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck,DuplicateSpeakableTextCheck" />
+            />
+
+
+        </RelativeLayout>
+
+
+
+
+        <Button
+            android:id="@+id/favBtn"
             android:layout_width="match_parent"
-            android:layout_height="205dp"
-            android:adjustViewBounds="true"
-            android:background="@drawable/wavy_background"
-            android:backgroundTint="#0f969c"
-            android:contentDescription="TODO"
-            android:fontFamily="@font/comfertaa_light"
-            android:scaleType="fitXY"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/landingBeachNameTextView"
-            app:srcCompat="@drawable/black_brook_beach" />
+            android:layout_height="wrap_content"
+            android:text="Add to Favorites" />
+
+        <Button
+            android:id="@+id/RemovefavBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Remove from Favorites" />
+
 
         <TextView
             android:id="@+id/weatherDescriptionTextView"

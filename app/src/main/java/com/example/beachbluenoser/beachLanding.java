@@ -194,7 +194,7 @@ public class beachLanding extends AppCompatActivity {
 
                 // if (favBtn.getText().toString().equals("Add to Favorites")) {
                 addBeach.addFavoriteBeach(beachName);
-                Toast.makeText(beachLanding.this, "Add to Favorite Button clicked", Toast.LENGTH_LONG).show();
+                Toast.makeText(beachLanding.this, beachName+" Added to Favorites", Toast.LENGTH_LONG).show();
 
                 Intent refreshIntent = getIntent();
                 finish();
@@ -218,7 +218,7 @@ public class beachLanding extends AppCompatActivity {
                 FirebaseUser currentUser = auth.getCurrentUser();
                 AddFavBeach addBeach = new AddFavBeach(currentUser);
                 addBeach.removeFavoriteBeach(beachName);
-                Toast.makeText(beachLanding.this, "Remove from Favorite Button clicked", Toast.LENGTH_LONG).show();
+                Toast.makeText(beachLanding.this, beachName+" Removed from Favorites", Toast.LENGTH_LONG).show();
                 Intent refreshIntent = getIntent();
                 finish();
                 startActivity(refreshIntent);

@@ -35,6 +35,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<BeachItem> beachList;
 
     // String[] beach = {"All Beaches", "Rocky", "Sandy", "Wheelchair Accessible", "Floating Wheelchair"};
-    String[] capacity = {"Any Capacity", "High", "Medium", "Low","Parking Availability","Many spots","Few spots","Little/No Spots"};
+    String[] capacity = {"Any Capacity", "High", "Medium", "Low","Any Parking","Many Spots","Few Spots","Little/No Spots"};
 
     SwitchCompat itemToggle;
 
@@ -85,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
     String filterBeachItem = "";
     String filterCapacityItem = "";
+    String filterParkingItem = "";
 
     public String visualWaterConditionsText;
     public String capacityText;
@@ -242,11 +244,14 @@ public class MainActivity extends AppCompatActivity {
                 String capacityItem = adapterView.getItemAtPosition(position).toString();
                 Toast.makeText(MainActivity.this, capacityItem, Toast.LENGTH_SHORT).show();
                 beachList.clear();
-                if (capacityItem.equals("Any Capacity")) {
+                if (capacityItem.equals("Any Capacity") || capacityItem.equals("Any Parking")) {
                     filterCapacityItem = "";
                 }
-                else {
+                else if (capacityItem.equals("Low") || capacityItem.equals("Medium") || capacityItem.equals("High")){
                     filterCapacityItem = "Beach Capacity: "+ capacityItem + " Capacity";
+                }
+                else {
+                    filterCapacityItem = "Parking Availability: " + capacityItem;
                 }
                 getDataFromDbAndShowOnUI();
             }
@@ -424,6 +429,13 @@ public class MainActivity extends AppCompatActivity {
                                 beachName = DataName;
                                 String beachCapacityTextForTheDay ="";
                                 String beachVisualWaveConditionsTextForTheDay = "";
+                                String beachParking = "";
+                                //Retrieve parking
+                                if(!(document.getData().get("beachParkingConForDay")==null)) {
+                                    beachParking = document.getData().get("beachParkingConForDay").toString();
+                                }else{
+                                    beachParking="Parking Availability: No data today!";
+                                }
                                 if(!(document.getData().get("beachCapacityTextForTheDay")==null)) {
                                     beachCapacityTextForTheDay = document.getData().get("beachCapacityTextForTheDay").toString();
                                 }else{
@@ -466,7 +478,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 Log.d("PrintingHere","BeachName: "+DataName + " capacity: "+beachCapacityTextForTheDay +  " visualWaterConditions: " +beachVisualWaveConditionsTextForTheDay);
                                 BeachItem beachItem = new BeachItem(DataName,DataImageValue,beachCapacityTextForTheDay,
-                                        beachVisualWaveConditionsTextForTheDay,recyclerViewWheelchairAccessValue,recyclerViewSandyOrRockyValue,recyclerViewFloatingWheelchairValue);
+                                        beachVisualWaveConditionsTextForTheDay,recyclerViewWheelchairAccessValue,recyclerViewSandyOrRockyValue,recyclerViewFloatingWheelchairValue,beachParking);
                                 //beachItemArrayList.add(beachItem);
                                 Log.d("beachdetails:","wheelchair: "+beachItem.getwheelchairAccess() + " floating: "+beachItem.getFloatingWheelchair() +" sandy or rocky: "+beachItem.getsandyOrRocky());
                                 Log.d("FilterItem:","filterItem:"+filterCapacityItem);
@@ -474,7 +486,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                                 if (Objects.equals(filterBeachItem, "") || Objects.equals(beachItem.getsandyOrRocky(), filterBeachItem) || Objects.equals(beachItem.getwheelchairAccess(), filterBeachItem) || Objects.equals(beachItem.getFloatingWheelchair(), filterBeachItem)) {
-                                    if (Objects.equals(filterCapacityItem, "") || Objects.equals(beachItem.getcapacity(), filterCapacityItem)) {
+                                    if (Objects.equals(filterCapacityItem, "") || Objects.equals(beachItem.getcapacity(), filterCapacityItem) || Objects.equals(beachItem.getParking(), filterCapacityItem)) {
                                         beachItemArrayList.add(beachItem);
                                     }
                                 }

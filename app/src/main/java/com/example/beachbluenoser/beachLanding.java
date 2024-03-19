@@ -328,7 +328,7 @@ public class beachLanding extends AppCompatActivity {
                     if (!(document.getData().get("beachParkingConForDay") == null)) {
                         landingBeachParkingText = document.getData().get("beachParkingConForDay").toString();
                     } else {
-                        landingBeachParkingText = "Parking: No data today!";
+                        landingBeachParkingText = "Parking Availability: No data today!";
                     }
                     if (!(document.getData().get("floatingWheelchair") == null)) {
                         landingBeachFloatingWheelchairText = document.getData().get("floatingWheelchair").toString();

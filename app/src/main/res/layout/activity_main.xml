@@ -7,7 +7,9 @@
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+
+    >
 
     <!-- A Linear Layout for the TextInputLayout -->
     <androidx.appcompat.widget.Toolbar
@@ -16,7 +18,8 @@
         android:layout_height="?attr/actionBarSize"
         android:background="#1468B2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
         <TextView
             android:id="@+id/AppHeader"
@@ -68,7 +71,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+
+
+        >
 
         <!--This code is for the Search Beach Dropdown-->
         <com.google.android.material.textfield.TextInputLayout
@@ -79,7 +85,11 @@
             android:layout_margin="2.5dp"
             android:padding="10dp"
             app:startIconDrawable="@drawable/ic_beach"
-            tools:ignore="LabelFor,MissingConstraints,RtlSymmetry">
+            tools:ignore="LabelFor,MissingConstraints,RtlSymmetry"
+
+
+
+           >
 
             <AutoCompleteTextView
                 android:id="@+id/auto_complete_textview"
@@ -89,7 +99,11 @@
                 android:text="@string/Search"
                 android:textColor="#000000"
                 android:textSize="14sp"
-                tools:ignore="TextContrastCheck" />
+                tools:ignore="TextContrastCheck"
+
+
+
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -99,7 +113,9 @@
             android:layout_height="100dp"
             android:layout_margin="2.5dp"
             android:padding="10dp"
-            app:startIconDrawable="@drawable/ic_capacity">
+
+            app:startIconDrawable="@drawable/ic_capacity"
+            android:background="@color/cardview_light_background">
 
             <AutoCompleteTextView
                 android:id="@+id/auto_complete_textview2"
@@ -110,7 +126,8 @@
                 android:inputType="none"
                 android:text="@string/Capacity"
                 android:textColor="#000000"
-                tools:ignore="TextContrastCheck" />
+                tools:ignore="TextContrastCheck"
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -118,6 +135,7 @@
 
 
     <LinearLayout
+        android:background="#ADD8E6"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"

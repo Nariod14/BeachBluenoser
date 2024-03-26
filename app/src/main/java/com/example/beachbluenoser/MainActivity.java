@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.ViewGroup;
@@ -120,6 +121,11 @@ public class MainActivity extends AppCompatActivity {
                 updateRecyclerView(beachList,isChecked);
             }
         });
+        AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.auto_complete_textview);
+        autoCompleteTextView.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        AutoCompleteTextView autoCompleteTextView2 = (AutoCompleteTextView) findViewById(R.id.auto_complete_textview2);
+        autoCompleteTextView2.setBackgroundColor(Color.parseColor("#FFFFFF"));
+
 
 
 

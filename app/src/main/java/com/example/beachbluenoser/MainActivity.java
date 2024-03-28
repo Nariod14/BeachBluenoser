@@ -36,6 +36,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -76,16 +77,19 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<BeachItem> beachList;
 
     // String[] beach = {"All Beaches", "Rocky", "Sandy", "Wheelchair Accessible", "Floating Wheelchair"};
-    String[] capacity = {"Any Capacity", "High", "Medium", "Low"};
+    String[] capacity = {"Any Capacity", "High", "Medium", "Low","Any Parking","Many Spots","Few Spots","Little/No Spots"};
 
     SwitchCompat itemToggle;
+    SwitchCompat favToggle;
 
+    boolean ischeckTAG;
 
 
 
 
     String filterBeachItem = "";
     String filterCapacityItem = "";
+    String filterParkingItem = "";
 
     public String visualWaterConditionsText;
     public String capacityText;
@@ -108,16 +112,20 @@ public class MainActivity extends AppCompatActivity {
         void callbackCall();
     }
 
+    //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         itemToggle = findViewById(R.id.itemToggle);
+        favToggle = findViewById(R.id.favToggle);
+
 
         itemToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                ischeckTAG = isChecked;
                 updateRecyclerView(beachList,isChecked);
             }
         });
@@ -127,7 +135,16 @@ public class MainActivity extends AppCompatActivity {
         autoCompleteTextView2.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
 
-
+        favToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    populateFavoriteBeaches();
+                } else {
+                    updateRecyclerView(beachList, ischeckTAG); // Change false to true if you want to use second layout
+                }
+            }
+        });
 
 
         beachList = new ArrayList<>();
@@ -248,11 +265,14 @@ public class MainActivity extends AppCompatActivity {
                 String capacityItem = adapterView.getItemAtPosition(position).toString();
                 Toast.makeText(MainActivity.this, capacityItem, Toast.LENGTH_SHORT).show();
                 beachList.clear();
-                if (capacityItem.equals("Any Capacity")) {
+                if (capacityItem.equals("Any Capacity") || capacityItem.equals("Any Parking")) {
                     filterCapacityItem = "";
                 }
-                else {
+                else if (capacityItem.equals("Low") || capacityItem.equals("Medium") || capacityItem.equals("High")){
                     filterCapacityItem = "Beach Capacity: "+ capacityItem + " Capacity";
+                }
+                else {
+                    filterCapacityItem = "Parking Availability: " + capacityItem;
                 }
                 getDataFromDbAndShowOnUI();
             }
@@ -327,6 +347,21 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void populateFavoriteBeaches() {
+        getUserfavbeaches(new FavBeachesCallback() {
+            @Override
+            public void onFavBeachesReceived(ArrayList<String> favBeaches) {
+                ArrayList<BeachItem> favoriteBeachList = new ArrayList<>();
+                for (BeachItem beachItem : beachList) {
+                    if (favBeaches.contains(beachItem.getName())) {
+                        favoriteBeachList.add(beachItem);
+                    }
+                }
+                updateRecyclerView(favoriteBeachList, ischeckTAG); // Change false to true if you want to use second layout
+            }
+        });
+    }
+
 
 
     @Override
@@ -386,6 +421,33 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public interface FavBeachesCallback {
+        void onFavBeachesReceived(ArrayList<String> favBeaches);
+    }
+
+
+    public void getUserfavbeaches(FavBeachesCallback callback) {
+        String userID = beachBluenoserAuth.getCurrentUser().getUid();
+        DocumentReference Ref = db.collection("BBUSERSTABLE-PROD").document(userID);
+        Ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot documentSnapshot = task.getResult();
+                    if (documentSnapshot.exists()) {
+                        ArrayList<String> userFavBeaches = (ArrayList<String>) documentSnapshot.getData().get("favBeaches");
+                        if (userFavBeaches != null) {
+                            callback.onFavBeachesReceived(userFavBeaches);
+                        } else {
+                            callback.onFavBeachesReceived(new ArrayList<>());
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+
     private void getDataFromDbAndShowOnUI() {
         // to toggle between the "deleted posts" and active posts button
         // resetToggle();
@@ -403,6 +465,13 @@ public class MainActivity extends AppCompatActivity {
                                 beachName = DataName;
                                 String beachCapacityTextForTheDay ="";
                                 String beachVisualWaveConditionsTextForTheDay = "";
+                                String beachParking = "";
+                                //Retrieve parking
+                                if(!(document.getData().get("beachParkingConForDay")==null)) {
+                                    beachParking = document.getData().get("beachParkingConForDay").toString();
+                                }else{
+                                    beachParking="Parking Availability: No data today!";
+                                }
                                 if(!(document.getData().get("beachCapacityTextForTheDay")==null)) {
                                     beachCapacityTextForTheDay = document.getData().get("beachCapacityTextForTheDay").toString();
                                 }else{
@@ -445,14 +514,15 @@ public class MainActivity extends AppCompatActivity {
 
                                 Log.d("PrintingHere","BeachName: "+DataName + " capacity: "+beachCapacityTextForTheDay +  " visualWaterConditions: " +beachVisualWaveConditionsTextForTheDay);
                                 BeachItem beachItem = new BeachItem(DataName,DataImageValue,beachCapacityTextForTheDay,
-                                        beachVisualWaveConditionsTextForTheDay,recyclerViewWheelchairAccessValue,recyclerViewSandyOrRockyValue,recyclerViewFloatingWheelchairValue);
+                                        beachVisualWaveConditionsTextForTheDay,recyclerViewWheelchairAccessValue,recyclerViewSandyOrRockyValue,recyclerViewFloatingWheelchairValue,beachParking);
                                 //beachItemArrayList.add(beachItem);
                                 Log.d("beachdetails:","wheelchair: "+beachItem.getwheelchairAccess() + " floating: "+beachItem.getFloatingWheelchair() +" sandy or rocky: "+beachItem.getsandyOrRocky());
                                 Log.d("FilterItem:","filterItem:"+filterCapacityItem);
 
 
+
                                 if (Objects.equals(filterBeachItem, "") || Objects.equals(beachItem.getsandyOrRocky(), filterBeachItem) || Objects.equals(beachItem.getwheelchairAccess(), filterBeachItem) || Objects.equals(beachItem.getFloatingWheelchair(), filterBeachItem)) {
-                                    if (Objects.equals(filterCapacityItem, "") || Objects.equals(beachItem.getcapacity(), filterCapacityItem)) {
+                                    if (Objects.equals(filterCapacityItem, "") || Objects.equals(beachItem.getcapacity(), filterCapacityItem) || Objects.equals(beachItem.getParking(), filterCapacityItem)) {
                                         beachItemArrayList.add(beachItem);
                                     }
                                 }
@@ -570,5 +640,4 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
     }
 }
-
 

@@ -79,7 +79,9 @@ public class MainActivity extends AppCompatActivity {
     String[] capacity = {"Any Capacity", "High", "Medium", "Low","Any Parking","Many Spots","Few Spots","Little/No Spots"};
 
     SwitchCompat itemToggle;
+    SwitchCompat favToggle;
 
+    boolean ischeckTAG;
 
 
 
@@ -115,15 +117,27 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         itemToggle = findViewById(R.id.itemToggle);
+        favToggle = findViewById(R.id.favToggle);
+
 
         itemToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                ischeckTAG = isChecked;
                 updateRecyclerView(beachList,isChecked);
             }
         });
 
-
+        favToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    populateFavoriteBeaches();
+                } else {
+                    updateRecyclerView(beachList, ischeckTAG); // Change false to true if you want to use second layout
+                }
+            }
+        });
 
 
         beachList = new ArrayList<>();
@@ -322,6 +336,21 @@ public class MainActivity extends AppCompatActivity {
                     Intent loginIntent = new Intent(MainActivity.this, Login.class);
                     startActivity(loginIntent);
                 }
+            }
+        });
+    }
+
+    private void populateFavoriteBeaches() {
+        getUserfavbeaches(new FavBeachesCallback() {
+            @Override
+            public void onFavBeachesReceived(ArrayList<String> favBeaches) {
+                ArrayList<BeachItem> favoriteBeachList = new ArrayList<>();
+                for (BeachItem beachItem : beachList) {
+                    if (favBeaches.contains(beachItem.getName())) {
+                        favoriteBeachList.add(beachItem);
+                    }
+                }
+                updateRecyclerView(favoriteBeachList, ischeckTAG); // Change false to true if you want to use second layout
             }
         });
     }
@@ -604,5 +633,4 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
     }
 }
-
 

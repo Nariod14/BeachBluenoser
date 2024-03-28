@@ -127,6 +127,14 @@
 
         <!--Code to show the filtered items-->
         <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/favToggle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="   Favorite Beaches"
+            android:textColor="@color/black" />
+
+
+        <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/itemToggle"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -143,6 +151,36 @@
             android:scrollbars="vertical">
 
         </androidx.recyclerview.widget.RecyclerView>
+
+        <Switch
+            android:id="@+id/switch1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Switch" />
+
+        <Switch
+            android:id="@+id/switch3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Switch" />
+
+        <Switch
+            android:id="@+id/switch4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Switch" />
+
+        <Switch
+            android:id="@+id/switch5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Switch" />
+
+        <Switch
+            android:id="@+id/switch7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Switch" />
 
     </LinearLayout>
 

@@ -105,7 +105,9 @@ public class beachLanding extends AppCompatActivity {
     @SuppressLint("MissingInflatedId")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.beach_landing);
+
+            setContentView(R.layout.beach_landing);
+
         Bundle bundle = getIntent().getExtras();
         MainActivity main = new MainActivity();
 
@@ -142,8 +144,36 @@ public class beachLanding extends AppCompatActivity {
             }
         }
 
+        getSandyOrRocky(new SandyOrRockyCallback() {
+            @Override
+            public void onSandyOrRockyReceived(String sandyOrRocky) {
+                if (sandyOrRocky != null) {
+                    // Check the value of sandyOrRocky
+                    if (sandyOrRocky.equals("Sandy")) {
+                        // Beach is sandy
+                        // Do something for sandy beach
+                        setContentView(R.layout.beach_landing_sandy);
+                        Log.d("Beach Type", "Sandy Beach");
+                    } else if (sandyOrRocky.equals("Rocky")) {
+                        // Beach is rocky
+                        // Do something for rocky beach
+                        setContentView(R.layout.beach_landing_rocky);
+                        Log.d("Beach Type", "Rocky Beach");
+                    } else {
+                        // Beach type is unknown
+                        // Do something for unknown beach type
+                        Log.d("Beach Type", "Unknown Beach Type");
+                    }
+                } else {
+                    // Handle null case
+                    Log.d("Beach Type", "Sandy or Rocky attribute not available");
+                }
+            }
+        });
+
 
         getPreliminaryDataFromDB();
+
 
         Date c = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
@@ -489,4 +519,26 @@ public class beachLanding extends AppCompatActivity {
         currentImageIndex--;
         setBeachImage();
     }
+
+    public interface SandyOrRockyCallback {
+        void onSandyOrRockyReceived(String sandyOrRocky);
+    }
+
+    public void getSandyOrRocky(SandyOrRockyCallback callback) {
+        DocumentReference landingBeachRef = db.collection("beach").document(beachName);
+        landingBeachRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    String sandyOrRocky = document.getString("sandyOrRocky");
+                    callback.onSandyOrRockyReceived(sandyOrRocky);
+                }
+            } else {
+                Log.d("Firestore", "Error getting document: ", task.getException());
+                callback.onSandyOrRockyReceived(null);
+            }
+        });
+    }
+
+
 }

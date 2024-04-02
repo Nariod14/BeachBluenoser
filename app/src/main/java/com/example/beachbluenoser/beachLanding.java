@@ -148,24 +148,134 @@ public class beachLanding extends AppCompatActivity {
             @Override
             public void onSandyOrRockyReceived(String sandyOrRocky) {
                 if (sandyOrRocky != null) {
-                    // Check the value of sandyOrRocky
                     if (sandyOrRocky.equals("Sandy")) {
-                        // Beach is sandy
-                        // Do something for sandy beach
                         setContentView(R.layout.beach_landing_sandy);
                         Log.d("Beach Type", "Sandy Beach");
                     } else if (sandyOrRocky.equals("Rocky")) {
-                        // Beach is rocky
-                        // Do something for rocky beach
                         setContentView(R.layout.beach_landing_rocky);
                         Log.d("Beach Type", "Rocky Beach");
                     } else {
-                        // Beach type is unknown
-                        // Do something for unknown beach type
                         Log.d("Beach Type", "Unknown Beach Type");
                     }
-                } else {
-                    // Handle null case
+
+                    // Set button click listeners after changing layout
+                    Button btn = findViewById(R.id.checkInSurvey);
+                    ImageButton backBtn = findViewById(R.id.backButton);
+                    favBtn = findViewById(R.id.favBtn);
+                    RemovefavBtn = findViewById(R.id.RemovefavBtn);
+                    // Set other button click listeners if needed...
+
+                    backBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mp.start();
+                            Intent backIntent = new Intent(beachLanding.this, MainActivity.class);
+                            startActivity(backIntent);
+                        }
+                    });
+
+                    btn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mp.start();
+                            Intent intent;
+                            if (userType.equals("Manager")) {
+                                intent = new Intent(beachLanding.this, ManagementDataSurvey.class);
+                            } else if (userType.equals("Lifeguard")) {
+                                intent = new Intent(beachLanding.this, LifeguardDataSurvey.class);
+                            } else {
+                                intent = new Intent(beachLanding.this, UserDataSurvey.class);
+                            }
+                            intent.putExtra("beachName", beachName);
+
+                            startActivity(intent);
+                        }
+                    });
+                    if(auth.getCurrentUser() == null){
+                        favBtn.setVisibility(View.GONE);
+                        RemovefavBtn.setVisibility(View.GONE);
+                    } else {
+
+                        favBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                FirebaseUser currentUser = auth.getCurrentUser();
+                                AddFavBeach addBeach = new AddFavBeach(currentUser);
+
+                                //List<String> favBeaches = (List<String>) documentSnapshot.get("favBeaches");
+
+                                //Log.d("FavoriteBeachList", "List: " + favBeaches);
+
+
+                                // if (favBtn.getText().toString().equals("Add to Favorites")) {
+                                addBeach.addFavoriteBeach(beachName);
+                                Toast.makeText(beachLanding.this, beachName + " Added to Favorites", Toast.LENGTH_LONG).show();
+
+                                Intent refreshIntent = getIntent();
+                                finish();
+                                startActivity(refreshIntent);
+                                //     favBtn.setText("Remove from Favorites");
+                                //}
+                                //else if (favBtn.getText().toString().equals("Remove from Favorites")) {
+                                // favBtn.setText("Remove from Favorites");
+                                //  addBeach.removeFavoriteBeach(beachName);
+                                //   favBtn.setText("Add to Favorites");
+                                // }
+                            }
+
+                        });
+                        RemovefavBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                FirebaseUser currentUser = auth.getCurrentUser();
+                                AddFavBeach addBeach = new AddFavBeach(currentUser);
+                                addBeach.removeFavoriteBeach(beachName);
+                                Toast.makeText(beachLanding.this, beachName + " Removed from Favorites", Toast.LENGTH_LONG).show();
+                                Intent refreshIntent = getIntent();
+                                finish();
+                                startActivity(refreshIntent);
+                            }
+
+                        });
+
+
+
+                        mapsBtn = findViewById(R.id.mapsBtn);
+                        mapsBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                mp.start();
+                                beachLocation = beachLat + "," + beachLong;
+                                //https://developers.google.com/maps/documentation/urls/android-intents#location_search
+                                //if you want maps to launch directly into navigation switch out gmmIntentUri for below
+                                //Uri gmmIntentUri = Uri.parse("google.navigation:q=" + parsedBeachName + "@" + beachLocation);
+                                Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + parsedBeachName + "@" + beachLocation);
+                                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                                mapIntent.setPackage("com.google.android.apps.maps");
+                                startActivity(mapIntent);
+                            }
+                        });
+                        if(auth.getCurrentUser() != null) {
+                            main.getUserfavbeaches(new MainActivity.FavBeachesCallback() {
+                                @Override
+                                public void onFavBeachesReceived(ArrayList<String> favBeaches) {
+                                    if (favBeaches.contains(beachName)) {
+                                        setRemoveFavBtnVisibility(true);
+                                        setFavBtnVisibility(false);
+                                    } else {
+                                        setFavBtnVisibility(true);
+                                        setRemoveFavBtnVisibility(false);
+                                    }
+                                }
+                            });
+
+                        }
+
+                    }
+
+                    // Set other button click listeners if needed...
+                }
+                else {
                     Log.d("Beach Type", "Sandy or Rocky attribute not available");
                 }
             }

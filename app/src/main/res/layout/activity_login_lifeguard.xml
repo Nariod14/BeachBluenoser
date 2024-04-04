@@ -24,7 +24,7 @@
         android:id="@+id/passwordLogin"
         android:layout_width="311dp"
         android:layout_height="50dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/rounded_button"
         android:backgroundTint="#edf1ec"
         android:ems="10"
@@ -34,11 +34,10 @@
         android:paddingStart="10dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/emailLogin"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailLogin"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintTop_toBottomOf="@+id/emailLogin" />
 
     <TextView
         android:id="@+id/textView"
@@ -56,10 +55,12 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         app:layout_constraintVertical_bias="0.5" />
 
+
     <EditText
         android:id="@+id/emailLogin"
         android:layout_width="311dp"
         android:layout_height="50dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/rounded_button"
         android:backgroundTint="#edf1ec"
         android:ems="10"
@@ -68,14 +69,11 @@
         android:inputType="textPersonName"
         android:paddingStart="10dp"
         android:textColor="@android:color/black"
-        android:textColorHint="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/passwordLogin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.5" />
 
+        android:textColorHint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
         android:id="@+id/loginBtn"

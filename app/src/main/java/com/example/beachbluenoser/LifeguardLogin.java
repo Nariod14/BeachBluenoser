@@ -1,10 +1,8 @@
 package com.example.beachbluenoser;
 
-import android.accounts.AccountManagerFuture;
 import android.util.Log;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import com.google.android.material.snackbar.Snackbar;
@@ -19,10 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 public class LifeguardLogin extends AppCompatActivity {
 
@@ -143,7 +138,7 @@ public class LifeguardLogin extends AppCompatActivity {
     }
 
     private void showMainActivity() {
-        Intent intent = new Intent(LifeguardLogin.this,MainActivity.class);
+        Intent intent = new Intent(LifeguardLogin.this, MainActivity_lifeguard.class);
         startActivity(intent);
         Toast.makeText(LifeguardLogin.this, "Authentication was successful", Toast.LENGTH_LONG).show();
     }

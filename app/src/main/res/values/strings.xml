@@ -36,6 +36,9 @@
     <string name="user_name">User Name:</string>
     <string name="full_name">Full Name:</string>
     <string name="email_address">Email Address:</string>
+    <string name="default_notification_channel_id" translatable="false">default_channel_id</string>
+    <string name="default_notification_channel_name">Channel Name</string>
+    <string name="default_notification_channel_description">Channel Description</string>
 
 
     <string-array name="visualWaterConditionsValues">
@@ -74,6 +77,5 @@
         <item>Few people</item>
         <item>Little/No people</item>
     </string-array>
-
 
 </resources>

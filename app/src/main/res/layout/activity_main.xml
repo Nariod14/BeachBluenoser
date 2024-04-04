@@ -129,14 +129,14 @@
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/itemToggle"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:text="   Switch View"
             android:textColor="@color/black" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/BeachMasterList"
             android:layout_width="match_parent"
-            android:layout_height="1030dp"
+            android:layout_height= "wrap_content"
             android:layout_gravity="bottom"
             android:autofillHints="Empty"
             android:padding="1dp"

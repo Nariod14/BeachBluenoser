@@ -2,20 +2,30 @@ package com.example.beachbluenoser;
 
 import static android.content.ContentValues.TAG;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.ViewGroup;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -25,6 +35,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -35,6 +46,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 
 import java.text.SimpleDateFormat;
@@ -70,6 +82,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
     final  FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -133,8 +148,39 @@ public class MainActivity extends AppCompatActivity {
         autoCompleteTextView.setBackgroundColor(Color.parseColor("#FFFFFF"));
         AutoCompleteTextView autoCompleteTextView2 = (AutoCompleteTextView) findViewById(R.id.auto_complete_textview2);
         autoCompleteTextView2.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
+            requestPermissions(new String[] {Manifest.permission.POST_NOTIFICATIONS},99);
+            Log.d(TAG,"Location Permission asked");
+        }
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
 
 
+                        // Get new FCM registration token
+                        String token = task.getResult();
+
+                        Log.d(TAG,"FCM Token:  " + token);
+                    }
+                });
+
+        FirebaseMessaging.getInstance().subscribeToTopic("warnings")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        String msg = "Subscribed";
+                        if (!task.isSuccessful()) {
+                            msg = "Subscribe failed";
+                        }
+                        Log.d(TAG, msg);
+                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
         favToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -342,6 +388,16 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void createNotificationChannel() {
+        CharSequence name = getString(R.string.default_notification_channel_name);
+        String description = getString(R.string.default_notification_channel_description);
+        int importance = NotificationManager.IMPORTANCE_DEFAULT;
+        NotificationChannel channel = new NotificationChannel(getString(R.string.default_notification_channel_id), name, importance);
+        channel.setDescription(description);
+        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+        notificationManager.createNotificationChannel(channel);
     }
 
     private void populateFavoriteBeaches() {

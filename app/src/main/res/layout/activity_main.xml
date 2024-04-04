@@ -166,43 +166,13 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/BeachMasterList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height= "wrap_content"
             android:layout_gravity="bottom"
             android:autofillHints="Empty"
             android:padding="1dp"
             android:scrollbars="vertical">
 
         </androidx.recyclerview.widget.RecyclerView>
-
-        <Switch
-            android:id="@+id/switch1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Switch" />
-
-        <Switch
-            android:id="@+id/switch3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Switch" />
-
-        <Switch
-            android:id="@+id/switch4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Switch" />
-
-        <Switch
-            android:id="@+id/switch5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Switch" />
-
-        <Switch
-            android:id="@+id/switch7"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Switch" />
 
     </LinearLayout>
 

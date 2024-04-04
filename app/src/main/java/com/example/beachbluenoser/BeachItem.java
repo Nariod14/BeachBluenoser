@@ -10,6 +10,8 @@ public class BeachItem {
     private String sandyOrRocky;
     private String imageSource;
     private String visualWaterConditions;
+
+    private String parking;
     public BeachItem(){
 
     }
@@ -24,6 +26,22 @@ public class BeachItem {
         this.visualWaterConditions = visualWaterConditions;
     }
 
+    public BeachItem(String name,String imageSource,String capacity,String visualWaterConditions,String wheelchairAccess,String sandyOrRocky, String floatingWheelchair, String parking){
+        this.name = name;
+        this.wheelchairAccess = wheelchairAccess;
+        this.floatingWheelchair = floatingWheelchair;
+        this.capacity = capacity;
+        this.sandyOrRocky = sandyOrRocky;
+        this.imageSource = imageSource;
+        this.visualWaterConditions = visualWaterConditions;
+        this.parking = parking;
+    }
+    public String getParking(){
+        return this.parking;
+    }
+    public void setParking(String parking){
+        this.parking = parking;
+    }
     public String getName(){return name;}
     public void setName(String name){this.name = name;}
 

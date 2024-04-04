@@ -86,7 +86,10 @@ public class Login extends AppCompatActivity {
             }
         });
     }
-
+    /**
+     * Gets emails and passwords and checks to see if the email and password fields have input in them
+     *
+     */
     private void authenticateUser() {
         emailAddress = findViewById(R.id.emailLogin);
         passwordField = findViewById(R.id.passwordLogin);

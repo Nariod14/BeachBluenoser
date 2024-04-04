@@ -105,7 +105,9 @@ public class beachLanding extends AppCompatActivity {
     @SuppressLint("MissingInflatedId")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.beach_landing);
+
+            setContentView(R.layout.beach_landing);
+
         Bundle bundle = getIntent().getExtras();
         MainActivity main = new MainActivity();
 
@@ -124,7 +126,7 @@ public class beachLanding extends AppCompatActivity {
             }
             else if (auth.getCurrentUser() != null) {
                 userID = auth.getCurrentUser().getUid();
-                DocumentReference userRef = db.collection("BBUsers").document(userID);
+                DocumentReference userRef = db.collection("BBUSERSTABLE-PROD").document(userID);
                 userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -142,8 +144,146 @@ public class beachLanding extends AppCompatActivity {
             }
         }
 
+        getSandyOrRocky(new SandyOrRockyCallback() {
+            @Override
+            public void onSandyOrRockyReceived(String sandyOrRocky) {
+                if (sandyOrRocky != null) {
+                    if (sandyOrRocky.equals("Sandy")) {
+                        setContentView(R.layout.beach_landing_sandy);
+                        Log.d("Beach Type", "Sandy Beach");
+                    } else if (sandyOrRocky.equals("Rocky")) {
+                        setContentView(R.layout.beach_landing_rocky);
+                        Log.d("Beach Type", "Rocky Beach");
+                    } else {
+                        Log.d("Beach Type", "Unknown Beach Type");
+                    }
+
+                    // Set button click listeners after changing layout
+                    Button btn = findViewById(R.id.checkInSurvey);
+                    ImageButton backBtn = findViewById(R.id.backButton);
+                    favBtn = findViewById(R.id.favBtn);
+                    RemovefavBtn = findViewById(R.id.RemovefavBtn);
+                    // Set other button click listeners if needed...
+
+                    backBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mp.start();
+                            Intent backIntent = new Intent(beachLanding.this, MainActivity.class);
+                            startActivity(backIntent);
+                        }
+                    });
+
+                    btn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mp.start();
+                            Intent intent;
+                            if (userType.equals("Manager")) {
+                                intent = new Intent(beachLanding.this, ManagementDataSurvey.class);
+                            } else if (userType.equals("Lifeguard")) {
+                                intent = new Intent(beachLanding.this, LifeguardDataSurvey.class);
+                            } else {
+                                intent = new Intent(beachLanding.this, UserDataSurvey.class);
+                            }
+                            intent.putExtra("beachName", beachName);
+
+                            startActivity(intent);
+                        }
+                    });
+                    if(auth.getCurrentUser() == null){
+                        favBtn.setVisibility(View.GONE);
+                        RemovefavBtn.setVisibility(View.GONE);
+                    } else {
+
+                        favBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                FirebaseUser currentUser = auth.getCurrentUser();
+                                AddFavBeach addBeach = new AddFavBeach(currentUser);
+
+                                //List<String> favBeaches = (List<String>) documentSnapshot.get("favBeaches");
+
+                                //Log.d("FavoriteBeachList", "List: " + favBeaches);
+
+
+                                // if (favBtn.getText().toString().equals("Add to Favorites")) {
+                                addBeach.addFavoriteBeach(beachName);
+                                Toast.makeText(beachLanding.this, beachName + " Added to Favorites", Toast.LENGTH_LONG).show();
+
+                                Intent refreshIntent = getIntent();
+                                finish();
+                                startActivity(refreshIntent);
+                                //     favBtn.setText("Remove from Favorites");
+                                //}
+                                //else if (favBtn.getText().toString().equals("Remove from Favorites")) {
+                                // favBtn.setText("Remove from Favorites");
+                                //  addBeach.removeFavoriteBeach(beachName);
+                                //   favBtn.setText("Add to Favorites");
+                                // }
+                            }
+
+                        });
+                        RemovefavBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                FirebaseUser currentUser = auth.getCurrentUser();
+                                AddFavBeach addBeach = new AddFavBeach(currentUser);
+                                addBeach.removeFavoriteBeach(beachName);
+                                Toast.makeText(beachLanding.this, beachName + " Removed from Favorites", Toast.LENGTH_LONG).show();
+                                Intent refreshIntent = getIntent();
+                                finish();
+                                startActivity(refreshIntent);
+                            }
+
+                        });
+
+
+
+                        mapsBtn = findViewById(R.id.mapsBtn);
+                        mapsBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                mp.start();
+                                beachLocation = beachLat + "," + beachLong;
+                                //https://developers.google.com/maps/documentation/urls/android-intents#location_search
+                                //if you want maps to launch directly into navigation switch out gmmIntentUri for below
+                                //Uri gmmIntentUri = Uri.parse("google.navigation:q=" + parsedBeachName + "@" + beachLocation);
+                                Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + parsedBeachName + "@" + beachLocation);
+                                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                                mapIntent.setPackage("com.google.android.apps.maps");
+                                startActivity(mapIntent);
+                            }
+                        });
+                        if(auth.getCurrentUser() != null) {
+                            main.getUserfavbeaches(new MainActivity.FavBeachesCallback() {
+                                @Override
+                                public void onFavBeachesReceived(ArrayList<String> favBeaches) {
+                                    if (favBeaches.contains(beachName)) {
+                                        setRemoveFavBtnVisibility(true);
+                                        setFavBtnVisibility(false);
+                                    } else {
+                                        setFavBtnVisibility(true);
+                                        setRemoveFavBtnVisibility(false);
+                                    }
+                                }
+                            });
+
+                        }
+
+                    }
+
+                    // Set other button click listeners if needed...
+                }
+                else {
+                    Log.d("Beach Type", "Sandy or Rocky attribute not available");
+                }
+            }
+        });
+
 
         getPreliminaryDataFromDB();
+
 
         Date c = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
@@ -154,8 +294,16 @@ public class beachLanding extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mp.start();
-                Intent backIntent = new Intent(beachLanding.this, MainActivity.class);
-                startActivity(backIntent);
+                //Only users will direct to main page
+                if(userType.equals("User")) {
+                    Intent backIntent = new Intent(beachLanding.this, MainActivity.class);
+                    startActivity(backIntent);
+                }
+                //Lifeguard only shows a specific beach
+                else {
+                    Intent backIntent = new Intent(beachLanding.this, MainActivity_lifeguard.class);
+                    startActivity(backIntent);
+                }
             }
         });
 
@@ -489,4 +637,26 @@ public class beachLanding extends AppCompatActivity {
         currentImageIndex--;
         setBeachImage();
     }
+
+    public interface SandyOrRockyCallback {
+        void onSandyOrRockyReceived(String sandyOrRocky);
+    }
+
+    public void getSandyOrRocky(SandyOrRockyCallback callback) {
+        DocumentReference landingBeachRef = db.collection("beach").document(beachName);
+        landingBeachRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    String sandyOrRocky = document.getString("sandyOrRocky");
+                    callback.onSandyOrRockyReceived(sandyOrRocky);
+                }
+            } else {
+                Log.d("Firestore", "Error getting document: ", task.getException());
+                callback.onSandyOrRockyReceived(null);
+            }
+        });
+    }
+
+
 }

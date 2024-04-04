@@ -2,7 +2,11 @@
 plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
+<<<<<<< cf044874b7b4973604e4e2c2ef919b30a5d08ab2
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+=======
+    id 'com.google.firebase.crashlytics'
+>>>>>>> b213fa681d2d5f8c40fc93101fbff394ef8195fd
 }
 
 android {
@@ -11,8 +15,13 @@ android {
 
     defaultConfig {
         applicationId "com.example.beachbluenoser"
+<<<<<<< cf044874b7b4973604e4e2c2ef919b30a5d08ab2
         minSdk 19
         targetSdk 34
+=======
+        minSdk 26
+        targetSdk 33
+>>>>>>> b213fa681d2d5f8c40fc93101fbff394ef8195fd
         versionCode 1
         versionName "1.0"
 
@@ -33,6 +42,12 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    packagingOptions {
+        resources {
+            excludes += ['META-INF/DEPENDENCIES']
+        }
+    }
+
 }
 
 dependencies {
@@ -45,6 +60,12 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:22.3.1'
     implementation 'com.google.firebase:firebase-firestore:24.11.0'
     implementation 'com.android.volley:volley:1.2.1'
+    implementation 'com.google.firebase:firebase-messaging:23.4.1'
+    implementation platform("com.google.firebase:firebase-bom:32.7.4")
+    implementation 'com.google.firebase:firebase-crashlytics:18.6.2'
+    implementation 'com.google.firebase:firebase-analytics:21.5.1'
+    implementation 'com.google.firebase:firebase-database:20.3.1'
+    implementation 'com.google.auth:google-auth-library-oauth2-http:1.17.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'

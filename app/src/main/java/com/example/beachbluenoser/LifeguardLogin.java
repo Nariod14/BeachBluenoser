@@ -1,7 +1,8 @@
 package com.example.beachbluenoser;
 
+import android.util.Log;
+
 import android.content.Intent;
-import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import com.google.android.material.snackbar.Snackbar;
@@ -16,34 +17,25 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class Login extends AppCompatActivity {
+public class LifeguardLogin extends AppCompatActivity {
 
     EditText emailAddress;
     EditText passwordField;
     Button userLogin;
-    Button signUp;
-    Button forgotPassword;
     ImageButton rtnHome;
     private FirebaseAuth beachBluenoserAuth;
     String emailAuth;
     String passAuth;
     MediaPlayer mp;
-    //Recently added
-    Button lifeguardLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_login_lifeguard);
 
-        //Recently added
-        lifeguardLogin = findViewById(R.id.lifeguardBtn);
         userLogin = findViewById(R.id.loginBtn);
-        signUp = findViewById(R.id.signupBtn);
-        forgotPassword = findViewById(R.id.forgotPasswordBtn);
         rtnHome = findViewById(R.id.returnHomeButton);
         mp = MediaPlayer.create(this, R.raw.click);
 
@@ -52,25 +44,7 @@ public class Login extends AppCompatActivity {
             finish();
             return;
         }*/
-        //Direct to lifeguard login
-        lifeguardLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mp.start();
-                Intent intent = new Intent(Login.this, LifeguardLogin.class);
-                startActivity(intent);
 
-            }
-        });
-        forgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mp.start();
-                Intent intent = new Intent(Login.this, PasswordReset.class);
-                startActivity(intent);
-
-            }
-        });
         userLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,20 +54,12 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        signUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mp.start();
-                Intent intent = new Intent(Login.this, Registration.class);
-                startActivity(intent);
-            }
-        });
 
         rtnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mp.start();
-                Intent intent = new Intent(Login.this, MainActivity.class);
+                Intent intent = new Intent(LifeguardLogin.this, Login.class);
                 startActivity(intent);
             }
         });
@@ -104,10 +70,11 @@ public class Login extends AppCompatActivity {
         passwordField = findViewById(R.id.passwordLogin);
 
         emailAuth = emailAddress.getText().toString().trim();
+        //Token in the name of "password"
         passAuth = passwordField.getText().toString().trim();
 
         if (emailAuth.isEmpty() || passAuth.isEmpty()) {
-            Toast.makeText(Login.this, "Please enter a valid email address and password", Toast.LENGTH_LONG).show();
+            Toast.makeText(LifeguardLogin.this, "Please enter a valid email address and password", Toast.LENGTH_LONG).show();
         }
         else {
 
@@ -115,7 +82,7 @@ public class Login extends AppCompatActivity {
         }
     }
     private void checkIfEmailExists(String email) {
-        FirebaseFirestore.getInstance().collection("BBUSERSTABLE-PROD")
+        FirebaseFirestore.getInstance().collection("Lifeguard")
                 .whereEqualTo("Email", email)
                 .get()
                 .addOnCompleteListener(task -> {
@@ -129,7 +96,7 @@ public class Login extends AppCompatActivity {
                         }
                     } else {
                         // Error occurred while checking email existence
-                        Toast.makeText(Login.this, "Error checking email existence", Toast.LENGTH_LONG).show();
+                        Toast.makeText(LifeguardLogin.this, "Error checking email existence", Toast.LENGTH_LONG).show();
                     }
                 });
     }
@@ -147,7 +114,7 @@ public class Login extends AppCompatActivity {
 
 
 
-       // CODE TO ADJUST TEXT SIXE AND SNACKBAR SIZE
+        // CODE TO ADJUST TEXT SIXE AND SNACKBAR SIZE
         TextView snackbarTextView = snackbar.getView().findViewById(com.google.android.material.R.id.snackbar_text);
         snackbarTextView.setMaxLines(20);
         snackbarTextView.setPadding(60, 40, 37, 36); // Adjust padding as needed
@@ -156,6 +123,7 @@ public class Login extends AppCompatActivity {
     }
 
     private void signInUser(String email, String password) {
+
         beachBluenoserAuth.signInWithEmailAndPassword(email, password)
 
                 .addOnCompleteListener(this, task -> {
@@ -163,14 +131,15 @@ public class Login extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         showMainActivity();
                     } else {
-                        Toast.makeText(Login.this, "Authentication Failed!", Toast.LENGTH_LONG).show();
+                        Log.e("LifeguardLogin", "Authentication Failed!", task.getException());
+                        Toast.makeText(LifeguardLogin.this, "Authentication Failed!", Toast.LENGTH_LONG).show();
                     }
                 });
     }
 
     private void showMainActivity() {
-        Intent intent = new Intent(Login.this,MainActivity.class);
+        Intent intent = new Intent(LifeguardLogin.this, MainActivity_lifeguard.class);
         startActivity(intent);
-        Toast.makeText(Login.this, "Authentication was successful", Toast.LENGTH_LONG).show();
+        Toast.makeText(LifeguardLogin.this, "Authentication was successful", Toast.LENGTH_LONG).show();
     }
 }

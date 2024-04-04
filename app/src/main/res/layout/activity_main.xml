@@ -1,22 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
+    android:background="#ADD8E6"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+
+    >
 
     <!-- A Linear Layout for the TextInputLayout -->
     <androidx.appcompat.widget.Toolbar
+
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="#1468B2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
         <TextView
             android:id="@+id/AppHeader"
@@ -61,6 +65,7 @@
 
 
     <LinearLayout
+
         android:id="@+id/linearLayout2"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
@@ -68,7 +73,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+
+
+        >
 
         <!--This code is for the Search Beach Dropdown-->
         <com.google.android.material.textfield.TextInputLayout
@@ -79,7 +87,11 @@
             android:layout_margin="2.5dp"
             android:padding="10dp"
             app:startIconDrawable="@drawable/ic_beach"
-            tools:ignore="LabelFor,MissingConstraints,RtlSymmetry">
+            tools:ignore="LabelFor,MissingConstraints,RtlSymmetry"
+
+
+
+           >
 
             <AutoCompleteTextView
                 android:id="@+id/auto_complete_textview"
@@ -89,19 +101,28 @@
                 android:text="@string/Search"
                 android:textColor="#000000"
                 android:textSize="14sp"
-                tools:ignore="TextContrastCheck" />
+                tools:ignore="TextContrastCheck"
+                android:background="@color/cardview_light_background"
+
+
+
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+
             android:id="@+id/capacityTextInputLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="200dp"
             android:layout_height="100dp"
             android:layout_margin="2.5dp"
             android:padding="10dp"
-            app:startIconDrawable="@drawable/ic_capacity">
+
+            app:startIconDrawable="@drawable/ic_capacity"
+            android:background="#ADD8E6">
 
             <AutoCompleteTextView
+
                 android:id="@+id/auto_complete_textview2"
                 android:layout_width="match_parent"
                 android:layout_height="73dp"
@@ -110,7 +131,8 @@
                 android:inputType="none"
                 android:text="@string/Capacity"
                 android:textColor="#000000"
-                tools:ignore="TextContrastCheck" />
+
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -127,16 +149,24 @@
 
         <!--Code to show the filtered items-->
         <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/itemToggle"
+            android:id="@+id/favToggle"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:text="   Favorite Beaches"
+            android:textColor="@color/black" />
+
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/itemToggle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="   Switch View"
             android:textColor="@color/black" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/BeachMasterList"
             android:layout_width="match_parent"
-            android:layout_height="1030dp"
+            android:layout_height= "wrap_content"
             android:layout_gravity="bottom"
             android:autofillHints="Empty"
             android:padding="1dp"

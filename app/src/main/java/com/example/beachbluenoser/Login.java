@@ -30,19 +30,21 @@ public class Login extends AppCompatActivity {
     private FirebaseAuth beachBluenoserAuth;
     String emailAuth;
     String passAuth;
-
     MediaPlayer mp;
+    //Recently added
+    Button lifeguardLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        //Recently added
+        lifeguardLogin = findViewById(R.id.lifeguardBtn);
         userLogin = findViewById(R.id.loginBtn);
         signUp = findViewById(R.id.signupBtn);
         forgotPassword = findViewById(R.id.forgotPasswordBtn);
         rtnHome = findViewById(R.id.returnHomeButton);
-
         mp = MediaPlayer.create(this, R.raw.click);
 
         beachBluenoserAuth = FirebaseAuth.getInstance();
@@ -50,6 +52,16 @@ public class Login extends AppCompatActivity {
             finish();
             return;
         }*/
+        //Direct to lifeguard login
+        lifeguardLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mp.start();
+                Intent intent = new Intent(Login.this, LifeguardLogin.class);
+                startActivity(intent);
+
+            }
+        });
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,7 +98,10 @@ public class Login extends AppCompatActivity {
             }
         });
     }
-
+    /**
+     * Gets emails and passwords and checks to see if the email and password fields have input in them
+     *
+     */
     private void authenticateUser() {
         emailAddress = findViewById(R.id.emailLogin);
         passwordField = findViewById(R.id.passwordLogin);
@@ -102,6 +117,11 @@ public class Login extends AppCompatActivity {
             checkIfEmailExists(emailAuth);
         }
     }
+    /**
+     * Checks to see if an email exists on the Bluenoser Firebase Database
+     * @param  email the email input by the user
+     */
+
     private void checkIfEmailExists(String email) {
         FirebaseFirestore.getInstance().collection("BBUSERSTABLE-PROD")
                 .whereEqualTo("Email", email)
@@ -121,6 +141,10 @@ public class Login extends AppCompatActivity {
                     }
                 });
     }
+    /**
+     * Uses a snackbar to display the message if the user email does not exsist
+     * @param  message the message that will be displayed if the email does not exsist
+     */
 
     private void showSnackbar(String message) {
         Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_INDEFINITE)
@@ -142,6 +166,12 @@ public class Login extends AppCompatActivity {
 
         snackbar.show();
     }
+
+    /**
+     * If users email exists this method will sign In a user with their email and password
+     * @param  email the email rpovided by the user
+     * @param password the password provided by the user
+     */
 
     private void signInUser(String email, String password) {
         beachBluenoserAuth.signInWithEmailAndPassword(email, password)

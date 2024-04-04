@@ -125,6 +125,22 @@
         app:layout_constraintVertical_bias="0.5"
         app:srcCompat="@drawable/rounded_button" />
 
+    <Button
+        android:id="@+id/lifeguardBtn"
+        android:layout_width="313dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="78dp"
+        android:backgroundTint="#edf1ec"
+        android:fontFamily="@font/lexend_deca_main"
+        android:text="Login as a lifeguard"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signupBtn"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/rounded_button" />
+
     <TextView
         android:id="@+id/noAccountView"
         android:layout_width="wrap_content"

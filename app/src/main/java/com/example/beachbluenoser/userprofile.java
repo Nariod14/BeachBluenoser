@@ -54,6 +54,7 @@ public class userprofile extends AppCompatActivity {
             }
         });
         loginProfileBtn.setOnClickListener(new View.OnClickListener() {
+            
             @Override
             public void onClick(View view) {
                 if (beachBluenoserAuth.getCurrentUser() != null) {

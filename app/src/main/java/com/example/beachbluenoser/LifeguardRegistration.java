@@ -140,14 +140,16 @@ public class LifeguardRegistration extends AppCompatActivity {
 
         user.put("Email", email);
         user.put("Token", AccToken);
-
+        //Hard-coded beach token
+        user.put("Beach", "BBB");
+        user.put("userType", "Lifeguard");
         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Log.d(TAG, "onSuccess: user Profile is created for " + lgID);
             }
         });
-        Intent intent = (new Intent(LifeguardRegistration.this, MainActivity.class));
+        Intent intent = (new Intent(LifeguardRegistration.this, LifeguardLogin.class));
         intent.putExtra("beachName",beachName);
         intent.putExtra("userType","Lifeguard");
         startActivity(intent);

@@ -42,6 +42,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registerView2" />
 
+    <EditText
+        android:id="@+id/beachToken"
+        android:layout_width="313dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="104dp"
+        android:background="@drawable/rounded_button"
+        android:backgroundTint="#edf1ec"
+        android:ems="10"
+        android:fontFamily="@font/lexend_deca"
+        android:hint="Beach Token"
+        android:inputType="textWebEmailAddress"
+        android:paddingStart="10dp"
+        android:textColor="@android:color/black"
+        android:textColorHint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registerView2" />
+
     <TextView
         android:id="@+id/registerView2"
         android:layout_width="wrap_content"

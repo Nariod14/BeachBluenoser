@@ -35,10 +35,10 @@ import java.util.UUID;
 
 public class LifeguardRegistration extends AppCompatActivity {
 
-    EditText emailAdd, accessToken;
+    EditText emailAdd, accessToken, beachType;
     Button backBtn, registerBtn;
 
-    String email, AccToken, lgID, beachName;
+    String email, AccToken, lgID, beachName, beach;
 
     private int temp = 0;
     FirebaseFirestore beachBluenoserDB, beachBluenoserDBB;
@@ -52,6 +52,8 @@ public class LifeguardRegistration extends AppCompatActivity {
         setContentView(R.layout.activity_lifeguard_registration_page);
 
         emailAdd = findViewById(R.id.registerLifeguardEmail);
+        //New field for beach token
+        beachType = findViewById(R.id.beachToken);
         //accessToken = findViewById(R.id.editAccessToken);
         backBtn = findViewById(R.id.backButton);
         registerBtn = findViewById(R.id.registerBtn);
@@ -75,7 +77,8 @@ public class LifeguardRegistration extends AppCompatActivity {
             public void onClick(View v) {
                 mp.start();
                 email = emailAdd.getText().toString().trim();
-
+                //Beach Type
+                beach = beachType.getText().toString().trim();
                 // Generate a random three-character string
                 StringBuilder accTokenBuilder = new StringBuilder();
                 Random random = new Random();
@@ -141,7 +144,7 @@ public class LifeguardRegistration extends AppCompatActivity {
         user.put("Email", email);
         user.put("Token", AccToken);
         //Hard-coded beach token
-        user.put("Beach", "BBB");
+        user.put("Beach", beachType);
         user.put("userType", "Lifeguard");
         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override

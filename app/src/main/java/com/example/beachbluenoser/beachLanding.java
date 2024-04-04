@@ -126,7 +126,7 @@ public class beachLanding extends AppCompatActivity {
             }
             else if (auth.getCurrentUser() != null) {
                 userID = auth.getCurrentUser().getUid();
-                DocumentReference userRef = db.collection("BBUsers").document(userID);
+                DocumentReference userRef = db.collection("BBUSERSTABLE-PROD").document(userID);
                 userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -294,8 +294,16 @@ public class beachLanding extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mp.start();
-                Intent backIntent = new Intent(beachLanding.this, MainActivity.class);
-                startActivity(backIntent);
+                //Only users will direct to main page
+                if(userType.equals("User")) {
+                    Intent backIntent = new Intent(beachLanding.this, MainActivity.class);
+                    startActivity(backIntent);
+                }
+                //Lifeguard only shows a specific beach
+                else {
+                    Intent backIntent = new Intent(beachLanding.this, MainActivity_lifeguard.class);
+                    startActivity(backIntent);
+                }
             }
         });
 

@@ -102,6 +102,11 @@ public class Login extends AppCompatActivity {
             checkIfEmailExists(emailAuth);
         }
     }
+    /**
+     * Checks to see if an email exists on the Bluenoser Firebase Database
+     * @param  email the email input by the user
+     */
+
     private void checkIfEmailExists(String email) {
         FirebaseFirestore.getInstance().collection("BBUSERSTABLE-PROD")
                 .whereEqualTo("Email", email)
@@ -121,6 +126,10 @@ public class Login extends AppCompatActivity {
                     }
                 });
     }
+    /**
+     * Uses a snackbar to display the message if the user email does not exsist
+     * @param  message the message that will be displayed if the email does not exsist
+     */
 
     private void showSnackbar(String message) {
         Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_INDEFINITE)
@@ -142,6 +151,12 @@ public class Login extends AppCompatActivity {
 
         snackbar.show();
     }
+
+    /**
+     * If users email exists this method will sign In a user with their email and password
+     * @param  email the email rpovided by the user
+     * @param password the password provided by the user
+     */
 
     private void signInUser(String email, String password) {
         beachBluenoserAuth.signInWithEmailAndPassword(email, password)

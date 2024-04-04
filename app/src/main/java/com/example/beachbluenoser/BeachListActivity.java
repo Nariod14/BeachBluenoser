@@ -15,6 +15,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 
 public class BeachListActivity extends AppCompatActivity {
     final  FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -106,4 +107,13 @@ public class BeachListActivity extends AppCompatActivity {
         RecyclerView.Adapter mAdapter = new MasterBeachListAdapter(beachList);
         recyclerView.setAdapter(mAdapter);
     }
+
+//    public HashMap<String, String> parkingListRetrive() {
+//        HashMap<String, String> parkingList = new ArrayList<>();
+//
+//        //Retrive parking from database
+//
+//
+//        return parkingList;
+//    }
 }

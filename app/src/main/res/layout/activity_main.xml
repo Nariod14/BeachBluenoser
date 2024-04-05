@@ -131,7 +131,7 @@
                 android:inputType="none"
                 android:text="@string/Capacity"
                 android:textColor="#000000"
-
+                android:background="@color/cardview_light_background"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 

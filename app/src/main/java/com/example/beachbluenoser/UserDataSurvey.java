@@ -1,6 +1,7 @@
 package com.example.beachbluenoser;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -30,6 +33,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+
+import android.Manifest;
+import android.widget.Toast;
+
 
 public class UserDataSurvey extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -50,8 +57,9 @@ public class UserDataSurvey extends AppCompatActivity implements AdapterView.OnI
     public int lowCapacityCount = 0;
     public int mediumCapacityCount = 0;
     public int highCapacityCount = 0;
-    ImageButton backArrowkey;;
+    ImageButton backArrowkey;
 
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1001;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +67,8 @@ public class UserDataSurvey extends AppCompatActivity implements AdapterView.OnI
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_survey);
+
+        requestLocationPermission();
 
         Date c = Calendar.getInstance().getTime();
 
@@ -104,8 +114,8 @@ public class UserDataSurvey extends AppCompatActivity implements AdapterView.OnI
             public void onClick(View v){
                 Log.d("HELLOTEST","JELLOTEST");
 
-                 parkingValue = parkingConditionSpinner.getSelectedItem().toString();
-                 beachCapacityValue = UserbeachCapacitySpinner.getSelectedItem().toString();
+                parkingValue = parkingConditionSpinner.getSelectedItem().toString();
+                beachCapacityValue = UserbeachCapacitySpinner.getSelectedItem().toString();
                 Log.d("Values", parkingValue +" "+beachCapacityValue);
                 getCurrentValues();
                 new Handler().postDelayed(new Runnable() {
@@ -118,7 +128,49 @@ public class UserDataSurvey extends AppCompatActivity implements AdapterView.OnI
                 }, 10);
             }
         });
+
+
     }
+
+    private void requestLocationPermission() {
+        // Check if the permission is already granted
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Permission is not granted, request it
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                    LOCATION_PERMISSION_REQUEST_CODE);
+        } else {
+            // Permission has already been granted
+            // You can start using coarse location
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        // Check if the request code matches our request
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            // Check if permission is granted
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted, you can start using coarse location
+
+                //DEVS FOR NEXT SEMESTER THIS IS WHERE YOUR LOCATION CODE SHOULD GO
+            } else {
+                // Permission denied
+                Intent deniedIntent = new Intent(UserDataSurvey.this, beachLanding.class);
+                startActivity(deniedIntent);
+                Toast.makeText(UserDataSurvey.this, "Access to checkin page removed on two location request denials. Change in android settings.", Toast.LENGTH_LONG).show();
+
+
+
+            }
+        }
+    }
+
     public void getCurrentValues(){
         DocumentReference surveyBeachRef = db.collection("survey").document(currentDate).collection(beachName).document(currentDate);
 

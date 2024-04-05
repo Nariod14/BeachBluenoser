@@ -49,7 +49,7 @@
             <ImageButton
                 android:id="@+id/backButton"
                 android:layout_width="0dp"
-                android:layout_height="30dp"
+                android:layout_height="31dp"
                 android:background="#0f969c"
                 android:backgroundTint="#0f969c"
                 android:contentDescription="TODO"

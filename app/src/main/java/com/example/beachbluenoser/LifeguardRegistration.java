@@ -143,9 +143,10 @@ public class LifeguardRegistration extends AppCompatActivity {
 
         user.put("Email", email);
         user.put("Token", AccToken);
-        //Hard-coded beach token
-        user.put("Beach", beachType);
+        //Hot-fix for registration
+        user.put("Beach", beach);
         user.put("userType", "Lifeguard");
+
         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {

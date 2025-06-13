@@ -28,5 +28,5 @@ This project was developed during a 4-month placement at Dalhousie University (J
 ## 👨‍💻 Developed by
 
 Dorian Zambo — Android Developer, Dalhousie University  
-[LinkedIn](https://www.linkedin.com/) • [Email](mailto:nariod14@gmail.com)
+[LinkedIn](https://www.linkedin.com/dgz1144) • [Email](mailto:nariod14@gmail.com)
 
